@@ -13,51 +13,68 @@ Verifique com:
 ```bash
 node -v
 npm -v
+```
+
+
 📦 Instalando o Yarn (caso não tenha)
 O Yarn é um gerenciador de pacotes alternativo ao NPM. Para instalar:
 
-bash
+
+```bash
 Copy
 Edit
 npm install -g yarn
 Verifique a instalação:
+```
 
-bash
+```bash
 Copy
 Edit
 yarn -v
+
+```
+
 🛠️ Instalando dependências
 Na raiz do projeto, execute:
 
-bash
+```bash
 Copy
 Edit
 yarn install
+```
 Ou, se estiver usando NPM:
 
-bash
+```bash
 Copy
 Edit
 npm install
+```
+
 ▶️ Rodando o projeto em modo de desenvolvimento
 Com Yarn:
-bash
+
+```bash
 Copy
 Edit
 yarn dev
+```
+
 Com NPM:
-bash
+```bash
 Copy
 Edit
 npm run dev
+```
 Depois, acesse no navegador:
 
-arduino
+```bash
 Copy
 Edit
 http://localhost:5173
+```
+
 🧱 Estrutura básica
-bash
+```bash
 Copy
 Edit
 ├── public/
@@ -68,16 +85,20 @@ Edit
 ├── package.json
 ├── vite.config.js
 └── README.md
+```
+
 📦 Build para produção
-bash
+```bash
 Copy
 Edit
 yarn build
+```
 Ou:
 
-bash
+```bash
 Copy
 Edit
 npm run build
+```
 🤝 Contribuições
 Fique à vontade para abrir issues ou pull requests.
