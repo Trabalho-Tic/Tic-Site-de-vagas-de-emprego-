@@ -21,15 +21,13 @@ O Yarn é um gerenciador de pacotes alternativo ao NPM. Para instalar:
 
 
 ```bash
-Copy
-Edit
+
 npm install -g yarn
 Verifique a instalação:
 ```
 
 ```bash
-Copy
-Edit
+
 yarn -v
 
 ```
@@ -38,15 +36,13 @@ yarn -v
 Na raiz do projeto, execute:
 
 ```bash
-Copy
-Edit
+
 yarn install
 ```
 Ou, se estiver usando NPM:
 
 ```bash
-Copy
-Edit
+
 npm install
 ```
 
@@ -54,29 +50,25 @@ npm install
 Com Yarn:
 
 ```bash
-Copy
-Edit
+
 yarn dev
 ```
 
 Com NPM:
 ```bash
-Copy
-Edit
+
 npm run dev
 ```
 Depois, acesse no navegador:
 
 ```bash
-Copy
-Edit
+
 http://localhost:5173
 ```
 
 🧱 Estrutura básica
 ```bash
-Copy
-Edit
+
 ├── public/
 ├── src/
 │   ├── App.jsx
@@ -89,15 +81,13 @@ Edit
 
 📦 Build para produção
 ```bash
-Copy
-Edit
+
 yarn build
 ```
 Ou:
 
 ```bash
-Copy
-Edit
+
 npm run build
 ```
 🤝 Contribuições
