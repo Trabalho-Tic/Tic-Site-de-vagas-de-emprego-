@@ -73,11 +73,12 @@ npm run dev
 A API vai subir em: http://localhost:ADEFINIR
 ```
 
-💡 Objetivo
+## 💡 Objetivo
 Este projeto tem como meta criar uma plataforma de vagas inclusiva e acessível, facilitando a conexão entre empresas e pessoas com deficiência (PCD), promovendo a diversidade no mercado de trabalho. 🌍
 
 <p align="center"> <img src="https://cdn.dribbble.com/users/1520866/screenshots/16328897/media/9bfb0e470db4bc4b2609f8df4e3ff0e2.gif" height="200" alt="Inclusão e acessibilidade"> </p>
-📦 Estrutura do Projeto
+
+## 📦 Estrutura do Projeto
 ```bash
 src/
 ├── config/        # Configurações de banco de dados
@@ -106,7 +107,7 @@ src/
 🤝 Contribuindo
 Este projeto é parte de um trabalho universitário, mas ideias, feedbacks e melhorias são sempre bem-vindos! 💬
 
-📚 Licença
+## 📚 Licença
 Este projeto é livre para fins educacionais e não comerciais.
 
 <p align="center"> Feito com ❤️ por estudantes que acreditam na inclusão digital </p> ```
