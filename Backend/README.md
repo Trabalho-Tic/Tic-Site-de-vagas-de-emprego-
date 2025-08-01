@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNG5kbmYzZGFrbWZtaG5ydnBlZTI2NjM4b3lmcXRlZDFscjZsaTg4ZiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/HkLZT8Jd7bqc8/giphy.gif" height="180" alt="Coding gif" />
+  <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge" height="180" alt="Coding gif" />
 </p>
 
 <p align="center">
