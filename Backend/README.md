@@ -48,6 +48,17 @@
 
 ## 🧑‍💻 Como rodar o projeto
 
+### 0️⃣ Pré-requisito: Instalar o Yarn
+
+Antes de começar, certifique-se de ter o **Yarn** instalado na sua máquina. Caso não tenha, você pode instalar usando o npm:
+
+```bash
+npm install -g yarn
+```
+
+Ou acesse a página oficial para outras formas de instalação: https://classic.yarnpkg.com/lang/en/docs/install/
+
+
 ### 1️⃣ Clone o repositório
 
 ```bash
