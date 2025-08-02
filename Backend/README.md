@@ -57,8 +57,9 @@ cd suapasta
 
 2️⃣ Instale as dependências
 ```bash
-npm install
+yarn install
 ```
+
 
 3️⃣ Configure seu .env
 Crie um arquivo .env na raiz com os dados do seu banco PostgreSQL:
@@ -73,8 +74,8 @@ DB_PORT=5432
 
 4️⃣ Inicie o servidor
 ```bash
-npm run dev
-A API vai subir em: http://localhost:ADEFINIR
+yarn dev
+A API vai subir em: http://localhost:8000
 ```
 
 ## 💡 Objetivo
@@ -94,19 +95,19 @@ src/
 
 .env
 ✅ Funcionalidades atuais
- Conexão com PostgreSQL via Sequelize
+  Conexão com PostgreSQL via Sequelize
 
- Cadastro e listagem de usuários (modelo base)
+  Cadastro e listagem de usuários (modelo base)
 
- Estrutura inicial para rotas REST
+  Estrutura inicial para rotas REST
 
- Sistema de vagas
+  Sistema de vagas
 
- Cadastro de empresas e candidatos
+  Cadastro de empresas e candidatos
 
- Filtros e acessibilidade nas buscas
+  Filtros e acessibilidade nas buscas
 
- JWT e autenticação
+  JWT e autenticação
 
 🤝 Contribuindo
 Este projeto é parte de um trabalho universitário, mas ideias, feedbacks e melhorias são sempre bem-vindos! 💬
