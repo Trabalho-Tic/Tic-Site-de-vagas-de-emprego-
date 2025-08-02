@@ -7,6 +7,11 @@ class FormularioController {
         return response.json(formularios);
     }
 
+    async create(request, response) {
+        const formulario = await Formulario.create(request.body)
+        return response.json(formulario)
+    }
+
 }
 
 module.exports = new FormularioController()
