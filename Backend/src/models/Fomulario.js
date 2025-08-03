@@ -7,7 +7,7 @@ const Formulario = sequelize.define('Formulario', {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true
     },
-    name: {
+    nome: {
         type: DataTypes.STRING,
         allowNull: false
     },
