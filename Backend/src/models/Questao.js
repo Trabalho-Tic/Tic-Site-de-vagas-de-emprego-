@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize")
 const sequelize = require("../config/database")
 
-const Questionario = sequelize.define("Questionario", {
+const Questao = sequelize.define("Questao", {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -11,22 +11,22 @@ const Questionario = sequelize.define("Questionario", {
         type: DataTypes.STRING,
         allowNull: false
     },
-    dataCriacao: {
+    tipoQuestao: {
         type: DataTypes.DATEONLY,
         allowNull: false
     },
-    id_formulario: {
+    id_dominio: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-            model: "tb_formulario",
+            model: "tb_dominio",
             key: "id"
         },
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
     }
 }, {
-    tableName: "tb_questionario",
+    tableName: "tb_questao",
     timestamps: true,
     createdAt: false
 })
