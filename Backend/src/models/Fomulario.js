@@ -12,12 +12,13 @@ const Formulario = sequelize.define('Formulario', {
         allowNull: false
     },
     dataCriacao: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false 
     }
 }, {
     tableName: 'tb_formulario',
-    timestamps: true
+    timestamps: true,
+    createdAt: false
 })
 
 module.exports = Formulario
