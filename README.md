@@ -21,11 +21,10 @@ O Yarn é um gerenciador de pacotes alternativo ao NPM. Para instalar:
 
 
 ```bash
-
 npm install -g yarn
-Verifique a instalação:
 ```
 
+Verifique a instalação:
 ```bash
 
 yarn -v
@@ -39,12 +38,6 @@ Na raiz do projeto, execute:
 
 yarn install
 ```
-Ou, se estiver usando NPM:
-
-```bash
-
-npm install
-```
 
 ▶️ Rodando o projeto em modo de desenvolvimento
 Com Yarn:
@@ -54,15 +47,9 @@ Com Yarn:
 yarn dev
 ```
 
-Com NPM:
-```bash
-
-npm run dev
-```
 Depois, acesse no navegador:
 
 ```bash
-
 http://localhost:5173
 ```
 
@@ -84,11 +71,6 @@ http://localhost:5173
 
 yarn build
 ```
-Ou:
 
-```bash
-
-npm run build
-```
 🤝 Contribuições
 Fique à vontade para abrir issues ou pull requests.
