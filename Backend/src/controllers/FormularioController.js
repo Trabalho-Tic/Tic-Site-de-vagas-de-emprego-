@@ -1,4 +1,4 @@
-const Formulario = require('../models/Fomulario');
+const Formulario = require('../models/Formulario');
 
 class FormularioController {
 
@@ -34,8 +34,14 @@ class FormularioController {
     }
     
     async update(request, response) {
+        const { id } = request.params
+        console.log(id)
         try {
-            const formulario = await Formulario.update(request.body)
+            const formulario = await Formulario.findByPk(id)
+            if (!formulario) {
+                return response.status(404).json({ error: "Formulario não encontrado"})
+            }
+            await formulario.update(request.body)
             return response.json(formulario)
         } catch (error) {
             return response.status(500).json({ error: "Erro ao atualizar Formulario"})
@@ -43,8 +49,9 @@ class FormularioController {
     }
     
     async delete(request, response) {
+        const { id } = request.params
         try {
-            const formulario = await Formulario.findByPk(request.parms);
+            const formulario = await Formulario.findByPk(id);
             if (!formulario) {
                 return response.status(404).json({ error: 'Formulario não encontrado.' });
             }
