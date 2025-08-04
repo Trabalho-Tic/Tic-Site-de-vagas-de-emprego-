@@ -69,4 +69,4 @@ const Resposta = sequelize.define("Resposta", {
     createdAt: "dataResposta"
 })
 
-module.exports = new Resposta
+module.exports = Resposta

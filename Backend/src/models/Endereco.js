@@ -32,4 +32,4 @@ const Endereco = sequelize.define("Endereco", {
     timestamps: true,
 })
 
-module.exports = new Endereco
+module.exports = Endereco

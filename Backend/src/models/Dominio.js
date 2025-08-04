@@ -26,4 +26,4 @@ const Dominio = sequelize.define("Dominio", {
     timestamps: true
 })
 
-module.exports = new Dominio
+module.exports = Dominio

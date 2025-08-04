@@ -35,7 +35,6 @@ class FormularioController {
     
     async update(request, response) {
         const { id } = request.params
-        console.log(id)
         try {
             const formulario = await Formulario.findByPk(id)
             if (!formulario) {

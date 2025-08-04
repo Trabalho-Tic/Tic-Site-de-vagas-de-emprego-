@@ -31,4 +31,4 @@ const Questao = sequelize.define("Questao", {
     createdAt: false
 })
 
-module.exports = new Questao
+module.exports = Questao

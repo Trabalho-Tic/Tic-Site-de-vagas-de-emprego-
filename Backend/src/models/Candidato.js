@@ -40,4 +40,4 @@ const Candidato = sequelize.define("Candidato", {
     timestamps: true,
 })
 
-module.exports = new Candidato
+module.exports = Candidato
