@@ -30,3 +30,5 @@ const Questionario = sequelize.define("Questionario", {
     timestamps: true,
     createdAt: false
 })
+
+module.exports = new Questionario

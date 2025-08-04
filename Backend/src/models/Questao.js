@@ -30,3 +30,5 @@ const Questao = sequelize.define("Questao", {
     timestamps: true,
     createdAt: false
 })
+
+module.exports = new Questao

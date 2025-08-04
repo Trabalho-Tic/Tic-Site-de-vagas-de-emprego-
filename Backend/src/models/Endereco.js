@@ -31,3 +31,5 @@ const Endereco = sequelize.define("Endereco", {
     tableName: "tb_endereco",
     timestamps: true,
 })
+
+module.exports = new Endereco

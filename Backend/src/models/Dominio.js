@@ -25,3 +25,5 @@ const Dominio = sequelize.define("Dominio", {
     tableName: "tb_dominio",
     timestamps: true
 })
+
+module.exports = new Dominio

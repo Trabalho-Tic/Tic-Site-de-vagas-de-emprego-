@@ -68,3 +68,5 @@ const Resposta = sequelize.define("Resposta", {
     timestamps: true,
     createdAt: "dataResposta"
 })
+
+module.exports = new Resposta

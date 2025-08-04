@@ -39,3 +39,5 @@ const Candidato = sequelize.define("Candidato", {
     tableName: "tb_candidato",
     timestamps: true,
 })
+
+module.exports = new Candidato
