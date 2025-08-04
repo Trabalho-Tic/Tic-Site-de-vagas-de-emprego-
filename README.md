@@ -71,11 +71,6 @@ http://localhost:5173
 
 yarn build
 ```
-Ou:
 
-```bash
-
-npm run build
-```
 🤝 Contribuições
 Fique à vontade para abrir issues ou pull requests.
