@@ -3,6 +3,7 @@ const router = express.Router();
 const FormularioController = require('../controllers/FormularioController');
 const QuestionarioController = require('../controllers/QuestionarioController');
 const DominioController = require("../controllers/DominioController")
+const QuestaoController = require("../controllers/QuestaoController")
 
 // Formulario
 router.get('/formulario', FormularioController.index);
@@ -24,5 +25,12 @@ router.get('/Dominio/:id', DominioController.show);
 router.post('/Dominio/create', DominioController.create);
 router.put('/Dominio/update/:id', DominioController.update);
 router.delete('/Dominio/delete/:id', DominioController.delete);
+
+// Questao
+router.get('/Questao', QuestaoController.index);
+router.get('/Questao/:id', QuestaoController.show);
+router.post('/Questao/create', QuestaoController.create);
+router.put('/Questao/update/:id', QuestaoController.update);
+router.delete('/Questao/delete/:id', QuestaoController.delete);
 
 module.exports = router;
