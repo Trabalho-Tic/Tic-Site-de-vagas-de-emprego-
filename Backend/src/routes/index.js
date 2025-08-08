@@ -3,12 +3,13 @@ const router = express.Router();
 const FormularioController = require('../controllers/FormularioController');
 const QuestionarioController = require('../controllers/QuestionarioController');
 const DominioController = require("../controllers/DominioController")
-// const QuestaoController = require("../controllers/QuestaoController")
+const QuestaoController = require("../controllers/QuestaoController")
 const CandidatoController = require("../controllers/CandidatoController")
 
 // Formulario
 router.get('/formulario', FormularioController.index);
 router.get('/formulario/:id', FormularioController.show);
+router.get('/formularioquestionario/:id', FormularioController.showWithQuestionario);
 router.post('/formulario/create', FormularioController.create);
 router.put('/formulario/update/:id', FormularioController.update);
 router.delete('/formulario/delete/:id', FormularioController.delete);
@@ -27,12 +28,12 @@ router.post('/Dominio/create', DominioController.create);
 router.put('/Dominio/update/:id', DominioController.update);
 router.delete('/Dominio/delete/:id', DominioController.delete);
 
-// // Questao
-// router.get('/Questao', QuestaoController.index);
-// router.get('/Questao/:id', QuestaoController.show);
-// router.post('/Questao/create', QuestaoController.create);
-// router.put('/Questao/update/:id', QuestaoController.update);
-// router.delete('/Questao/delete/:id', QuestaoController.delete);
+// Questao
+router.get('/Questao', QuestaoController.index);
+router.get('/Questao/:id', QuestaoController.show);
+router.post('/Questao/create', QuestaoController.create);
+router.put('/Questao/update/:id', QuestaoController.update);
+router.delete('/Questao/delete/:id', QuestaoController.delete);
 
 // Candidato
 router.get('/Candidato', CandidatoController.index);

@@ -1,4 +1,4 @@
-const Formulario = require('../models/Formulario');
+const { Questionario, Formulario } = require('../models/associations');
 
 class FormularioController {
 
@@ -21,6 +21,19 @@ class FormularioController {
             return response.json(formulario)
         } catch (error) {
             return response.status(500).json({ error: "Erro ao buscar por formulario"})
+        }
+    }
+
+    async showWithQuestionario(request, response) {     
+        try {
+            const { id } = request.params
+            const formulario = await Formulario.findByPk(id, {include: { model: Questionario, as: "questionario"}})
+            if (!formulario) {
+                response.status(404).json({ error: "Formulario não encontrado"})
+            }
+            response.status(200).json(formulario)
+        } catch (error) {
+            response.status(500).json({ error: "Erro ao buscar formulario"})
         }
     }
 
