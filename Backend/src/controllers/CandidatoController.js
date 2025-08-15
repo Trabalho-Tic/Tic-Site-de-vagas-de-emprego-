@@ -1,5 +1,4 @@
 const Candidato = require('../models/Candidato');
-
 class CandidatoController {
 
     async index(request, response) {

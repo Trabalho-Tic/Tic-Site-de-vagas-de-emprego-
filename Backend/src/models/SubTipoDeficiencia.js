@@ -1,29 +1,29 @@
 const { DataTypes } = require("sequelize")
 const sequelize = require("../config/database")
 
-const Dominio = sequelize.define("Dominio", {
+const SubtipoDeficiencia = sequelize.define('subtipodeficiencia', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        primaryKey: true        
+        primarykey: true
     },
     nome: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    id_questionario: {
+    id_tipodeficiencia: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-            model: "tb_questionario",
+            model: "tb_tipodeficiencia",
             key: "id"
         },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE"
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
     }
 }, {
-    tableName: "tb_dominio",
+    tableName: "tb_subtipodeficiencia",
     timestamps: true
 })
 
-module.exports = Dominio
+module.exports = SubtipoDeficiencia

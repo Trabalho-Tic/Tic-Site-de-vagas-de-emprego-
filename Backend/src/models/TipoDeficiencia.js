@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize")
 const sequelize = require('../config/database')
 
-const Formulario = sequelize.define('Formulario', {
+const TipoDeficiencia = sequelize.define('TipoDeficiencia', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -11,14 +11,9 @@ const Formulario = sequelize.define('Formulario', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    dataCriacao: {
-        type: DataTypes.DATEONLY,
-        allowNull: false 
-    }
 }, {
-    tableName: 'tb_formulario',
-    timestamps: true,
-    createdAt: false
+    tableName: 'tb_tipodeficiencia',
+    timestamps: true
 })
 
-module.exports = Formulario
+module.exports = TipoDeficiencia
