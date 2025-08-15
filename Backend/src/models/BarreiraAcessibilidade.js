@@ -1,17 +1,17 @@
 const { DataTypes } = require("sequelize")
 const sequelize = require("../config/database")
 
-const SubTipoBarreira = sequelize.define('SubTipoBarreira', {
+const BarreiraAcessibilidade = sequelize.define('BarreiraAcessibilidade', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true
     },
-    id_subtipodeficiencia: {
+    id_acessibilidade: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-            model: "tb_subtipodeficiencia",
+            model: "tb_acessibilidade",
             key: "id"
         },
         onDelete: "CASCADE",
@@ -28,8 +28,8 @@ const SubTipoBarreira = sequelize.define('SubTipoBarreira', {
         onUpdate: "CASCADE"
     }
 }, {
-    tableName: "tb_subtipobarreira",
+    tableName: "tb_barreiraacessibilidade",
     timestamps: true
 })
 
-module.exports = SubTipoBarreira
+module.exports = BarreiraAcessibilidade
