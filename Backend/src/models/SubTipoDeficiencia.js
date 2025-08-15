@@ -5,7 +5,7 @@ const SubtipoDeficiencia = sequelize.define('subtipodeficiencia', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        primarykey: true
+        primaryKey: true
     },
     nome: {
         type: DataTypes.STRING,

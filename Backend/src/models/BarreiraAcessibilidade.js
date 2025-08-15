@@ -5,7 +5,7 @@ const SubTipoBarreira = sequelize.define('SubTipoBarreira', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        primarykey: true
+        primaryKey: true
     },
     id_subtipodeficiencia: {
         type: DataTypes.UUID,

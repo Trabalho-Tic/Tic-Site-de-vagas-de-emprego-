@@ -5,7 +5,7 @@ const Barreira = sequelize.define('Barreira', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        primarykey: true
+        primaryKey: true
     },
     descricao: {
         type: DataTypes.STRING,

@@ -5,7 +5,7 @@ const Acessibilidade = sequelize.define('Acessibilidade', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        primarykey: true
+        primaryKey: true
     },
     descricao: {
         type: DataTypes.STRING,
