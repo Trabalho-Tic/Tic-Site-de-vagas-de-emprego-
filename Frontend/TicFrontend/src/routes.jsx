@@ -1,9 +1,9 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./Pages"
-import Vagas from "./Pages"
+import Home from "./Pages/Home"
+import Vagas from "./Pages/Vagas"
 
-const router = createBrowserRouter([
+const routes = createBrowserRouter([
     {
         path: '/',
         element: <Home />
