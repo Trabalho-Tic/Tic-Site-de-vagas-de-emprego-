@@ -5,23 +5,12 @@ import Input from "../components/input";
 import photoLogin from "../assets/photologin.png"
 
 function Login() {
-    const [acessibilidade, setAcessibilidade] = useState([]);
-
-    useEffect(() => {
-    async function fetchData() {
-      const res = await fetch("http://localhost:8000/acessibilidade");
-      const data = await res.json();
-      console.log(data)
-      setAcessibilidade(data);
-    }
-    
-    fetchData();
-    
-    }, []);
+    const [login, setLogin] = useState("");
+    const [password, setPassword] = useState("")
 
     return (
         <section className="flex justify-center items-center gap-10">
-            <div className="flex flex-col w-90 md:w-125 h-150 border-1 rounded-xl justify-center p-5 md:p-10">
+            <div className="flex flex-col w-auto md:w-auto h-auto border-1 rounded-xl justify-center p-5 md:p-10">
                 <div>
                     <h1 className="!text-2xl pb-8">Welcome !</h1>
                 </div>
@@ -32,15 +21,25 @@ function Login() {
                 <div className="pb-12">
                     <div className="pb-10">
                         <p className="text-lg pb-2">User name</p>
-                        <Input placeholder="Enter your user name"></Input>
+                        <Input
+                            value={login}
+                            onChange={(e) => setLogin(e.target.value)}
+                            placeholder="Enter your user name">
+                        </Input>
                     </div>
-                    <div>
+                    <div className="flex flex-col">
                         <p className="text-lg pb-2">Password</p>
-                        <Input placeholder="Enter your password"></Input>
+                        <Input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Enter your password">
+                        </Input>
+                        <Link className="flex justify-end transition-all duration-500 !text-black hover:!text-gray-700">Forget password?</Link>
                     </div>
                 </div>
                 <div className="pb-8">
-                    <button className="!bg-black border-2 px-6 rounded-lg text-white text-lg w-80 md:w-100 h-15">Login</button>
+                    <button className="!bg-black border-2 px-6 rounded-lg text-white text-lg w-80 md:w-100 h-15 transition-all duration-500 hover:!bg-gray-600">Login</button>
                 </div>
                 <p className="flex justify-center gap-2">Do you have an Account?<Link className="!text-black" to={"/Vagas"}>Register</Link></p>
             </div>
