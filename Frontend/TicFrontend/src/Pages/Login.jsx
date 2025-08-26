@@ -9,8 +9,8 @@ function Login() {
     const [password, setPassword] = useState("")
 
     return (
-        <section className="flex justify-center items-center gap-10">
-            <div className="flex flex-col w-auto md:w-auto h-auto border-1 rounded-xl justify-center p-5 md:p-10">
+        <section className="flex justify-center px-100 items-center gap-10">
+            <div className="flex flex-col w-auto lg:w-auto h-auto border-1 rounded-xl justify-center p-5 lg:p-10">
                 <div>
                     <h1 className="!text-2xl pb-8">Welcome !</h1>
                 </div>
@@ -39,11 +39,11 @@ function Login() {
                     </div>
                 </div>
                 <div className="pb-8">
-                    <button className="!bg-black border-2 px-6 rounded-lg text-white text-lg w-80 md:w-100 h-15 transition-all duration-500 hover:!bg-gray-600">Login</button>
+                    <button className="!bg-black border-2 px-6 rounded-lg text-white text-lg w-80 lg:w-100 h-15 transition-all duration-500 hover:!bg-gray-600">Login</button>
                 </div>
                 <p className="flex justify-center gap-2">Do you have an Account?<Link className="!text-black" to={"/Vagas"}>Register</Link></p>
             </div>
-            <img className="hidden md:flex" src={photoLogin} alt="PhotoLogin" />
+            <img className="hidden lg:flex" src={photoLogin} alt="PhotoLogin" />
         </section>
     )
 }
