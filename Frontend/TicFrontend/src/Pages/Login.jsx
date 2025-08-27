@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
-import "../Styles/home.css"
-import { Link } from "react-router-dom"
+import "../Styles/login.css"
+import { Link, useNavigate } from "react-router-dom"
 import Input from "../components/input";
 import photoLogin from "../assets/photologin.png"
 
@@ -8,9 +8,11 @@ function Login() {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("")
 
+    const navigate = useNavigate()
+
     return (
-        <section className="flex justify-center px-100 items-center gap-10">
-            <div className="flex flex-col w-auto lg:w-auto h-auto border-1 rounded-xl justify-center p-5 lg:p-10">
+        <section className="flex justify-center items-center gap-10 h-screen">
+            <div className="flex flex-col w-auto shadow-xl lg:w-auto h-auto border-1 rounded-xl justify-center p-5 lg:p-10">
                 <div>
                     <h1 className="!text-2xl pb-8">Welcome !</h1>
                 </div>
@@ -35,13 +37,13 @@ function Login() {
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Enter your password">
                         </Input>
-                        <Link className="flex justify-end transition-all duration-500 !text-black hover:!text-gray-700">Forget password?</Link>
+                        <Link className="flex justify-end transition-all duration-500 text-black hover:text-gray-700 font-bold">Forget password?</Link>
                     </div>
                 </div>
                 <div className="pb-8">
                     <button className="!bg-black border-2 px-6 rounded-lg text-white text-lg w-80 lg:w-100 h-15 transition-all duration-500 hover:!bg-gray-600">Login</button>
                 </div>
-                <p className="flex justify-center gap-2">Do you have an Account?<Link className="!text-black" to={"/register"}>Register</Link></p>
+                <p className="flex justify-center gap-2">Do you have an Account?<Link className="text-black font-bold" to={"/register"}>Register</Link></p>
             </div>
             <img className="hidden lg:flex" src={photoLogin} alt="PhotoLogin" />
         </section>

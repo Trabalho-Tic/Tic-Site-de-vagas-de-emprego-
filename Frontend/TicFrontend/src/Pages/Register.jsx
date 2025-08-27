@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import "../Styles/home.css"
+import "../Styles/login.css"
 import { Link } from "react-router-dom"
 import Input from "../components/input";
 import photoLogin from "../assets/photologin.png"
@@ -12,7 +12,7 @@ function Register() {
     const [password, setPassword] = useState("")
 
     return (
-        <section className="flex justify-center items-center gap-10 py-4 md:py-0">
+        <section className="flex justify-center items-center gap-10 py-4 md:py-0 md:px-75 md:h-screen">
             <div className="flex flex-col w-auto lg:w-full h-auto border-1 rounded-xl justify-center p-5 lg:p-10">
                 <div>
                     <h1 className="!text-2xl pb-4">Welcome !</h1>
@@ -72,9 +72,9 @@ function Register() {
                     </div>
                 </div>
                 <div className="pb-8">
-                    <button className="!bg-black border-2 px-6 rounded-lg text-white text-lg w-80 lg:w-full h-15 transition-all duration-500 hover:!bg-gray-600">Login</button>
+                    <button className="!bg-black border-2 px-6 rounded-lg text-white text-lg w-80 lg:w-full h-15 transition-all duration-500 hover:!bg-gray-600">Register</button>
                 </div>
-                <p className="flex justify-center gap-2">Do you have an Account?<Link className="!text-black" to={"/"}>Login</Link></p>
+                <p className="flex justify-center gap-2">Do you have an Account?<Link className="text-black font-bold" to={"/"}>Login</Link></p>
             </div>
         </section>
     )
