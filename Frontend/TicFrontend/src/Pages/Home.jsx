@@ -2,6 +2,7 @@ import React from "react"
 import Header from "../components/Header"
 import Input from "../components/input"
 import Card from "../components/Card";
+import CardCompanies from "../components/CardCompanies";
 import { Search } from "lucide-react";
 import frame from "../assets/Frame 569.png"
 
@@ -47,6 +48,15 @@ function Vagas() {
                         <img className="w-22" src={frame} alt="" />
                         <p className="text-xl text-white font-medium">Enter in a new Job</p>
                     </div>
+                </div>
+            </section>
+            <section className="flex flex-col py-14 justify-center items-center bg-gradient-to-t from-white to-gray-200">
+                <p className="text-3xl font-semibold pb-12">The Companies</p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+                    <CardCompanies />
+                    <CardCompanies />
+                    <CardCompanies />
+                    <CardCompanies />
                 </div>
             </section>
         </>
