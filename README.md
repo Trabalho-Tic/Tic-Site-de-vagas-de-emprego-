@@ -39,7 +39,7 @@ A mensagem de commit deve ter a seguinte estrutura:
 - Faça commits **pequenos e objetivos**.  
 - Evite mensagens genéricas como *"update"*, *"ajustes"* ou *"finalizando"*.  
 - Sempre use **português** nas mensagens.
-- 
+  
 ---
 
 ## 🔀 Como Abrir um Pull Request (PR)
