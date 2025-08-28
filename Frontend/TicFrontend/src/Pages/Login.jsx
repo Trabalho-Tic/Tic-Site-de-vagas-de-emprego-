@@ -41,7 +41,7 @@ function Login() {
                     </div>
                 </div>
                 <div className="pb-8">
-                    <button className="!bg-black border-2 px-6 rounded-lg text-white text-lg w-full h-15 transition-all duration-500 hover:!bg-gray-600">Login</button>
+                    <button onClick={() => {navigate("/home")}} className="!bg-black border-2 px-6 rounded-lg text-white text-lg w-full h-15 transition-all duration-500 hover:!bg-gray-600">Login</button>
                 </div>
                 <p className="flex justify-center gap-2">Do you have an Account?<Link className="text-black font-bold" to={"/register"}>Register</Link></p>
             </div>

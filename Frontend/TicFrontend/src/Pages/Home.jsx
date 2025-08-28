@@ -3,6 +3,7 @@ import Header from "../components/Header"
 import Input from "../components/input"
 import Card from "../components/Card";
 import { Search } from "lucide-react";
+import frame from "../assets/Frame 569.png"
 
 function Vagas() {
     return (
@@ -25,6 +26,27 @@ function Vagas() {
                     <Card  />
                     <Card  />
                     <Card  />
+                </div>
+            </section>
+            <section className="flex flex-col justify-center items-center bg-[url(../assets/backgroundhome.png)] lg:py-10 lg:px-40 h-auto filter grayscale bg-cover">
+                <p className="pb-14 text-3xl font-semibold text-white">Do you finished your graduated or just try find a job?</p>
+                <div className="flex justify-center gap-22">
+                    <div className="flex flex-col items-center gap-6">
+                        <img className="w-22" src={frame} alt="" />
+                        <p className="text-xl text-white font-medium">Enter in a new Job</p>
+                    </div>
+                    <div className="flex flex-col items-center gap-6">
+                        <img className="w-22" src={frame} alt="" />
+                        <p className="text-xl text-white font-medium">Enter in a new Job</p>
+                    </div>
+                    <div className="flex flex-col items-center gap-6">
+                        <img className="w-22" src={frame} alt="" />
+                        <p className="text-xl text-white font-medium">Enter in a new Job</p>
+                    </div>
+                    <div className="flex flex-col items-center gap-6">
+                        <img className="w-22" src={frame} alt="" />
+                        <p className="text-xl text-white font-medium">Enter in a new Job</p>
+                    </div>
                 </div>
             </section>
         </>
