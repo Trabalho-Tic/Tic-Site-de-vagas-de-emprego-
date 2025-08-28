@@ -1,76 +1,112 @@
-# Projeto React com Vite
+# 📌 Guia de Contribuição
 
-Este projeto foi criado com [Vite](https://vitejs.dev/) e utiliza o React como biblioteca principal.
+Bem-vindo(a)! Este documento explica como **fazer commits** e **abrir pull requests** corretamente neste projeto.  
+Seguindo este guia, garantimos um histórico de mudanças **organizado, claro e padronizado**.
 
 ---
 
-## 🚀 Pré-requisitos
+## 📝 Estrutura de um Commit
 
-Antes de começar, você precisa ter o [Node.js](https://nodejs.org/) instalado na sua máquina.
+Nós seguimos o padrão [Conventional Commits](https://www.conventionalcommits.org/).  
+A mensagem de commit deve ter a seguinte estrutura:
 
-Verifique com:
+<tipo>(escopo opcional): descrição breve
 
-```bash
-node -v
-npm -v
-```
+- **tipo** → Define a natureza da mudança.  
+- **escopo (opcional)** → Parte do sistema afetada (ex: login, api, ui).  
+- **descrição** → Resumo curto e claro da alteração.  
 
+---
 
-📦 Instalando o Yarn (caso não tenha)
-O Yarn é um gerenciador de pacotes alternativo ao NPM. Para instalar:
+## 🔖 Tipos de Commits
 
+| Tipo      | Uso | Exemplo |
+|-----------|-----|---------|
+| **feat**  | Nova funcionalidade. | `feat(auth): adicionar login com Google` |
+| **fix**   | Correção de bug. | `fix(ui): corrigir alinhamento do botão` |
+| **docs**  | Alterações em documentação. | `docs(readme): adicionar guia de contribuição` |
+| **style** | Alterações que não afetam o código (formatação, lint). | `style(lint): ajustar indentação` |
+| **refactor** | Refatoração sem mudar comportamento. | `refactor(api): melhorar legibilidade` |
+| **test**  | Adição ou alteração de testes. | `test(auth): adicionar teste para logout` |
+| **chore** | Tarefas diversas (build, configs, deps). | `chore(deps): atualizar axios` |
+| **perf**  | Melhorias de performance. | `perf(api): otimizar consulta ao banco` |
+| **debug** | Commits temporários para depuração. | `debug(api): log da resposta da API` |
 
-```bash
-npm install -g yarn
-```
+---
 
-Verifique a instalação:
-```bash
+## ✅ Boas Práticas para Commits
 
-yarn -v
+- Faça commits **pequenos e objetivos**.  
+- Evite mensagens genéricas como *"update"*, *"ajustes"* ou *"finalizando"*.  
+- Sempre use **português** nas mensagens.
+- 
+---
 
-```
+## 🔀 Como Abrir um Pull Request (PR)
 
-🛠️ Instalando dependências
-Na raiz do projeto, execute:
-
-```bash
-
-yarn install
-```
-
-▶️ Rodando o projeto em modo de desenvolvimento
-Com Yarn:
-
-```bash
-
-yarn dev
-```
-
-Depois, acesse no navegador:
+1. Crie uma **branch** com nome descritivo:
 
 ```bash
-http://localhost:5173
+   git checkout -b feat/nome-da-funcionalidade
 ```
 
-🧱 Estrutura básica
+Exemplos:
+
+feat/login-social
+
+fix/erro-deploy
+
+docs/melhorar-readme
+
+Faça commits seguindo o padrão explicado acima.
+
+Envie a branch para o GitHub:
+
 ```bash
-
-├── public/
-├── src/
-│   ├── App.jsx
-│   ├── main.jsx
-├── index.html
-├── package.json
-├── vite.config.js
-└── README.md
+git push origin feat/nome-da-funcionalidade
 ```
 
-📦 Build para produção
+Abra um Pull Request (PR) no GitHub:
+
+Descreva claramente o que foi feito.
+
+Se aplicável, relacione issues (closes #id).
+
+Marque revisores, se necessário.
+
+🚦 Fluxo Resumido
+# Criar branch
+
 ```bash
-
-yarn build
+git checkout -b feat/nome-da-feature
 ```
 
-🤝 Contribuições
-Fique à vontade para abrir issues ou pull requests.
+# Adicionar arquivos
+
+```bash
+git add .
+```
+
+# Commit seguindo padrão
+
+```bash
+git commit -m "feat(auth): implementar autenticação JWT"
+```
+
+# Enviar para o GitHub
+
+```bash
+git push origin feat/nome-da-feature
+```
+
+# Abrir PR no GitHub
+🎯 Exemplo Prático
+
+```bash
+git checkout -b fix/cadastro-nulo
+git add src/pages/Register.js
+git commit -m "fix(register): corrigir bug ao salvar usuário com campo vazio"
+git push origin fix/cadastro-nulo
+```
+
+Depois é só abrir o Pull Request e aguardar a revisão. ✅
