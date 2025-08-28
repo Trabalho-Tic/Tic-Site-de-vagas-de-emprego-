@@ -28,7 +28,7 @@ function Vagas() {
                     <Card  />
                 </div>
             </section>
-            <section className="flex flex-col justify-center items-center bg-[url(../assets/backgroundhome.png)] lg:py-10 lg:px-40 h-auto filter grayscale bg-cover">
+            <section className="hidden lg:flex flex-col justify-center items-center bg-[url(../assets/backgroundhome.png)] lg:py-10 lg:px-40 h-auto filter grayscale bg-cover">
                 <p className="pb-14 text-3xl font-semibold text-white">Do you finished your graduated or just try find a job?</p>
                 <div className="flex justify-center gap-22">
                     <div className="flex flex-col items-center gap-6">
