@@ -6,6 +6,7 @@ const BarreiraAcessibilidadeController = require("../controllers/BarreiraAcessib
 const SubTipoBarreiraController = require("../controllers/SubTipoBarreiraController")
 const SubTipoDeficienciaController = require("../controllers/SubTipoDeficienciaController")
 const TipoDeficienciaController = require("../controllers/TipoDeficienciaController")
+const UserController = require("../controllers/UserController")
 
 // Acessibilidade
 router.get('/Acessibilidade', AcessibilidadeController.index);
@@ -48,5 +49,11 @@ router.get('/TipoDeficiencia/:id', TipoDeficienciaController.show);
 router.post('/TipoDeficiencia/create', TipoDeficienciaController.create);
 router.put('/TipoDeficiencia/update/:id', TipoDeficienciaController.update);
 router.delete('/TipoDeficiencia/delete/:id', TipoDeficienciaController.delete);
+
+
+// User
+router.get('/user', UserController.index);
+router.post('/user/create', UserController.create);
+
 
 module.exports = router;
