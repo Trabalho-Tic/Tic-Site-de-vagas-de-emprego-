@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react"
 import "../Styles/login.css"
 import { Link } from "react-router-dom"
 import Input from "../components/input";
-import photoLogin from "../assets/photologin.png"
+import Select from "../components/select";
 
 function Register() {
     const [login, setLogin] = useState("");
     const [email, setEmail] = useState("")
     const [cellphone, setCellphone] = useState("")
     const [cpf, setCpf] = useState("")
+    const [type, setType] =  useState("");
     const [password, setPassword] = useState("")
 
     return (
@@ -69,6 +70,15 @@ function Register() {
                             onChange={(e) => setCpf(e.target.value)}
                             placeholder="Enter your CPF">
                         </Input>
+                    </div>
+                    <div className="flex flex-col">
+                        <p className="text-lg pb-2">CPF</p>
+                        <Select
+                            required
+                            value={type}
+                            onChange={(e) => setType(e.target.value)}
+                            placeholder="Enter your CPF">
+                        </Select>
                     </div>
                 </div>
                 <div className="pb-8">
