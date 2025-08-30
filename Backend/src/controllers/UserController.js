@@ -27,7 +27,12 @@ class UserController {
     }
 
     async create(request, response) {
-        const { password } = request.body
+        const { email, password } = request.body
+
+        const user = User.findOne({ where: { email }})
+        if (!user) {
+            return response.status(401).json("Ja existe um usuario com esse email")
+        }
 
         try {
             const hashPassword = await gerarHash(password)
