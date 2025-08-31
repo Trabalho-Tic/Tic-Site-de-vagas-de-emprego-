@@ -42,11 +42,11 @@ function Login() {
         className="flex flex-col w-auto shadow-xl lg:w-auto h-auto border-1 rounded-xl justify-center p-5 lg:p-10"
       >
         <div>
-          <h1 className="!text-2xl pb-8">Welcome !</h1>
+          <h1 className="!text-2xl pb-8">Bem Vindo!</h1>
         </div>
         <div>
-          <h2 className="text-3xl font-bold">Sign in to</h2>
-          <p className="text-sm pb-12">Lorem ipsum dolor</p>
+          <h2 className="text-3xl font-bold">Faça login</h2>
+          <p className="text-sm pb-12"></p>
         </div>
         <div className="pb-12">
           <div className="pb-10">
@@ -55,21 +55,21 @@ function Login() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
+              placeholder="Escreva seu email"
               required
             />
           </div>
           <div className="flex flex-col">
-            <p className="text-lg pb-2">Password</p>
+            <p className="text-lg pb-2">Senha</p>
             <Input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
+              placeholder="Escreva sua Senha"
               required
             />
             <Link className="flex justify-end transition-all duration-500 text-black hover:text-gray-700 font-bold">
-              Forget password?
+              Esqueceu a senha?
             </Link>
           </div>
         </div>
@@ -83,9 +83,9 @@ function Login() {
         </div>
         {msg && <p className="text-red-500 text-center">{msg}</p>}
         <p className="flex justify-center gap-2">
-          Do you have an Account?
+          Ainda não possui uma conta?
           <Link className="text-black font-bold" to={"/register"}>
-            Register
+            Registre-se
           </Link>
         </p>
       </form>
