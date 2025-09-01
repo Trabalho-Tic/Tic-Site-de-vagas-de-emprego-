@@ -11,8 +11,7 @@ function Login() {
 
     async function handleLogin(event) {
         event.preventDefault()
-        alert("tentando logar")
-        
+        navigate("/home")
     }
 
     return (
