@@ -57,7 +57,9 @@ function Vagas() {
             </section>
             <section className="flex flex-col py-14 justify-center items-center bg-gradient-to-t from-white to-gray-200">
                 <p className="text-3xl font-semibold pb-12">The Companies</p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <CardCompanies />
+                    <CardCompanies />
                     <CardCompanies />
                     <CardCompanies />
                     <CardCompanies />
