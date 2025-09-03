@@ -72,7 +72,7 @@ function Register() {
                         </Input>
                     </div>
                     <div className="flex flex-col">
-                        <p className="text-lg pb-2">CPF</p>
+                        <p className="text-lg pb-2">Tipo de Usuário</p>
                         <Select
                             required
                             value={type}
