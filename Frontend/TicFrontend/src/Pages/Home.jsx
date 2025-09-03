@@ -1,5 +1,6 @@
 import React from "react"
 import Header from "../components/Header"
+import Footer from "../components/Footer";
 import Input from "../components/input"
 import Card from "../components/Card";
 import CardCompanies from "../components/CardCompanies";
@@ -12,7 +13,7 @@ function Vagas() {
         <>
             <Header />
             <section className="flex flex-col justify-center items-center gap-10 pt-10">
-                <p className="text-4xl text-shadow-lg/10">Procure por um Job</p>
+                <p className="text-4xl">Procure por um Job</p>
                 <div className="flex flex-col items-center lg:flex-row gap-5">
                     <Input placeholder="Procure pela Vaga"></Input>
                     <Input placeholder="Procure pela Localização"></Input>
@@ -63,6 +64,8 @@ function Vagas() {
                     <CardCompanies />
                 </div>
             </section>
+
+            <Footer />
         </>
     )
 }
