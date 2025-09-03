@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./Pages/Login"
 import Home from "./Pages/Home"
 import Register from "./Pages/Register"
+import Vaga from "./Pages/Vaga";
 
 const routes = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ const routes = createBrowserRouter([
     {
         path: '/register',
         element: <Register />
+    },
+    {
+        path: '/vagas',
+        element: <Vaga />
     }
 ])
 
