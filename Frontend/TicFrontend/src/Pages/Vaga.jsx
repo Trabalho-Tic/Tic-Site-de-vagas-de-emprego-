@@ -1,11 +1,10 @@
 import React from "react";
 import { Search, Zap } from "lucide-react";
 
-import logo from "../assets/js moderno.webp"
-
 import Header from "../components/Header"
 import Input from "../components/input"
 import Card from "../components/Card";
+import VagaDescricao from "../components/VagaDescricao";
 
 function Vaga() {
     return (
@@ -30,17 +29,7 @@ function Vaga() {
                 <Card />
             </div>
             <div className="w-full border-1 border-gray-300 p-10">
-                <div className="flex items-center gap-2">
-                    <img className="h-8 w-8 rounded-4xl" src={logo} alt="" />
-                    <p>Meta Company</p>
-                </div>
-                <div className="flex justify-between items-center pt-4">
-                    <div className="flex flex-col">
-                        <p className="text-2xl pb-3 font-bold">Product Owner</p>
-                        <p className="text-sm font-medium text-gray-600">Porto, Portugal (On site)</p>
-                    </div>
-                    <button className="flex text-lg rounded-4xl items-center px-6 h-12 gap-2 font-semibold bg-green-400 transition-all duration-500 hover:-translate-y-1 hover:bg-green-300"><Zap size={20} />Easy Apply</button>
-                </div>
+                <VagaDescricao />
             </div>
         </section>
         </>
