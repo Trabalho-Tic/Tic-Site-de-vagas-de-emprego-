@@ -5,6 +5,7 @@ import Header from "../components/Header"
 import Input from "../components/input"
 import Card from "../components/Card";
 import VagaDescricao from "../components/VagaDescricao";
+import Footer from "../components/Footer"
 
 function Vaga() {
     return (
@@ -18,7 +19,7 @@ function Vaga() {
                 <button className="w-15 items-center bg-gradient-to-t from-gray-50 to-gray-500 p-5 rounded-4xl transition-all duration-400 shadow-xl hover:-translate-y-1"><Search size={20} /></button>
             </div>
         </section>
-        <section className="flex w-full px-27 pt-5 gap-6">
+        <section className="flex w-full px-27 py-5 gap-6">
             <div className="flex flex-col gap-2">
                 <Card />
                 <Card />
@@ -32,6 +33,7 @@ function Vaga() {
                 <VagaDescricao />
             </div>
         </section>
+        <Footer />
         </>
     )
 }

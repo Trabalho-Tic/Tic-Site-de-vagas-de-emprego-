@@ -26,6 +26,23 @@ function VagaDescricao() {
                 <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Reporting to:</span> Design Manager, Bruno Mota</p>
                 <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Your Team:</span> u will mainly be part of a UX Designer’s team, working with cross-functional teams and a wider group of UX department</p>
             </div>
+            <nav className="pt-15 pb-8">
+                <ul className="flex gap-10 ">
+                    <li><a className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500" href="">Job Description</a></li>
+                    <li><a className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500" href="">Requirement</a></li>
+                    <li><a className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500" href="">Benefit</a></li>
+                    <li><a className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500" href="">Overview</a></li>
+                </ul>
+            </nav>
+            <div>
+                <p>Job Description</p>
+                <p></p>
+                <div>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                </div>
+            </div>
         </>
     )
 }
