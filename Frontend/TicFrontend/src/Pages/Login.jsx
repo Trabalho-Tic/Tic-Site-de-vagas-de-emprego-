@@ -16,7 +16,7 @@ function Login() {
 
     return (
         <section className="flex justify-center items-center gap-10 h-screen">
-            <form onSubmit={handleLogin} className="flex flex-col w-auto shadow-xl lg:w-auto h-auto border-1 rounded-xl justify-center p-5 lg:p-10">
+            <form onSubmit={handleLogin} className="flex flex-col w-auto shadow-xl md:w-125 h-auto border-1 rounded-xl justify-center p-5 lg:p-10">
                 <div>
                     <h1 className="!text-2xl pb-8">Welcome !</h1>
                 </div>
@@ -25,7 +25,7 @@ function Login() {
                     <p className="text-sm pb-12">Lorem ipsum dolor</p>
                 </div>
                 <div className="pb-12">
-                    <div className="pb-10">
+                    <div className="flex flex-col pb-10">
                         <p className="text-lg pb-2">User name</p>
                         <Input
                             value={login}
