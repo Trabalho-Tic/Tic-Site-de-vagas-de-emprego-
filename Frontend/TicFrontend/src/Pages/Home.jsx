@@ -62,8 +62,6 @@ function Vagas() {
                     <CardCompanies />
                     <CardCompanies />
                     <CardCompanies />
-                    <CardCompanies />
-                    <CardCompanies />
                 </div>
             </section>
 

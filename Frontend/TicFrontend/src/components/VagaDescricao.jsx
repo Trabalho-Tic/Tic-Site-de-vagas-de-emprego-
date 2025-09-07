@@ -36,12 +36,12 @@ function VagaDescricao() {
             </nav>
             <div>
                 <p>Job Description</p>
-                <p></p>
-                <div>
-                    <p></p>
-                    <p></p>
-                    <p></p>
-                </div>
+                <p>What will make your journey with us unique?</p>
+                <ul classname="list-disc">
+                    <li>A supportive manager who cares about your well-being and is invested in your professional growth.</li>
+                    <li>A culture of continuous learning with clear targets and feedback.</li>
+                    <li>A global company with over 2600 employees located in more than 26 countries, including offices in 3 countries.</li>
+                </ul>
             </div>
         </>
     )
