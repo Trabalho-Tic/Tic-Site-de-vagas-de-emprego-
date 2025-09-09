@@ -34,15 +34,32 @@ function VagaDescricao() {
                     <li><a className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500" href="">Overview</a></li>
                 </ul>
             </nav>
-            <div>
+            <section className="border-b-1 border-gray-400">
                 <p className="text-xl font-medium text-gray-400 pb-6">Job Description</p>
                 <p className="text-lg font-bold pb-3">What will make your journey with us unique?</p>
-                <ul className="pl-5">
+                <ul className="pl-5 pb-10">
                     <li className="list-disc text-sm font-medium pb-2">A supportive manager who cares about your well-being and is invested in your professional growth.</li>
                     <li className="list-disc text-sm font-medium pb-2">A culture of continuous learning with clear targets and feedback.</li>
                     <li className="list-disc text-sm font-medium">A global company with over 2600 employees located in more than 26 countries, including offices in 3 countries.</li>
                 </ul>
-            </div>
+            </section>
+            <section className="flex flex-col gap-8 pt-10">
+                <p className="text-xl font-medium text-gray-400">Requisiçoes</p>
+                <div>
+                    <p className="text-lg font-bold pb-3">O que você vai fazer</p>
+                    <p className="text-sm font-medium leading-6">As a UX Designer on our team, you will shape user experiences by leading the design of key features and projects. Your responsibilities include defining user experience flows, developing new product concepts, and crafting user stories. You will design detailed UI layouts, create benchmarks, and develop high-fidelity prototypes while documenting UX and UI strategies. Collaborating with technical teams, you will transform designs into impactful, industry-leading products. This role combines creativity and problem-solving to create meaningful user experiences. Your journey with us is an opportunity to drive innovation and make a significant impact.</p>
+                </div>
+                <div>
+                    <p className="text-lg font-bold pb-3">O que você agrega</p>
+                    <ul className="pl-5 pb-10">
+                        <li className="list-disc text-sm font-medium pb-2">Showcase proficiency in collaborative design environments.</li>
+                        <li className="list-disc text-sm font-medium pb-2">Demonstrated ability to work independently, think critically, and maintain meticulous attention to detail.</li>
+                        <li className="list-disc text-sm font-medium pb-2">Solid grasp of interactive elements, micro-interactions, and animations, contributing to a seamless user experience.</li>
+                        <li className="list-disc text-sm font-medium pb-2">Clear understanding of the entire UX lifecycle, coupled with a track record of designing successful apps and products.</li>
+                        <li className="list-disc text-sm font-medium">Deep passion for digital product development and an unwavering commitment to achieving excellence.</li>
+                    </ul>
+                </div>
+            </section>
         </>
     )
 }
