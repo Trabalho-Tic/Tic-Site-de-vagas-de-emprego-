@@ -19,8 +19,8 @@ function Vaga() {
                 <button className="w-15 items-center bg-gradient-to-t from-gray-50 to-gray-500 p-5 rounded-4xl transition-all duration-400 shadow-xl hover:-translate-y-1"><Search size={20} /></button>
             </div>
         </section>
-        <section className="flex w-full px-27 py-5 gap-6">
-            <div className="flex flex-col gap-2">
+        <section className="flex w-full md:px-27 md:py-5 gap-6">
+            <div className="hidden md:flex flex-col gap-2">
                 <Card />
                 <Card />
                 <Card />

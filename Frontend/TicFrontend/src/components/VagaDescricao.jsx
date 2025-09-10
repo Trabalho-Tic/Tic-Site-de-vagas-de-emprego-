@@ -26,16 +26,16 @@ function VagaDescricao() {
                 <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Reporting to:</span> Design Manager, Bruno Mota</p>
                 <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Your Team:</span> u will mainly be part of a UX Designer’s team, working with cross-functional teams and a wider group of UX department</p>
             </div>
-            <nav className="pt-15 pb-8">
-                <ul className="flex gap-10 ">
-                    <li><a className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500" href="">Job Description</a></li>
-                    <li><a className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500" href="">Requirement</a></li>
-                    <li><a className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500" href="">Benefit</a></li>
-                    <li><a className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500" href="">Overview</a></li>
-                </ul>
+            <nav className="pt-15 pb-8 overflow-x-auto">
+                <nav className="flex items-center gap-10 border-b-1 border-gray-400">
+                    <a href="#descricao" className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500">Descrição</a>
+                    <a href="#requisicoes" className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500">Requisições</a>
+                    <a href="#beneficios" className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500">Beneficios</a>
+                    <a className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500">Visão geral</a>
+                </nav>
             </nav>
-            <section className="border-b-1 border-gray-400">
-                <p className="text-xl font-medium text-gray-400 pb-6">Job Description</p>
+            <section id="descricao" className="border-b-1 border-gray-400">
+                <p className="text-xl font-medium text-gray-400 pb-6">Descrição</p>
                 <p className="text-lg font-bold pb-3">What will make your journey with us unique?</p>
                 <ul className="pl-5 pb-10">
                     <li className="list-disc text-sm font-medium pb-2">A supportive manager who cares about your well-being and is invested in your professional growth.</li>
@@ -43,7 +43,7 @@ function VagaDescricao() {
                     <li className="list-disc text-sm font-medium">A global company with over 2600 employees located in more than 26 countries, including offices in 3 countries.</li>
                 </ul>
             </section>
-            <section className="flex flex-col gap-8 pt-10">
+            <section id="requisicoes" className="flex flex-col gap-8 pt-10 border-b-1 border-gray-400">
                 <p className="text-xl font-medium text-gray-400">Requisiçoes</p>
                 <div>
                     <p className="text-lg font-bold pb-3">O que você vai fazer</p>
@@ -57,6 +57,24 @@ function VagaDescricao() {
                         <li className="list-disc text-sm font-medium pb-2">Solid grasp of interactive elements, micro-interactions, and animations, contributing to a seamless user experience.</li>
                         <li className="list-disc text-sm font-medium pb-2">Clear understanding of the entire UX lifecycle, coupled with a track record of designing successful apps and products.</li>
                         <li className="list-disc text-sm font-medium">Deep passion for digital product development and an unwavering commitment to achieving excellence.</li>
+                    </ul>
+                </div>
+            </section>
+            <section id="beneficios" className="flex flex-col gap-6 pt-10 border-b-1 border-gray-400">
+                <p className="text-xl font-medium text-gray-400 ">Beneficios</p>
+                <div>
+                    <p className="text-lg font-semibold pb-3">Base Pay Range</p>
+                    <p className="text-xl font-semibold">$50.00- $60.00 <span className="text-sm font-medium text-gray-400">Per/H</span></p>
+                </div>
+                <div>
+                    <p className="text-lg font-bold pb-3">What’s in it for you?</p>
+                    <ul className="pl-5 pb-10">
+                        <li className="list-disc text-sm font-medium pb-2">Embrace work-life balance with hybrid/remote roles and flexible hours.</li>
+                        <li className="list-disc text-sm font-medium pb-2">Enjoy 22 days + Birthday + Carnival Tuesday.</li>
+                        <li className="list-disc text-sm font-medium pb-2">Participate in team-building activities and events.</li>
+                        <li className="list-disc text-sm font-medium pb-2">Utilize the best tools and technology for work.</li>
+                        <li className="list-disc text-sm font-medium pb-2">Stay covered with comprehensive health insurance.</li>
+                        <li className="list-disc text-sm font-medium">A huge team of UX designers to learn from.</li>
                     </ul>
                 </div>
             </section>
