@@ -2,6 +2,11 @@ import React from "react";
 
 import { Zap } from "lucide-react";
 
+import imgGrande from "../assets/imgGrande.png"
+import imgPequena from "../assets/imgPequena.png"
+import imgPequena2 from "../assets/imgPequena2.png"
+import imgPequena3 from "../assets/imgPequena3.png"
+import imgPequena4 from "../assets/imgPequena4.png"
 
 import logo from "../assets/js moderno.webp"
 
@@ -31,7 +36,7 @@ function VagaDescricao() {
                     <a href="#descricao" className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500">Descrição</a>
                     <a href="#requisicoes" className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500">Requisições</a>
                     <a href="#beneficios" className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500">Beneficios</a>
-                    <a className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500">Visão geral</a>
+                    <a href="#visaoGeral" className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500">Visão geral</a>
                 </nav>
             </nav>
             <section id="descricao" className="border-b-1 border-gray-400">
@@ -76,6 +81,15 @@ function VagaDescricao() {
                         <li className="list-disc text-sm font-medium pb-2">Stay covered with comprehensive health insurance.</li>
                         <li className="list-disc text-sm font-medium">A huge team of UX designers to learn from.</li>
                     </ul>
+                </div>
+            </section>
+            <section id="visaoGeral" className="flex justify-center gap-4 pt-10">
+                <img src={imgGrande} alt="" />
+                <div className="grid grid-cols-2 gap-4">
+                    <img src={imgPequena} alt="" />
+                    <img src={imgPequena2} alt="" />
+                    <img src={imgPequena3} alt="" />
+                    <img src={imgPequena4} alt="" />
                 </div>
             </section>
         </>
