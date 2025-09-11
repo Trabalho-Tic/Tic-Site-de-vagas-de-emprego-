@@ -2,7 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const SECRET = process.env.JWT_SECRET;
+const SECRET = process.env.JWT_SECRET; // agora vem direto do .env
 
 class AuthController {
     async login(req, res) {
@@ -25,9 +25,15 @@ class AuthController {
                 { expiresIn: "2h" }
             );
 
-            return res.json({ token, user: { id: user.id, nome: user.nome, email: user.email } });
+            return res.json({
+                token,
+                user: { id: user.id, nome: user.nome, email: user.email }
+            });
         } catch (error) {
-            return res.status(500).json({ error: "Erro no login", details: error.message });
+            return res.status(500).json({
+                error: "Erro no login",
+                details: error.message
+            });
         }
     }
 }
