@@ -54,41 +54,41 @@ function Register() {
     <section className="flex justify-center items-center gap-10 py-4 lg:py-0 lg:px-75 sm:h-screen">
       <div className="flex flex-col w-auto lg:w-full h-auto border-1 rounded-xl justify-center p-5 lg:p-10">
         <div>
-          <h1 className="!text-2xl pb-4">Welcome !</h1>
+          <h1 className="!text-2xl pb-4">Bem vindo !</h1>
         </div>
         <div>
-          <h2 className="text-3xl font-bold">Register now</h2>
-          <p className="text-sm pb-4">Lorem ipsum dolor</p>
+          <h2 className="text-3xl font-bold">Registre-se agora</h2>
+          <p className="text-sm pb-4"></p>
         </div>
 
         <form onSubmit={handleRegister} className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-6">
           <div className="flex flex-col">
-            <p className="text-lg pb-2">User name</p>
+            <p className="text-lg pb-2">Nome</p>
             <Input
               required
               value={login}
               onChange={(e) => setLogin(e.target.value)}
-              placeholder="Enter your user name"
+              placeholder="Escreva seu nome"
             />
           </div>
           <div className="flex flex-col">
-            <p className="text-lg pb-2">Password</p>
+            <p className="text-lg pb-2">Senha</p>
             <Input
               required
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
+              placeholder="Escreva sua senha"
             />
           </div>
           <div className="flex flex-col">
-            <p className="text-lg pb-2">Cellphone</p>
+            <p className="text-lg pb-2">Telefone</p>
             <Input
               required
               type="tel"
               value={cellphone}
               onChange={(e) => setCellphone(e.target.value)}
-              placeholder="Enter your Cellphone"
+              placeholder="Escreva seu telefone"
             />
           </div>
           <div className="flex flex-col">
@@ -98,7 +98,7 @@ function Register() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your Email"
+              placeholder="Escreva seu Email"
             />
           </div>
           <div className="flex flex-col">
@@ -107,7 +107,7 @@ function Register() {
               required
               value={cpf}
               onChange={(e) => setCpf(e.target.value)}
-              placeholder="Enter your CPF"
+              placeholder="Escreva seu CPF"
             />
           </div>
           <div className="flex flex-col">
@@ -137,7 +137,7 @@ function Register() {
         </form>
 
         <p className="flex justify-center gap-2">
-          Do you have an Account?
+          Ja possui uma conta?
           <Link className="text-black font-bold" to={"/"}>
             Login
           </Link>

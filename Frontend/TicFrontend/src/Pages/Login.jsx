@@ -50,31 +50,31 @@ function Login() {
         className="flex flex-col w-auto shadow-xl md:w-125 h-auto border-1 rounded-xl justify-center p-5 lg:p-10"
       >
         <div>
-          <h1 className="!text-2xl pb-8">Welcome !</h1>
+          <h1 className="!text-2xl pb-8">Bem Vindo !</h1>
         </div>
         <div>
-          <h2 className="text-3xl font-bold">Sign in to</h2>
-          <p className="text-sm pb-12">Lorem ipsum dolor</p>
+          <h2 className="text-3xl font-bold">Faça seu login</h2>
+          <p className="text-sm pb-12"></p>
         </div>
         <div className="pb-12">
           <div className="flex flex-col pb-10">
-            <p className="text-lg pb-2">User name</p>
+            <p className="text-lg pb-2">Email</p>
             <Input
               value={login}
               onChange={(e) => setLogin(e.target.value)}
-              placeholder="Enter your user name"
+              placeholder="Coloque seu email"
             />
           </div>
           <div className="flex flex-col">
-            <p className="text-lg pb-2">Password</p>
+            <p className="text-lg pb-2">Senha</p>
             <Input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
+              placeholder="Coloque sua senha"
             />
             <Link className="flex justify-end transition-all duration-500 text-black hover:text-gray-700 font-bold">
-              Forget password?
+              Esqueceu sua senha?
             </Link>
           </div>
         </div>
@@ -88,9 +88,9 @@ function Login() {
           </button>
         </div>
         <p className="flex justify-center gap-2">
-          Do you have an Account?
+          Ainda nao tem uma conta?
           <Link className="text-black font-bold" to={"/register"}>
-            Register
+            Registre-se
           </Link>
         </p>
       </form>
