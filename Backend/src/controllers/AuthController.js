@@ -1,30 +1,35 @@
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
-import gerarHash from "../utils/auth"
-const jwt = require("jsonwebtoken")
-const SECRET = process.env.JWT_SECRET
+const User = require("../models/User");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-async function login(request, response) {
-    const { email, password } = request.body;
-    
-    const user = { id: 1, email: "teste@gmail.com", password: "123abc"}
+const SECRET = process.env.JWT_SECRET;
 
-    if (email != user.email) {
-        return response.status(401).json({ error: "Usuario não encontrado" })
+class AuthController {
+    async login(req, res) {
+        const { email, password } = req.body;
+
+        try {
+            const user = await User.findOne({ where: { email } });
+            if (!user) {
+                return res.status(401).json({ error: "Usuário não encontrado" });
+            }
+
+            const validPassword = await bcrypt.compare(password, user.password);
+            if (!validPassword) {
+                return res.status(401).json({ error: "Senha incorreta" });
+            }
+
+            const token = jwt.sign(
+                { id: user.id, email: user.email, typeUser: user.typeUser },
+                SECRET,
+                { expiresIn: "2h" }
+            );
+
+            return res.json({ token, user: { id: user.id, nome: user.nome, email: user.email } });
+        } catch (error) {
+            return res.status(500).json({ error: "Erro no login", details: error.message });
+        }
     }
-
-    const validPassword = await bcrypt.compare(password, user.password)
-    if (!validPassword) {
-        return response.status(401).json({ error: "Senha incorreta" })
-    }
-
-    const token = jwt.sign(
-        {
-            id: user.id, email: user.email
-        },
-        SECRET,
-        { expiresIn: "2h" }
-    )
-
-    return response.json({ token })
 }
+
+module.exports = new AuthController();
