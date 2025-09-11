@@ -1,11 +1,12 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-
+import gerarHash from "../utils/auth"
+const jwt = require("jsonwebtoken")
 const SECRET = process.env.JWT_SECRET
 
 async function login(request, response) {
     const { email, password } = request.body;
-
+    
     const user = { id: 1, email: "teste@gmail.com", password: "123abc"}
 
     if (email != user.email) {
