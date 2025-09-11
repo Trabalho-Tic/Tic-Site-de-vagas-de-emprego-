@@ -1,5 +1,5 @@
 async function useApi({ endpoint, method = "GET", body = null }) {
-    const API_BASE = "http://localhost:8000/api";
+    const API_BASE = "http://localhost:8000";
   
     const token = localStorage.getItem("token");
   
