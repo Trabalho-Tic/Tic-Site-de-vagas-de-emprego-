@@ -1,11 +1,19 @@
 const User = require('../models/User');
 const gerarHash = require("../utils/auth");
 
+// Helper para remover o campo password de qualquer retorno
+function sanitizeUser(userInstance) {
+    const json = userInstance?.toJSON ? userInstance.toJSON() : userInstance;
+    const { password, ...safe } = json || {};
+    return safe;
+}
+
 class UserController {
     async index(req, res) {
         try {
             const users = await User.findAll();
-            return res.json(users);
+            // remove password de todos
+            return res.json(users.map(sanitizeUser));
         } catch (error) {
             return res.status(500).json({ error: "Erro ao buscar usuários" });
         }
@@ -18,7 +26,7 @@ class UserController {
             if (!user) {
                 return res.status(404).json({ error: "Usuário não encontrado" });
             }
-            return res.json(user);
+            return res.json(sanitizeUser(user));
         } catch (error) {
             return res.status(500).json({ error: "Erro ao buscar usuário" });
         }
@@ -37,7 +45,8 @@ class UserController {
             req.body.password = hashPassword;
 
             const newUser = await User.create(req.body);
-            return res.status(201).json(newUser);
+            // não retornar password
+            return res.status(201).json(sanitizeUser(newUser));
         } catch (error) {
             return res.status(500).json({ error: "Erro ao criar usuário", details: error.message });
         }
@@ -51,7 +60,8 @@ class UserController {
                 return res.status(404).json({ error: "Usuário não encontrado" });
             }
             await user.update(req.body);
-            return res.json(user);
+            // não retornar password
+            return res.json(sanitizeUser(user));
         } catch (error) {
             return res.status(500).json({ error: "Erro ao atualizar usuário" });
         }
