@@ -1,12 +1,30 @@
 const express = require('express');
 const router = express.Router();
-const AcessibilidadeController = require("../controllers/AcessibilidadeController")
-const BarreiraController = require("../controllers/BarreiraController")
-const BarreiraAcessibilidadeController = require("../controllers/BarreiraAcessibilidadeController")
-const SubTipoBarreiraController = require("../controllers/SubTipoBarreiraController")
-const SubTipoDeficienciaController = require("../controllers/SubTipoDeficienciaController")
-const TipoDeficienciaController = require("../controllers/TipoDeficienciaController")
-const UserController = require("../controllers/UserController")
+
+// Controllers já existentes…
+const AcessibilidadeController = require("../controllers/AcessibilidadeController");
+const BarreiraController = require("../controllers/BarreiraController");
+const BarreiraAcessibilidadeController = require("../controllers/BarreiraAcessibilidadeController");
+const SubTipoBarreiraController = require("../controllers/SubTipoBarreiraController");
+const SubTipoDeficienciaController = require("../controllers/SubTipoDeficienciaController");
+const TipoDeficienciaController = require("../controllers/TipoDeficienciaController");
+const UserController = require("../controllers/UserController");
+
+// >>> ADIÇÕES (autenticação) <<<
+const AuthController = require("../controllers/AuthController");            // [ADD]
+const authMiddleware = require("../middlewares/authMiddleware");            // [ADD]
+
+// ------------------ ROTAS PÚBLICAS ------------------
+
+// Auth (login)
+router.post('/auth/login', (req, res) => AuthController.login(req, res));  // [ADD]
+
+// User (registro)
+router.post('/user/create', (req, res) => UserController.create(req, res));
+
+// ------------------ ROTAS PROTEGIDAS ------------------
+// Ativa o middleware UMA VEZ; tudo abaixo exige JWT
+router.use(authMiddleware);                                                // [ADD]
 
 // Acessibilidade
 router.get('/Acessibilidade', AcessibilidadeController.index);
@@ -50,10 +68,10 @@ router.post('/TipoDeficiencia/create', TipoDeficienciaController.create);
 router.put('/TipoDeficiencia/update/:id', TipoDeficienciaController.update);
 router.delete('/TipoDeficiencia/delete/:id', TipoDeficienciaController.delete);
 
-
-// User
-router.get('/user', UserController.index);
-router.post('/user/create', UserController.create);
-
+// (Opcional) CRUD de User só para admins/autenticados
+// router.get('/user', UserController.index);
+// router.get('/user/:id', UserController.show);
+// router.put('/user/update/:id', UserController.update);
+// router.delete('/user/delete/:id', UserController.delete);
 
 module.exports = router;

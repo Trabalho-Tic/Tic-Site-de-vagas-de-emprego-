@@ -1,79 +1,85 @@
 const User = require('../models/User');
-const gerarHash = require("../utils/auth")
-const bcrypt = require("bcrypt")
+const gerarHash = require("../utils/auth");
+
+// Helper para remover o campo password de qualquer retorno
+function sanitizeUser(userInstance) {
+    const json = userInstance?.toJSON ? userInstance.toJSON() : userInstance;
+    const { password, ...safe } = json || {};
+    return safe;
+}
 
 class UserController {
-
-    async index(request, response) {
+    async index(req, res) {
         try {
             const users = await User.findAll();
-            return response.json(users);
+            // remove password de todos
+            return res.json(users.map(sanitizeUser));
         } catch (error) {
-            return response.status(500).json({ error: "Erro ao buscar users" })
+            return res.status(500).json({ error: "Erro ao buscar usuários" });
         }
     }
 
-    async show(request, response) {
-        const { id } = request.params
-        try {
-            const user = await User.findByPk(id)
-            if (!user) {
-                return response.status(404).json({ error: "User não encontrado" })
-            }
-            return response.json(user)
-        } catch (error) {
-            return response.status(500).json({ error: "Erro ao buscar por User"})
-        }
-    }
-
-    async create(request, response) {
-        const { email, password } = request.body
-
-        const user = User.findOne({ where: { email }})
-        if (!user) {
-            return response.status(401).json("Ja existe um usuario com esse email")
-        }
-
-        try {
-            const hashPassword = await gerarHash(password)
-
-            request.body.password = hashPassword
-
-            const user = await User.create(request.body)
-            return response.json(user)
-        } catch (error) {
-            return response.status(500).json({ error: error })
-        }
-    }
-    
-    async update(request, response) {
-        const { id } = request.params
-        try {
-            const user = await User.findByPk(id)
-            if (!user) {
-                return response.status(404).json({ error: "User não encontrado"})
-            }
-            await user.update(request.body)
-            return response.json(user)
-        } catch (error) {
-            return response.status(500).json({ error: "Erro ao atualizar User"})
-        }
-    }
-    
-    async delete(request, response) {
-        const { id } = request.params
+    async show(req, res) {
+        const { id } = req.params;
         try {
             const user = await User.findByPk(id);
             if (!user) {
-                return response.status(404).json({ error: 'User não encontrado.' });
+                return res.status(404).json({ error: "Usuário não encontrado" });
+            }
+            return res.json(sanitizeUser(user));
+        } catch (error) {
+            return res.status(500).json({ error: "Erro ao buscar usuário" });
+        }
+    }
+
+    async create(req, res) {
+        const { email, password } = req.body;
+
+        try {
+            const existingUser = await User.findOne({ where: { email } });
+            if (existingUser) {
+                return res.status(400).json({ error: "Já existe um usuário com esse email" });
+            }
+
+            const hashPassword = await gerarHash(password);
+            req.body.password = hashPassword;
+
+            const newUser = await User.create(req.body);
+            // não retornar password
+            return res.status(201).json(sanitizeUser(newUser));
+        } catch (error) {
+            return res.status(500).json({ error: "Erro ao criar usuário", details: error.message });
+        }
+    }
+
+    async update(req, res) {
+        const { id } = req.params;
+        try {
+            const user = await User.findByPk(id);
+            if (!user) {
+                return res.status(404).json({ error: "Usuário não encontrado" });
+            }
+            await user.update(req.body);
+            // não retornar password
+            return res.json(sanitizeUser(user));
+        } catch (error) {
+            return res.status(500).json({ error: "Erro ao atualizar usuário" });
+        }
+    }
+
+    async delete(req, res) {
+        const { id } = req.params;
+        try {
+            const user = await User.findByPk(id);
+            if (!user) {
+                return res.status(404).json({ error: "Usuário não encontrado" });
             }
             await user.destroy();
-            return response.status(204).send();
+            return res.status(204).send();
         } catch (error) {
-            return res.status(500).json({ error: 'Erro ao deletar User.' });
+            return res.status(500).json({ error: "Erro ao deletar usuário" });
         }
     }
 }
 
-module.exports = new UserController()
- 
+module.exports = new UserController();
