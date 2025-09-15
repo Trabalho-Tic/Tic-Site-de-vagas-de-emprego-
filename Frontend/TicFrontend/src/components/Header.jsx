@@ -2,6 +2,7 @@ import React from "react"
 import "../Styles/home.css"
 import { NavLink, Link } from "react-router-dom"
 import logo from "../assets/Jobior.png"
+import profile from "../assets/profile.png"
 
 function Home() {
 
@@ -14,7 +15,10 @@ function Home() {
                 <NavLink to={"/"} className={({ isActive }) => isActive ? "text-lg bg-green-300 rounded-4xl py-2 px-3 font-medium transition-all duration-400 hover:text-gray-200" : "text-lg font-medium py-2 px-3 transition-all duration-400 hover:text-gray-200"}>Profile</NavLink>
                 <NavLink to={"/"} className={({ isActive }) => isActive ? "text-lg bg-green-300 rounded-4xl py-2 px-3 font-medium transition-all duration-400 hover:text-gray-200" : "text-lg font-medium py-2 px-3 transition-all duration-400 hover:text-gray-200"}>About</NavLink>
             </nav>
-            <Link className="hidden sm:flex bg-black text-white px-5 py-1 transition-all duration-500 hover:bg-gray-500 rounded-xl">Profile</Link>
+            <Link className="hidden sm:flex items-center gap-3 bg-black text-white px-3 py-1 transition-all duration-500 hover:bg-gray-500 rounded-xl">
+                <img className="w-8 bg-white rounded-4xl p-2" src={profile} alt="" />
+                Account
+            </Link>
         </header>
     )
 }
