@@ -14,7 +14,7 @@ function Vagas() {
             <Header />
             <section className="flex flex-col justify-center items-center gap-10 pt-10">
                 <p className="text-4xl">Procure por um Job</p>
-                <div className="flex flex-col items-center lg:flex-row gap-5">
+                <div className="flex flex-col items-center lg:flex-row gap-5 lg:w-200">
                     <Input placeholder="Procure pela Vaga"></Input>
                     <Input placeholder="Procure pela Localização"></Input>
                     <button className="w-15 items-center bg-gradient-to-t from-gray-50 to-gray-500 p-5 rounded-4xl transition-all duration-400 shadow-xl hover:-translate-y-1"><Search size={20} /></button>

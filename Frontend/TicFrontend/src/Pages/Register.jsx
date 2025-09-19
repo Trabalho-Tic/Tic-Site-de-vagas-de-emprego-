@@ -37,8 +37,7 @@ function Register() {
         method: "POST",
         body: payload,
       });
-
-      alert("Cadastro realizado com sucesso!");
+      
       // opção 1: redireciona para login
       navigate("/");
       // opção 2 (se quiser auto-login aqui, depois implementamos)
