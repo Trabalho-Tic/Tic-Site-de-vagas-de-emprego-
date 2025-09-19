@@ -1,5 +1,5 @@
-import sequelize from "../config/database";
-import { DataTypes, UUID } from "sequelize";
+const { DataTypes } = require("sequelize")
+const sequelize = require("../config/database")
 
 const Vaga = sequelize.define("tb_vaga", {
     id: {
@@ -19,51 +19,14 @@ const Vaga = sequelize.define("tb_vaga", {
         type: DataTypes.STRING,
         allowNull: false
     },
-    id_processo: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        references: {
-            model: "tb_vagaprocesso",
-            key: "id"
-        },
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE"
-    },
-    id_decricao: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        references: {
-            model: "tb_vagadecricao",
-            key: "id"
-        },
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE"
-    },
-    id_requisicao: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        references: {
-            model: "tb_vagarequisicao",
-            key: "id"
-        },
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE"
-    },
-    id_beneficio: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        references: {
-            model: "tb_vagabeneficio",
-            key: "id"
-        },
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE"
-    },
-    
+    modelo: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }
 }, {
     tableName: "tb_vaga",
     timestamps: true
 }
 )
 
-export default Vaga
+module.exports = Vaga

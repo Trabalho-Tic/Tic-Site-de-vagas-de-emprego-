@@ -1,15 +1,23 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
-const VagaDescricao = sequelize.define("vagaDescricao", {
+const VagaProcesso = sequelize.define("VagaProcesso", {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true
     },
-    descricao: {
-        type: DataTypes.JSON,
-        allowNull: false
+    processoSeletivo: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    entrevistador: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    time: {
+        type: DataTypes.STRING,
+        allowNull: true
     },
     id_vaga: {
         type: DataTypes.UUID,
@@ -22,9 +30,9 @@ const VagaDescricao = sequelize.define("vagaDescricao", {
         onUpdate: "CASCADE"
     },
 }, {
-    tableName: "tb_vagaDescricao",
+    tableName: "tb_vagaProcesso",
     timestamps: true
 }
 )
 
-module.exports = VagaDescricao
+module.exports = VagaProcesso

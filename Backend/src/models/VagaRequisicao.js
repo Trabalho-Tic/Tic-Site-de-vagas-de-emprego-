@@ -1,13 +1,21 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, STRING } = require("sequelize");
 const sequelize = require("../config/database");
 
-const VagaDescricao = sequelize.define("vagaDescricao", {
+const VagaRequisicao = sequelize.define("vagaRequisicao", {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true
     },
-    descricao: {
+    atuacao: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    conhecimentos: {
+        type: DataTypes.JSON,
+        allowNull: false
+    },
+    destaque: {
         type: DataTypes.JSON,
         allowNull: false
     },
@@ -22,9 +30,9 @@ const VagaDescricao = sequelize.define("vagaDescricao", {
         onUpdate: "CASCADE"
     },
 }, {
-    tableName: "tb_vagaDescricao",
+    tableName: "tb_vagaRequisicao",
     timestamps: true
 }
 )
 
-module.exports = VagaDescricao
+module.exports = VagaRequisicao
