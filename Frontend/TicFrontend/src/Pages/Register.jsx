@@ -32,7 +32,7 @@ function Register() {
         typeUser: type,
       };
 
-      await useApi({
+      const response = await useApi({
         endpoint: "/user/create",
         method: "POST",
         body: payload,

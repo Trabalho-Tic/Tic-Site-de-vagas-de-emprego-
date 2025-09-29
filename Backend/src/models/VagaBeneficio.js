@@ -27,7 +27,6 @@ const VagaBeneficio = sequelize.define("vagaBeneficio", {
     },
 }, {
     tableName: "tb_vagaBeneficio",
-    timestamps: true
 })
 
 module.exports = VagaBeneficio

@@ -19,7 +19,8 @@ async function useApi({ endpoint, method = "GET", body = null }) {
       const response = await fetch(`${API_BASE}${endpoint}`, options);
   
       if (!response.ok) {
-        throw new Error(`Erro: ${response.status}`);
+        const erro = await response.json();
+        throw new Error(erro.error);
       }
   
       return await response.json();

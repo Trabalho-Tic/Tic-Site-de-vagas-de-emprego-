@@ -31,7 +31,6 @@ const VagaRequisicao = sequelize.define("vagaRequisicao", {
     },
 }, {
     tableName: "tb_vagaRequisicao",
-    timestamps: true
 }
 )
 
