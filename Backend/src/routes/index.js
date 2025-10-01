@@ -9,6 +9,7 @@ const SubTipoBarreiraController = require("../controllers/SubTipoBarreiraControl
 const SubTipoDeficienciaController = require("../controllers/SubTipoDeficienciaController");
 const TipoDeficienciaController = require("../controllers/TipoDeficienciaController");
 const UserController = require("../controllers/UserController");
+const authController = require('../controllers/adminAuthController');
 
 // >>> ADIÇÕES (autenticação) <<<
 const AuthController = require("../controllers/AuthController");            // [ADD]
@@ -68,10 +69,6 @@ router.post('/TipoDeficiencia/create', TipoDeficienciaController.create);
 router.put('/TipoDeficiencia/update/:id', TipoDeficienciaController.update);
 router.delete('/TipoDeficiencia/delete/:id', TipoDeficienciaController.delete);
 
-// (Opcional) CRUD de User só para admins/autenticados
-// router.get('/user', UserController.index);
-// router.get('/user/:id', UserController.show);
-// router.put('/user/update/:id', UserController.update);
-// router.delete('/user/delete/:id', UserController.delete);
+router.post('/admin/login', authController.login);
 
 module.exports = router;

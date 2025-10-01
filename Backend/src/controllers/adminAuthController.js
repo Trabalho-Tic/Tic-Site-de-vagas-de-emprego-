@@ -19,12 +19,12 @@ class AuthController {
                 return res.status(401).json({ error: "Senha incorreta" });
             }
 
-            // Gerar o token com a role do usuário (tipo do usuário)
+            
             const token = jwt.sign(
                 { 
                     id: user.id, 
                     email: user.email, 
-                    typeUser: user.typeUser // Adiciona o tipo de usuário (admin, user, etc.)
+                    typeUser: user.typeUser 
                 },
                 SECRET,
                 { expiresIn: "2h" }
@@ -34,6 +34,7 @@ class AuthController {
                 token,
                 user: { id: user.id, nome: user.nome, email: user.email, typeUser: user.typeUser }
             });
+            
         } catch (error) {
             return res.status(500).json({
                 error: "Erro no login",
