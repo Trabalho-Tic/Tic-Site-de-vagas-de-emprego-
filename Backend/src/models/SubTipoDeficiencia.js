@@ -1,7 +1,7 @@
-const { DataTypes } = require("sequelize")
-const sequelize = require("../config/database")
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/database");
 
-const SubtipoDeficiencia = sequelize.define('subtipodeficiencia', {
+const SubtipoDeficiencia = sequelize.define('SubtipoDeficiencia', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -24,6 +24,13 @@ const SubtipoDeficiencia = sequelize.define('subtipodeficiencia', {
 }, {
     tableName: "tb_subtipodeficiencia",
     timestamps: true
-})
+});
 
-module.exports = SubtipoDeficiencia
+SubtipoDeficiencia.associate = (models) => {
+    SubtipoDeficiencia.belongsTo(models.TipoDeficiencia, {
+        foreignKey: "id_tipodeficiencia",
+        as: "tipoDeficiencia"
+    });
+};
+
+module.exports = SubtipoDeficiencia;

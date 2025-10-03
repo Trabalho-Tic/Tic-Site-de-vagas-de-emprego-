@@ -11,20 +11,20 @@ const TipoDeficienciaController = require("../controllers/TipoDeficienciaControl
 const UserController = require("../controllers/UserController");
 
 // >>> ADIÇÕES (autenticação) <<<
-const AuthController = require("../controllers/AuthController");            // [ADD]
-const authMiddleware = require("../middlewares/authMiddleware");            // [ADD]
+// const AuthController = require("../controllers/AuthController");            // [ADD]
+// const authMiddleware = require("../middlewares/authMiddleware");            // [ADD]
 
 // ------------------ ROTAS PÚBLICAS ------------------
 
 // Auth (login)
-router.post('/auth/login', (req, res) => AuthController.login(req, res));  // [ADD]
+// router.post('/auth/login', (req, res) => AuthController.login(req, res));  // [ADD]
 
 // User (registro)
 router.post('/user/create', (req, res) => UserController.create(req, res));
 
 // ------------------ ROTAS PROTEGIDAS ------------------
 // Ativa o middleware UMA VEZ; tudo abaixo exige JWT
-router.use(authMiddleware);                                                // [ADD]
+// router.use(authMiddleware);                                                // [ADD]
 
 // Acessibilidade
 router.get('/Acessibilidade', AcessibilidadeController.index);
@@ -73,5 +73,8 @@ router.delete('/TipoDeficiencia/delete/:id', TipoDeficienciaController.delete);
 // router.get('/user/:id', UserController.show);
 // router.put('/user/update/:id', UserController.update);
 // router.delete('/user/delete/:id', UserController.delete);
+
+// ASSOCIAÇÕES
+router.post('/TipoDeficiencia/:id/SubTipoDeficiencia', TipoDeficienciaController.associarSubtipos);
 
 module.exports = router;

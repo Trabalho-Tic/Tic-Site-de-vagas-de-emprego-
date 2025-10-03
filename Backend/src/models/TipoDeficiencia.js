@@ -16,4 +16,11 @@ const TipoDeficiencia = sequelize.define('TipoDeficiencia', {
     timestamps: true
 })
 
+TipoDeficiencia.associate = (models) => {
+    TipoDeficiencia.hasMany(models.SubtipoDeficiencia, {
+        foreignKey: "id_tipodeficiencia",
+        as: "subtipos"
+    });
+};
+
 module.exports = TipoDeficiencia
