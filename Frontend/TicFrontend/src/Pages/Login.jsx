@@ -5,35 +5,47 @@ import Input from "../components/input";
 import photoLogin from "../assets/photologin.png";
 import useApi from "../api/Api";
 
+// Função de validação
+const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
+
 function Login() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  async function handleLogin(event) {
+  const handleLogin = async (event) => {
     event.preventDefault();
     if (loading) return;
+
+    // Validação de login e senha
+    let formErrors = {};
+
+    if (!validateEmail(login)) formErrors.login = "Email inválido.";
+    if (!password) formErrors.password = "A senha é obrigatória.";
+
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+      return;
+    }
 
     try {
       setLoading(true);
 
-      // usa o valor de "User name" como email para o backend
       const data = await useApi({
         endpoint: "/auth/login",
         method: "POST",
         body: { email: login, password },
       });
 
-      // guarda token e dados básicos do usuário
+      // Guarda o token e dados do usuário
       localStorage.setItem("token", data.token);
       if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
 
-      // mantém seu comportamento: ir para /home
       navigate("/home");
     } catch (err) {
       console.error(err);
-      // mensagem simples sem alterar o layout
       alert(
         (err?.message?.includes("401") && "Credenciais inválidas.") ||
           "Falha no login. Tente novamente."
@@ -41,7 +53,7 @@ function Login() {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <section className="flex justify-center items-center gap-10 h-screen">
@@ -64,6 +76,7 @@ function Login() {
               onChange={(e) => setLogin(e.target.value)}
               placeholder="Coloque seu email"
             />
+            {errors.login && <p className="text-red-500">{errors.login}</p>}
           </div>
           <div className="flex flex-col">
             <p className="text-lg pb-2">Senha</p>
@@ -73,6 +86,7 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Coloque sua senha"
             />
+            {errors.password && <p className="text-red-500">{errors.password}</p>}
             <Link className="flex justify-end transition-all duration-500 text-black hover:text-gray-700 font-bold">
               Esqueceu sua senha?
             </Link>
@@ -88,7 +102,7 @@ function Login() {
           </button>
         </div>
         <p className="flex justify-center gap-2">
-          Ainda nao tem uma conta?
+          Ainda não tem uma conta?
           <Link className="text-black font-bold" to={"/register"}>
             Registre-se
           </Link>

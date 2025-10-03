@@ -33,23 +33,36 @@ class UserController {
     }
 
     async create(req, res) {
-        const { email, password } = req.body;
+    const { email, password, cpf } = req.body;  // Certifique-se de que o campo é 'cpf' no banco, e não 'CPF'
 
-        try {
-            const existingUser = await User.findOne({ where: { email } });
-            if (existingUser) {
-                return res.status(400).json({ error: "Já existe um usuário com esse email" });
-            }
+    try {
+        // Verifica se já existe um usuário com o email fornecido
+        const existingEmail = await User.findOne({ where: { email } });
 
-            const hashPassword = await gerarHash(password);
-            req.body.password = hashPassword;
+        // Verifica se já existe um usuário com o CPF fornecido
+        const existingCPF = await User.findOne({ where: { cpf } });
 
-            const newUser = await User.create(req.body);
-            // não retornar password
-            return res.status(201).json(sanitizeUser(newUser));
-        } catch (error) {
-            return res.status(500).json({ error: "Erro ao criar usuário", details: error.message });
+        // Se o email já existe, retorna um erro
+        if (existingEmail) {
+            return res.status(400).json({ error: "Já existe um usuário com esse email" });
+        } 
+        // Se o CPF já existe, retorna um erro
+        else if (existingCPF) {
+            return res.status(400).json({ error: "Já existe um usuário com esse CPF" });
         }
+
+        // Se não houverem erros, gera o hash da senha e cria o novo usuário
+        const hashPassword = await gerarHash(password);
+        req.body.password = hashPassword;
+
+        const newUser = await User.create(req.body);
+        
+        // Não retorna a senha no JSON de resposta
+        return res.status(201).json(sanitizeUser(newUser));
+    } catch (error) {
+        // Em caso de erro no processo de criação
+        return res.status(500).json({ error: "Erro ao criar usuário", details: error.message });
+    }
     }
 
     async update(req, res) {
