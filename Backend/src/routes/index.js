@@ -10,6 +10,10 @@ const SubTipoDeficienciaController = require("../controllers/SubTipoDeficienciaC
 const TipoDeficienciaController = require("../controllers/TipoDeficienciaController");
 const UserController = require("../controllers/UserController");
 const VagaController = require("../controllers/VagaController");
+const VagaDescricaoController = require('../controllers/VagaDescricaoController');
+const VagaBeneficioController = require('../controllers/VagaBeneficioController');
+const VagaProcessoController = require('../controllers/VagaProcessoController');
+const VagaRequisicaoController = require('../controllers/VagaRequisicaoController');
 
 // >>> ADIÇÕES (autenticação) <<<
 // const AuthController = require("../controllers/AuthController");            // [ADD]
@@ -76,6 +80,21 @@ router.post('/Vaga/create', VagaController.create);
 router.put('/Vaga/update/:id', VagaController.update);
 router.delete('/Vaga/delete/:id', VagaController.delete);
 
+// Vaga Descrição 
+router.post("/vagadescricao/:id", VagaDescricaoController.create);
+router.put("/vagadescricao/:id", VagaDescricaoController.update);
+
+// Vaga Beneficios 
+router.post("/vagabeneficio/:id", VagaBeneficioController.create);
+router.put("/vagabneficio/:id", VagaBeneficioController.update);
+
+// Vaga Processo 
+router.post("/vagaprocesso/:id", VagaProcessoController.create);
+router.put("/vagaprocesso/:id", VagaProcessoController.update);
+
+// Vaga Requisição 
+router.post("/vagarequsicao/:id", VagaRequisicaoController.create);
+router.put("/vagarequsicao/:id", VagaRequisicaoController.update);
 
 // (Opcional) CRUD de User só para admins/autenticados
 // router.get('/user', UserController.index);
