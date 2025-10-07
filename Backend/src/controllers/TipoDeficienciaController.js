@@ -1,6 +1,7 @@
 const TipoDeficiencia = require('../models/TipoDeficiencia');
 const SubtipoDeficiencia = require('../models/SubTipoDeficiencia');
 const Barreira = require('../models/Barreira');
+const Acessibilidade = require('../models/Acessibilidade');
 
 class TipoDeficienciaController {
 
@@ -10,9 +11,16 @@ class TipoDeficienciaController {
                 include: {
                     model: SubtipoDeficiencia,
                     as: 'subtipos',
+                    attributes: ['nome'],
                     include: {
                         model: Barreira,
-                        as: 'barreiras'
+                        as: 'barreiras',
+                        attributes: ['descricao'],
+                        include: {
+                            model: Acessibilidade,
+                            attributes: ['descricao'],
+                            as: 'acessibilidades'
+                        }
                     }
                 }
             });

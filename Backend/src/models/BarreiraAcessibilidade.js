@@ -32,4 +32,19 @@ const BarreiraAcessibilidade = sequelize.define('BarreiraAcessibilidade', {
     timestamps: true
 })
 
+BarreiraAcessibilidade.associate = (models) => {
+
+    BarreiraAcessibilidade.belongsTo(models.Acessibilidade, {
+        foreignKey: 'id_acessibilidade',
+        as: 'acessibilidade',
+        onDelete: 'CASCADE'
+    });
+
+    BarreiraAcessibilidade.belongsTo(models.Barreira, {
+        foreignKey: 'id_barreira',
+        as: 'barreira',
+        onDelete: 'CASCADE'
+    });
+};
+
 module.exports = BarreiraAcessibilidade

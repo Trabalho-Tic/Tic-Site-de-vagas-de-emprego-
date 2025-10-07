@@ -17,12 +17,21 @@ const Barreira = sequelize.define('Barreira', {
 })
 
 Barreira.associate = (models) => {
+    
     Barreira.belongsToMany(models.SubtipoDeficiencia, {
       through: "tb_subtipobarreira",
       foreignKey: 'id_barreira',
       otherKey: 'id_subtipodeficiencia',
       as: 'subtipos'
     });
+    
+    Barreira.belongsToMany(models.Acessibilidade, {
+      through: "tb_barreiraacessibilidade",
+      foreignKey: 'id_barreira',
+      otherKey: 'id_acessibilidade',
+      as: 'acessibilidades'
+    });
+
   };
 
 module.exports = Barreira
