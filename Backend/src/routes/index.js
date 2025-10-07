@@ -9,6 +9,7 @@ const SubTipoBarreiraController = require("../controllers/SubTipoBarreiraControl
 const SubTipoDeficienciaController = require("../controllers/SubTipoDeficienciaController");
 const TipoDeficienciaController = require("../controllers/TipoDeficienciaController");
 const UserController = require("../controllers/UserController");
+const VagaController = require("../controllers/VagaController");
 
 // >>> ADIÇÕES (autenticação) <<<
 // const AuthController = require("../controllers/AuthController");            // [ADD]
@@ -67,6 +68,14 @@ router.get('/TipoDeficiencia/:id', TipoDeficienciaController.show);
 router.post('/TipoDeficiencia/create', TipoDeficienciaController.create);
 router.put('/TipoDeficiencia/update/:id', TipoDeficienciaController.update);
 router.delete('/TipoDeficiencia/delete/:id', TipoDeficienciaController.delete);
+
+// Vaga
+router.get('/Vaga', VagaController.index);
+router.get('/Vaga/:id', VagaController.show);
+router.post('/Vaga/create', VagaController.create);
+router.put('/Vaga/update/:id', VagaController.update);
+router.delete('/Vaga/delete/:id', VagaController.delete);
+
 
 // (Opcional) CRUD de User só para admins/autenticados
 // router.get('/user', UserController.index);
