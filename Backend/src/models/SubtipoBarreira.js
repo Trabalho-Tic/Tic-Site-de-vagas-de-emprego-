@@ -32,4 +32,20 @@ const SubTipoBarreira = sequelize.define('SubTipoBarreira', {
     timestamps: true
 })
 
+SubTipoBarreira.associate = (models) => {
+    // Cada registro da tabela pertence a um Subtipo
+    SubTipoBarreira.belongsTo(models.SubtipoDeficiencia, {
+        foreignKey: 'id_subtipodeficiencia',
+        as: 'subtipo',
+        onDelete: 'CASCADE'
+    });
+
+    // E pertence a uma Barreira
+    SubTipoBarreira.belongsTo(models.Barreira, {
+        foreignKey: 'id_barreira',
+        as: 'barreira',
+        onDelete: 'CASCADE'
+    });
+};
+
 module.exports = SubTipoBarreira

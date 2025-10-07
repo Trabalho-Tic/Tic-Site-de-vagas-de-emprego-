@@ -1,4 +1,5 @@
 const Barreira = require('../models/Barreira');
+const SubTipoBarreira = require('../models/SubTipoBarreira');
 
 class BarreiraController {
 
@@ -58,6 +59,25 @@ class BarreiraController {
             return response.status(204).send();
         } catch (error) {
             return res.status(500).json({ error: 'Erro ao deletar Barreira.' });
+        }
+    }
+
+    async associarSubtipos(request, response) {
+        const { id } = request.params;
+        const { subtipos } = request.body;
+
+        try {
+            const barreira = await Barreira.findByPk(id);
+            if (!barreira) {
+                return response.status(404).json({ error: 'Barreira não encontrada' });
+            }
+            
+            await barreira.addSubtipos(subtipos);
+
+            return response.json({ message: 'Subtipos associados com sucesso!' });
+        } catch (error) {
+            console.error(error);
+            return response.status(500).json({ error: 'Erro ao associar subtipos' });
         }
     }
 }

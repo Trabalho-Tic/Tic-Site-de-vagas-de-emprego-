@@ -1,5 +1,6 @@
 const TipoDeficiencia = require('../models/TipoDeficiencia');
 const SubtipoDeficiencia = require('../models/SubTipoDeficiencia');
+const Barreira = require('../models/Barreira');
 
 class TipoDeficienciaController {
 
@@ -8,7 +9,11 @@ class TipoDeficienciaController {
             const tipoDeficiencias = await TipoDeficiencia.findAll({
                 include: {
                     model: SubtipoDeficiencia,
-                    as: 'subtipos' // deve ser igual ao alias definido na associação
+                    as: 'subtipos',
+                    include: {
+                        model: Barreira,
+                        as: 'barreiras'
+                    }
                 }
             });
             return response.json(tipoDeficiencias);

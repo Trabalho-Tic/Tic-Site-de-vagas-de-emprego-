@@ -76,5 +76,6 @@ router.delete('/TipoDeficiencia/delete/:id', TipoDeficienciaController.delete);
 
 // ASSOCIAÇÕES
 router.post('/TipoDeficiencia/:id/SubTipoDeficiencia', TipoDeficienciaController.associarSubtipos);
+router.post('/Barreira/:id/SubTipoDeficiencia', BarreiraController.associarSubtipos);
 
 module.exports = router;
