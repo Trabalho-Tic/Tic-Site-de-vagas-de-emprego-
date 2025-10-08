@@ -86,15 +86,15 @@ router.put("/vagadescricao/:id", VagaDescricaoController.update);
 
 // Vaga Beneficios 
 router.post("/vagabeneficio/:id", VagaBeneficioController.create);
-router.put("/vagabneficio/:id", VagaBeneficioController.update);
+router.put("/vagabeneficio/:id", VagaBeneficioController.update);
 
 // Vaga Processo 
 router.post("/vagaprocesso/:id", VagaProcessoController.create);
 router.put("/vagaprocesso/:id", VagaProcessoController.update);
 
 // Vaga Requisição 
-router.post("/vagarequsicao/:id", VagaRequisicaoController.create);
-router.put("/vagarequsicao/:id", VagaRequisicaoController.update);
+router.post("/vagarequisicao/:id", VagaRequisicaoController.create);
+router.put("/vagarequisicao/:id", VagaRequisicaoController.update);
 
 // (Opcional) CRUD de User só para admins/autenticados
 // router.get('/user', UserController.index);

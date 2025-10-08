@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize")
 const sequelize = require("../config/database")
 
-const Vaga = sequelize.define("tb_vaga", {
+const Vaga = sequelize.define("vaga", {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -28,5 +28,27 @@ const Vaga = sequelize.define("tb_vaga", {
     timestamps: true
 }
 )
+
+Vaga.associate = (models) => {
+    Vaga.hasOne(models.vagaDescricao, {
+        foreignKey: 'id_vaga',
+        as: 'descricao'
+    });
+
+    Vaga.hasOne(models.vagaBeneficio, {
+        foreignKey: 'id_vaga',
+        as: 'beneficio'
+    });
+
+    Vaga.hasOne(models.vagaProcesso, {
+        foreignKey: 'id_vaga',
+        as: 'processo'
+    });
+
+    Vaga.hasOne(models.vagaRequisicao, {
+        foreignKey: 'id_vaga',
+        as: 'requisicao'
+    });
+};
 
 module.exports = Vaga

@@ -1,11 +1,22 @@
 const Vaga = require('../models/Vaga');
+const VagaDescricao = require('../models/VagaDescricao');
+const VagaBeneficio = require('../models/VagaBeneficio');
+const VagaProcesso = require('../models/VagaProcesso');
+const VagaRequisicao = require('../models/VagaRequisicao');
 
 class VagaController {
 
     async index(request, response) {
         try {
-            const vagas = await Vaga.findAll();
-            return response.json(Vagas);
+            const vagas = await Vaga.findAll({
+                include: [
+                    { model: VagaProcesso, as: 'processo', attributes: ['processoSeletivo', 'entrevistador', 'time'] },
+                    { model: VagaDescricao, as: 'descricao', attributes: ['descricao'] },
+                    { model: VagaRequisicao, as: 'requisicao', attributes: ['atuacao', 'conhecimentos', 'destaque'] },
+                    { model: VagaBeneficio, as: 'beneficio', attributes: ['salario', 'beneficios'] },
+                ]
+            });
+            return response.json(vagas);
         } catch (error) {
             return response.status(500).json({ error: "Erro ao buscar Vagas" })
         }

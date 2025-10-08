@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
-const VagaProcesso = sequelize.define("VagaProcesso", {
+const VagaProcesso = sequelize.define("vagaProcesso", {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -33,5 +33,12 @@ const VagaProcesso = sequelize.define("VagaProcesso", {
     tableName: "tb_vagaProcesso",
 }
 )
+
+VagaProcesso.associate = (models) => {
+    VagaProcesso.belongsTo(models.vaga, {
+        foreignKey: 'id_vaga',
+        as: 'vaga'
+    });
+};
 
 module.exports = VagaProcesso

@@ -4,7 +4,7 @@ class VagaRequisicaoController {
 
     async create(request, response) {
         const { id } = request.params
-        request.body.vagaId = id
+        request.body.id_vaga = id
         try {
             const vagaRequisicao = await VagaRequisicao.create(request.body)
             return response.json(vagaRequisicao)

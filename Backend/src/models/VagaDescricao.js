@@ -26,4 +26,11 @@ const VagaDescricao = sequelize.define("vagaDescricao", {
 }
 )
 
+VagaDescricao.associate = (models) => {
+    VagaDescricao.belongsTo(models.vaga, {
+        foreignKey: 'id_vaga',
+        as: 'vaga'
+    });
+};
+
 module.exports = VagaDescricao
