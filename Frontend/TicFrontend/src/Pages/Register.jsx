@@ -179,7 +179,7 @@ function Register() {
 
         <p className="flex justify-center gap-2">
           Já possui uma conta?
-          <Link className="text-black font-bold" to={"/"}>
+          <Link className="text-black font-bold" to={"/login"}>
             Login
           </Link>
         </p>

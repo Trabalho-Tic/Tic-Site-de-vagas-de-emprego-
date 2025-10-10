@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
+import useApi from "../api/Api";
 import Header from "../components/Header"
 import Footer from "../components/Footer";
 import Input from "../components/input"
@@ -9,6 +10,22 @@ import frame from "../assets/Frame 569.png"
 import bg from "../assets/backgroundhome.png";
 
 function Vagas() {
+    const [vagas, setVagas] = useState([])
+
+    useEffect(() => {
+        async function fetchVagas() {
+            try {
+            const vaga = await useApi({ endpoint: "/vaga" });
+            setVagas(vaga);
+            } catch (error) {
+            console.error("Erro ao buscar vagas:", error);
+            }
+        }
+
+        fetchVagas();
+    }, []);
+
+
     return (
         <>
             <Header />
@@ -23,12 +40,11 @@ function Vagas() {
             <section className="bg-gradient-to-t to-white from-gray-100 sm:px-0 lg:px-25 py-15 flex flex-col items-center">
                 <p className="text-3xl text-center font-semibold px-1 pb-6">Vagas abertas recentemente</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    <Card  />
-                    <Card  />
-                    <Card  />
-                    <Card  />
-                    <Card  />
-                    <Card  />
+                    {
+                        vagas.map((vaga) => (
+                            <Card vaga={vaga} />
+                        ))
+                    }
                 </div>
             </section>
             <section 

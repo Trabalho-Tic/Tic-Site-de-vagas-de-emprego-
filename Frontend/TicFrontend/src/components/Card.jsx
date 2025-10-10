@@ -2,7 +2,7 @@ import React from "react"
 import { Link, useNavigate } from "react-router-dom"
 import Logo from "../assets/js moderno.webp"
 
-function Card() {
+function Card({ vaga }) {
     const navigate = useNavigate()
 
     return (
@@ -11,7 +11,7 @@ function Card() {
                 <img className="h-10 w-10 rounded-4xl" src={Logo} alt="" />
                 <p className="text-sm text-gray-400">Meta Company</p>
             </div>
-            <p className="text-xl font-medium pb-2">Product Design</p>
+            <p className="text-xl font-medium pb-2">{vaga.nome}</p>
             <p className="text-sm text-gray-500 pb-6">Porto, Portugal <span className="text-sm text-black font-medium">(On site)</span></p>
             <div onClick={(e) => e.stopPropagation()} className="flex gap-3">
                 <button onClick={() => navigate("/inscreve")} className="text-sm text-green-400 px-3 py-1 rounded-3xl border-1 border-green-400 transition-all duration-400 hover:bg-green-500 hover:text-black font-medium">Enviar Candidatura</button>

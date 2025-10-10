@@ -8,11 +8,11 @@ import Company from "./Pages/Companies";
 
 const routes = createBrowserRouter([
     {
-        path: '/',
+        path: '/login',
         element: <Login />
     },
     {
-        path: '/home',
+        path: '/',
         element: <Home />
     },
     {
