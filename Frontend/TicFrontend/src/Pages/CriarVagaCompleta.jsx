@@ -3,7 +3,7 @@ import Input from "../components/input";
 import useApi from "../api/Api";
 import { useNavigate } from "react-router-dom";
 
-function CriarVaga() {
+function CriarVagaCompleta() {
     const [nome, setNome] = useState("")
     const [pais, setPais] = useState("")
     const [cidade, setCidade] = useState("")
@@ -41,6 +41,7 @@ function CriarVaga() {
                 onSubmit={handleLogin}
                 className="flex flex-col w-auto shadow-xl md:w-125 h-auto border-1 rounded-xl justify-center p-5 lg:p-10"
             >
+                <p>Descrição</p>
                 <Input
                     value={nome}
                     onChange={(e) => setNome(e.target.value)}
@@ -61,6 +62,21 @@ function CriarVaga() {
                     onChange={(e) => setModelo(e.target.value)}
                     placeholder="Coloque o modelo da vaga"
                 />
+                <Input
+                    value={modelo}
+                    onChange={(e) => setModelo(e.target.value)}
+                    placeholder="Coloque o modelo da vaga"
+                />
+                <Input
+                    value={modelo}
+                    onChange={(e) => setModelo(e.target.value)}
+                    placeholder="Coloque o modelo da vaga"
+                />
+                <Input
+                    value={modelo}
+                    onChange={(e) => setModelo(e.target.value)}
+                    placeholder="Coloque o modelo da vaga"
+                />
                 <button
                     type="submit"
                     disabled={loading}
@@ -73,4 +89,4 @@ function CriarVaga() {
     )
 }
 
-export default CriarVaga
+export default CriarVagaCompleta

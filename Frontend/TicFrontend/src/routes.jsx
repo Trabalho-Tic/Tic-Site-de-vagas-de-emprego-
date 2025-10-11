@@ -5,6 +5,8 @@ import Home from "./Pages/Home"
 import Register from "./Pages/Register"
 import Vaga from "./Pages/Vaga";
 import Company from "./Pages/Companies";
+import CriarVaga from "./Pages/CriarVaga";
+import CriarVagaCompleta from "./Pages/CriarVagaCompleta";
 
 const routes = createBrowserRouter([
     {
@@ -22,6 +24,14 @@ const routes = createBrowserRouter([
     {
         path: '/vagas/:id',
         element: <Vaga />
+    },
+    {
+        path: '/criarVaga',
+        element: <CriarVaga />
+    },
+    {
+        path: '/criarVaga/:id',
+        element: <CriarVagaCompleta />
     },
     {
         path: '/empresas',
