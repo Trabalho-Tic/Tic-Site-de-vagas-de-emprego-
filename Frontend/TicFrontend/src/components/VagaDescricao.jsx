@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import useApi from "../api/Api";
 
 import { Zap } from "lucide-react";
 
@@ -11,6 +13,27 @@ import imgPequena4 from "../assets/imgPequena4.png"
 import logo from "../assets/js moderno.webp"
 
 function VagaDescricao() {
+    const { id } = useParams()
+    const [vaga, setVaga] = useState([])
+
+    useEffect(() => {
+        async function fetchVagas() {
+            try {
+            const result = await useApi({ endpoint: `/vaga/${id}` });
+            setVaga(result);
+            console.log(result)
+            } catch (error) {
+            console.error("Erro ao buscar vagas:", error);
+            }
+        }
+
+        fetchVagas();
+    }, [id]);
+
+    if (!vaga || !vaga.id) {
+        return <p>Carregando vaga...</p>;
+    }
+
     return (
         <>
             <div className="flex items-center gap-2">
@@ -19,15 +42,15 @@ function VagaDescricao() {
             </div>
             <div className="flex justify-between items-center pt-4">
                 <div className="flex flex-col">
-                    <p className="text-2xl pb-3 font-bold">Desenvolvedor de software</p>
-                    <p className="text-sm font-medium text-gray-600">Porto, Portugal (On site)</p>
+                    <p className="text-2xl pb-3 font-bold">{vaga.nome}</p>
+                    <p className="text-sm font-medium text-gray-600">{vaga.cidade}, {vaga.pais} (On site)</p>
                 </div>
                 <button className="flex text-lg rounded-4xl items-center px-6 h-12 gap-2 font-semibold bg-green-400 transition-all duration-500 hover:-translate-y-1 hover:bg-green-300"><Zap size={20} />Candidatar-se</button>
             </div>
             <div className="flex flex-col pt-14">
-                <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Modelo de vaga:</span> Remoto</p>
-                <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Processo seletivo:</span> It will have 2 stages that include a 45 min HR chat ➡️ 1h Cultural/Technical chat</p>
-                <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Entrevistador:</span> Design Manager, Bruno Mota</p>
+                <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Modelo de vaga:</span> {vaga.modelo}</p>
+                <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Processo seletivo:</span> {vaga.processo.processoSeletivo}</p>
+                <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Entrevistador:</span> {vaga.processo.entrevistador}</p>
                 <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Seu time:</span> u will mainly be part of a UX Designer’s team, working with cross-functional teams and a wider group of UX department</p>
             </div>
             <nav className="pt-15 pb-8 overflow-x-auto">

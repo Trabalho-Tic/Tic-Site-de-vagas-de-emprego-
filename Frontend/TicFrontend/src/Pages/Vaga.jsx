@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import { Search, Zap } from "lucide-react";
 
 import Header from "../components/Header"
@@ -6,8 +6,25 @@ import Input from "../components/input"
 import Card from "../components/Card";
 import VagaDescricao from "../components/VagaDescricao";
 import Footer from "../components/Footer"
+import useApi from "../api/Api";
 
 function Vaga() {
+
+    const [vagas, setVagas] = useState([])
+
+    useEffect(() => {
+        async function fetchVagas() {
+            try {
+            const vaga = await useApi({ endpoint: "/vaga" });
+            setVagas(vaga);
+            } catch (error) {
+            console.error("Erro ao buscar vagas:", error);
+            }
+        }
+
+        fetchVagas();
+    }, []);
+
     return (
         <>
         <Header />
@@ -21,13 +38,11 @@ function Vaga() {
         </section>
         <section className="flex w-full md:px-27 md:py-5 gap-6">
             <div className="hidden lg:flex flex-col gap-2">
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
+                {
+                    vagas.map((vaga) => (
+                        <Card vaga={vaga} />
+                    ))
+                }
             </div>
             <div className="w-full border-1 border-gray-300 p-10">
                 <VagaDescricao />

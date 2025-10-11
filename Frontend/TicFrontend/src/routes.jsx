@@ -20,7 +20,7 @@ const routes = createBrowserRouter([
         element: <Register />
     },
     {
-        path: '/vagas',
+        path: '/vagas/:id',
         element: <Vaga />
     },
     {
