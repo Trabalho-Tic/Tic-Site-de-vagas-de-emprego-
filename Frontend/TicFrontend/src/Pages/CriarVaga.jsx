@@ -34,7 +34,7 @@ function CriarVaga() {
         }
     };
     return (
-        <>
+        <div className="flex justify-center items-center h-screen">
             <form
                 onSubmit={handleLogin}
                 className="flex flex-col w-auto shadow-xl md:w-125 h-auto border-1 rounded-xl justify-center p-5 lg:p-10"
@@ -67,7 +67,7 @@ function CriarVaga() {
                     {loading ? "Criando..." : "Criar"}
                 </button>
             </form>
-        </>
+        </div>
     )
 }
 
