@@ -26,9 +26,7 @@ function CriarVaga() {
                 body: { nome, pais, cidade, modelo },
             });
 
-            console.log(data)
-
-            navigate(`/criarVaga/${data.id}`);
+            navigate(`/criarVaga/beneficio/${data.id}`);
         } catch (err) {
             console.error(err);
         } finally {
