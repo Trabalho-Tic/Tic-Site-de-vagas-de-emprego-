@@ -10,6 +10,10 @@ import CriarVagaCompleta from "./Pages/CriarVagaBeneficio";
 import CriarVagaBeneficio from "./Pages/CriarVagaBeneficio";
 import CriarVagaProcesso from "./Pages/CriarVagaProcesso";
 
+import AdminLayout from "./admin/Layout";
+import UsuariosPage from "./admin/pages/UsuariosPage";
+import VagasPage from "./admin/pages/VagasPage";
+
 const routes = createBrowserRouter([
     {
         path: '/login',
@@ -42,8 +46,18 @@ const routes = createBrowserRouter([
     {
         path: '/empresas',
         element: <Company />
-    }
-])
+    },
+
+    {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      { index: true, element: <UsuariosPage /> }, // renderiza /admin direto
+      { path: "usuarios", element: <UsuariosPage /> },
+      { path: "vagas", element: <VagasPage /> },
+    ],
+  },
+]);
 
 function Router() {
     return <RouterProvider router={routes}/>
