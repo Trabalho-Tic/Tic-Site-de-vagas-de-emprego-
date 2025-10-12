@@ -29,7 +29,7 @@ const VagaBeneficio = sequelize.define("vagaBeneficio", {
     tableName: "tb_vagaBeneficio",
 })
 
- VagaBeneficio.associate = (models) => {
+VagaBeneficio.associate = (models) => {
     VagaBeneficio.belongsTo(models.vaga, {
         foreignKey: 'id_vaga',
         as: 'vaga'
