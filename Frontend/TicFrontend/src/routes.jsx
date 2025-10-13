@@ -9,6 +9,7 @@ import CriarVaga from "./Pages/CriarVaga";
 import CriarVagaCompleta from "./Pages/CriarVagaBeneficio";
 import CriarVagaBeneficio from "./Pages/CriarVagaBeneficio";
 import CriarVagaProcesso from "./Pages/CriarVagaProcesso";
+import Profile from "./Pages/Profile";
 
 const routes = createBrowserRouter([
     {
@@ -42,6 +43,10 @@ const routes = createBrowserRouter([
     {
         path: '/empresas',
         element: <Company />
+    },
+    {
+        path: '/profile',
+        element: <Profile/>
     }
 ])
 
