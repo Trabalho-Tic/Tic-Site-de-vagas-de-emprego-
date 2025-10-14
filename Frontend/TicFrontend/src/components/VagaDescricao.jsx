@@ -51,7 +51,7 @@ function VagaDescricao() {
                 <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Modelo de vaga:</span> {vaga.modelo}</p>
                 <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Processo seletivo:</span> {vaga.processo.processoSeletivo}</p>
                 <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Entrevistador:</span> {vaga.processo.entrevistador}</p>
-                <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Seu time:</span> u will mainly be part of a UX Designer’s team, working with cross-functional teams and a wider group of UX department</p>
+                <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Seu time:</span> {vaga.processo.time}</p>
             </div>
             <nav className="pt-15 pb-8 overflow-x-auto">
                 <nav className="flex items-center gap-10 border-b-1 border-gray-400">
@@ -65,49 +65,53 @@ function VagaDescricao() {
                 <p className="text-xl font-medium text-gray-400 pb-6">Descrição</p>
                 <p className="text-lg font-bold pb-3">O que te espera: </p>
                 <ul className="pl-5 pb-10">
-                    <li className="list-disc text-sm font-medium pb-2">A supportive manager who cares about your well-being and is invested in your professional growth.</li>
-                    <li className="list-disc text-sm font-medium pb-2">A culture of continuous learning with clear targets and feedback.</li>
-                    <li className="list-disc text-sm font-medium">A global company with over 2600 employees located in more than 26 countries, including offices in 3 countries.</li>
+                    {
+                        vaga.descricao.descricao.map((desc) => (
+                            <li className="list-disc text-sm font-medium pb-2">{desc}</li>
+                        ))
+                    }
                 </ul>
             </section>
             <section id="requisicoes" className="flex flex-col gap-8 pt-10 border-b-1 border-gray-400">
                 <p className="text-xl font-medium text-gray-400">Requisições</p>
                 <div>
                     <p className="text-lg font-bold pb-3">O que você vai fazer:</p>
-                    <p className="text-sm font-medium leading-6">As a UX Designer on our team, you will shape user experiences by leading the design of key features and projects. Your responsibilities include defining user experience flows, developing new product concepts, and crafting user stories. You will design detailed UI layouts, create benchmarks, and develop high-fidelity prototypes while documenting UX and UI strategies. Collaborating with technical teams, you will transform designs into impactful, industry-leading products. This role combines creativity and problem-solving to create meaningful user experiences. Your journey with us is an opportunity to drive innovation and make a significant impact.</p>
+                    <p className="text-sm font-medium leading-6">{vaga.requisicao.atuacao}</p>
                 </div>
                 <div>
                     <p className="text-lg font-bold pb-3">Requisitos e qualificações:</p>
                     <ul className="pl-5 pb-3">
-                        <li className="list-disc text-sm font-medium pb-2">Showcase proficiency in collaborative design environments.</li>
-                        <li className="list-disc text-sm font-medium pb-2">Demonstrated ability to work independently, think critically, and maintain meticulous attention to detail.</li>
-                        <li className="list-disc text-sm font-medium pb-2">Solid grasp of interactive elements, micro-interactions, and animations, contributing to a seamless user experience.</li>
-                        <li className="list-disc text-sm font-medium pb-2">Clear understanding of the entire UX lifecycle, coupled with a track record of designing successful apps and products.</li>
-                        <li className="list-disc text-sm font-medium">Deep passion for digital product development and an unwavering commitment to achieving excellence.</li>
+                        {
+                            vaga.requisicao.conhecimentos.map((conhecimento) => (
+                                <li className="list-disc text-sm font-medium">{conhecimento}</li>
+                            ))
+                        }
                     </ul>
                 </div>
                 <div>
                     <p className="text-lg font-bold pb-3">Se destaca se souber:</p>
                     <ul className="pl-5 pb-10">
-                        <li className="list-disc text-sm font-medium pb-2">Showcase proficiency in collaborative design environments.</li>
-                    </ul>
+                        {
+                            vaga.requisicao.destaque.map((dest) => (
+                                <li className="list-disc text-sm font-medium">{dest}</li>
+                            ))
+                        }                    </ul>
                 </div>
             </section>
             <section id="beneficios" className="flex flex-col gap-6 pt-10 border-b-1 border-gray-400">
                 <p className="text-xl font-medium text-gray-400 ">Beneficios</p>
                 <div>
                     <p className="text-lg font-semibold pb-3">Base Salarial:</p>
-                    <p className="text-xl font-semibold">$50.00- $60.00 <span className="text-sm font-medium text-gray-400">Per/H</span></p>
+                    <p className="text-xl font-semibold">{vaga.beneficio.salario} <span className="text-sm font-medium text-gray-400">Por/Mês</span></p>
                 </div>
                 <div>
                     <p className="text-lg font-bold pb-3">Oque temos a lhe oferecer:</p>
                     <ul className="pl-5 pb-10">
-                        <li className="list-disc text-sm font-medium pb-2">Embrace work-life balance with hybrid/remote roles and flexible hours.</li>
-                        <li className="list-disc text-sm font-medium pb-2">Enjoy 22 days + Birthday + Carnival Tuesday.</li>
-                        <li className="list-disc text-sm font-medium pb-2">Participate in team-building activities and events.</li>
-                        <li className="list-disc text-sm font-medium pb-2">Utilize the best tools and technology for work.</li>
-                        <li className="list-disc text-sm font-medium pb-2">Stay covered with comprehensive health insurance.</li>
-                        <li className="list-disc text-sm font-medium">A huge team of UX designers to learn from.</li>
+                        {
+                            vaga.beneficio.beneficios.map((beneficio) => (
+                                <li className="list-disc text-sm font-medium">{beneficio}</li>
+                            ))
+                        }
                     </ul>
                 </div>
             </section>

@@ -25,7 +25,7 @@ const VagaRequisicaoController = require('../controllers/VagaRequisicaoControlle
 // router.post('/auth/login', (req, res) => AuthController.login(req, res));  // [ADD]
 
 // User (registro)
-router.post('/user/create', (req, res) => UserController.create(req, res));
+// router.post('/user/create', (req, res) => UserController.create(req, res));
 
 // ------------------ ROTAS PROTEGIDAS ------------------
 // Ativa o middleware UMA VEZ; tudo abaixo exige JWT
