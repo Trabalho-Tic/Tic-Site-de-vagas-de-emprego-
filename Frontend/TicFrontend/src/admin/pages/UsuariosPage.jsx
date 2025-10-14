@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import useApi from "../../api/Api";
 import Modal from "../../components/Modal";
 
@@ -13,18 +13,18 @@ const usuarioVazio = {
 };
 
 export default function UsuariosPage() {
-  const [usuarios, setUsuarios] = React.useState([]);
-  const [busca, setBusca] = React.useState("");
-  const [form, setForm] = React.useState(usuarioVazio);
-  const [modalAberto, setModalAberto] = React.useState(false);
-  const [idEdicao, setIdEdicao] = React.useState(null);
+  const [usuarios, setUsuarios] = useState([]);
+  const [busca, setBusca] = useState("");
+  const [form, setForm] = useState(usuarioVazio);
+  const [modalAberto, setModalAberto] = useState(false);
+  const [idEdicao, setIdEdicao] = useState(null);
 
   async function carregarUsuarios() {
     const data = await useApi({ endpoint: "/user" });
     setUsuarios(data || []);
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     carregarUsuarios();
   }, []);
 
