@@ -5,21 +5,12 @@ import { useNavigate, useParams } from "react-router-dom";
 
 function CriarVagaProcesso() {
     const { id } = useParams()
-    const [processo, setProcesso] = useState("")
+    const [processoSeletivo, setProcessoSeletivo] = useState("")
     const [entrevistador, setEntrevistador] = useState("")
     const [time, setTime] = useState("")
     const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
-
-    const handleAddBeneficio = (event) => {
-        event.preventDefault();
-
-        if (beneficio.trim() === "") return;
-
-        setBeneficios([...beneficios, beneficio]);
-        setBeneficio("");
-    }
 
     const handleLogin = async (event) => {
         event.preventDefault();
@@ -32,10 +23,10 @@ function CriarVagaProcesso() {
             const data = await useApi({
                 endpoint: `/vagaProcesso/${id}`,
                 method: "POST",
-                body: { salario, beneficios },
+                body: { processoSeletivo, entrevistador, time },
             });
 
-            navigate(`/criarVaga/requisito/${id}`);
+            navigate(`/criarVaga/requisicao/${id}`);
         } catch (err) {
             console.error(err);
         } finally {
@@ -57,8 +48,8 @@ function CriarVagaProcesso() {
           Como funciona o processo seletivo
         </label>
         <Input
-          value={processo}
-          onChange={(e) => setProcesso(e.target.value)}
+          value={processoSeletivo}
+          onChange={(e) => setProcessoSeletivo(e.target.value)}
           placeholder="Descreva como funciona o processo seletivo"
           className="border border-gray-300 h-[83px] rounded-md px-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
         />

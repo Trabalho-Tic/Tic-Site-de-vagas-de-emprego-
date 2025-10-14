@@ -6,10 +6,11 @@ import Register from "./Pages/Register"
 import Vaga from "./Pages/Vaga";
 import Company from "./Pages/Companies";
 import CriarVaga from "./Pages/CriarVaga";
-import CriarVagaCompleta from "./Pages/CriarVagaBeneficio";
 import CriarVagaBeneficio from "./Pages/CriarVagaBeneficio";
 import CriarVagaProcesso from "./Pages/CriarVagaProcesso";
 import Profile from "./Pages/Profile";
+import CriarVagaRequisicao from "./Pages/CriarVagaRequisicao";
+import CriarVagaDescricao from "./Pages/CriarVagaDescricao";
 
 const routes = createBrowserRouter([
     {
@@ -39,6 +40,14 @@ const routes = createBrowserRouter([
     {
         path: '/criarVaga/Processo/:id',
         element: <CriarVagaProcesso />
+    },
+    {
+        path: '/criarVaga/Requisicao/:id',
+        element: <CriarVagaRequisicao />
+    },
+    {
+        path: '/criarVaga/Descricao/:id',
+        element: <CriarVagaDescricao />
     },
     {
         path: '/empresas',
