@@ -96,11 +96,12 @@ router.put("/vagaprocesso/:id", VagaProcessoController.update);
 router.post("/vagarequisicao/:id", VagaRequisicaoController.create);
 router.put("/vagarequisicao/:id", VagaRequisicaoController.update);
 
-// (Opcional) CRUD de User só para admins/autenticados
-// router.get('/user', UserController.index);
-// router.get('/user/:id', UserController.show);
-// router.put('/user/update/:id', UserController.update);
-// router.delete('/user/delete/:id', UserController.delete);
+
+router.get('/user', UserController.index);
+router.get('/user/:id', UserController.show);
+router.post('/user/create', (req, res) => UserController.create(req, res));
+router.put('/user/update/:id', UserController.update);
+router.delete('/user/delete/:id', UserController.delete);
 
 // ASSOCIAÇÕES
 router.post('/TipoDeficiencia/:id/SubTipoDeficiencia', TipoDeficienciaController.associarSubtipos);

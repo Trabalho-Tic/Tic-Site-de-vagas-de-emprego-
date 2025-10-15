@@ -12,6 +12,10 @@ import Profile from "./Pages/Profile";
 import CriarVagaRequisicao from "./Pages/CriarVagaRequisicao";
 import CriarVagaDescricao from "./Pages/CriarVagaDescricao";
 
+import AdminLayout from "./admin/Layout";
+import UsuariosPage from "./admin/pages/UsuariosPage";
+import VagasPage from "./admin/pages/VagasPage";
+
 const routes = createBrowserRouter([
     {
         path: '/login',
@@ -52,6 +56,15 @@ const routes = createBrowserRouter([
     {
         path: '/empresas',
         element: <Company />
+    },
+    {
+      path: "/admin",
+      element: <AdminLayout />,
+      children: [
+        { index: true, element: <UsuariosPage /> }, // renderiza /admin direto
+        { path: "usuarios", element: <UsuariosPage /> },
+        { path: "vagas", element: <VagasPage /> },
+      ],
     },
     {
         path: '/profile',
