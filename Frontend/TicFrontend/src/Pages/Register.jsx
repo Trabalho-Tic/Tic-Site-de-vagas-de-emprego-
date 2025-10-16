@@ -16,7 +16,7 @@ const validatePhone = (phone) => /^[0-9]{10,11}$/.test(phone); // Aceita telefon
 const validatePassword = (password) => password.length >= 6;
 
 function Register() {
-  const [login, setLogin] = useState("");
+  const [name, setname] = useState("");
   const [email, setEmail] = useState("");
   const [file, setFile] = useState("");
   const [url, setUrl] = useState("");
@@ -54,7 +54,7 @@ function Register() {
     try {
       setLoading(true);
       const payload = {
-        nome: login,
+        nome: name,
         email,
         cpf,
         password,
@@ -163,8 +163,8 @@ function Register() {
                   <p className="text-lg pb-2">Nome</p>
                   <Input
                     required
-                    value={login}
-                    onChange={(e) => setLogin(e.target.value)}
+                    value={name}
+                    onChange={(e) => setname(e.target.value)}
                     placeholder="Escreva seu nome"
                   />
                 </div>
@@ -249,8 +249,8 @@ function Register() {
                   <p className="text-lg pb-2">Nome Empresa</p>
                   <Input
                     required
-                    value={login}
-                    onChange={(e) => setLogin(e.target.value)}
+                    value={name}
+                    onChange={(e) => setname(e.target.value)}
                     placeholder="Escreva o nome da empresa"
                   />
                 </div>
