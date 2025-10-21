@@ -35,7 +35,7 @@ const User = sequelize.define('User', {
     },
     deficiencias: {
         type: DataTypes.JSON,
-        allowNull: false
+        allowNull: true
     }
 }, {
     tableName: "tb_user",

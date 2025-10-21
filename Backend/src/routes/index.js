@@ -15,21 +15,21 @@ const VagaBeneficioController = require('../controllers/VagaBeneficioController'
 const VagaProcessoController = require('../controllers/VagaProcessoController');
 const VagaRequisicaoController = require('../controllers/VagaRequisicaoController');
 
-// >>> ADIÇÕES (autenticação) <<<
-// const AuthController = require("../controllers/AuthController");            // [ADD]
-// const authMiddleware = require("../middlewares/authMiddleware");            // [ADD]
+ //>>> ADIÇÕES (autenticação) <<<
+ const AuthController = require("../controllers/AuthController");            // [ADD]
+ const authMiddleware = require("../middlewares/authMiddleware");            // [ADD]
 
 // ------------------ ROTAS PÚBLICAS ------------------
 
-// Auth (login)
-// router.post('/auth/login', (req, res) => AuthController.login(req, res));  // [ADD]
+ //Auth (login)
+ router.post('/auth/login', (req, res) => AuthController.login(req, res));  // [ADD]
 
-// User (registro)
-// router.post('/user/create', (req, res) => UserController.create(req, res));
+ //User (registro)
+ router.post('/user/create', (req, res) => UserController.create(req, res));
 
 // ------------------ ROTAS PROTEGIDAS ------------------
 // Ativa o middleware UMA VEZ; tudo abaixo exige JWT
-// router.use(authMiddleware);                                                // [ADD]
+ router.use(authMiddleware);                                                // [ADD]
 
 // Acessibilidade
 router.get('/Acessibilidade', AcessibilidadeController.index);
