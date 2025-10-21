@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize")
 const sequelize = require("../config/database")
 
-const SubTipoBarreira = sequelize.define('SubTipoBarreira', {
+const SubTipoBarreiras = sequelize.define('SubTipoBarreiras', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -28,24 +28,24 @@ const SubTipoBarreira = sequelize.define('SubTipoBarreira', {
         onUpdate: "CASCADE"
     }
 }, {
-    tableName: "tb_subtipobarreira",
+    tableName: "tb_subtipobarreiras",
     timestamps: true
 })
 
-SubTipoBarreira.associate = (models) => {
+SubTipoBarreiras.associate = (models) => {
     // Cada registro da tabela pertence a um Subtipo
-    SubTipoBarreira.belongsTo(models.SubtipoDeficiencia, {
+    SubTipoBarreiras.belongsTo(models.SubtipoDeficiencia, {
         foreignKey: 'id_subtipodeficiencia',
         as: 'subtipo',
         onDelete: 'CASCADE'
     });
 
     // E pertence a uma Barreira
-    SubTipoBarreira.belongsTo(models.Barreira, {
+    SubTipoBarreiras.belongsTo(models.Barreira, {
         foreignKey: 'id_barreira',
         as: 'barreira',
         onDelete: 'CASCADE'
     });
 };
 
-module.exports = SubTipoBarreira
+module.exports = SubTipoBarreiras

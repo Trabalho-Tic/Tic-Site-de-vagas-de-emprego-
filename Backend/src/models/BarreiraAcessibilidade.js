@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize")
 const sequelize = require("../config/database")
 
-const BarreiraAcessibilidade = sequelize.define('BarreiraAcessibilidade', {
+const BarreiraAcessibilidades = sequelize.define('BarreiraAcessibilidades', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -28,23 +28,23 @@ const BarreiraAcessibilidade = sequelize.define('BarreiraAcessibilidade', {
         onUpdate: "CASCADE"
     }
 }, {
-    tableName: "tb_barreiraacessibilidade",
+    tableName: "tb_barreiraacessibilidades",
     timestamps: true
 })
 
-BarreiraAcessibilidade.associate = (models) => {
+BarreiraAcessibilidades.associate = (models) => {
 
-    BarreiraAcessibilidade.belongsTo(models.Acessibilidade, {
+    BarreiraAcessibilidades.belongsTo(models.Acessibilidade, {
         foreignKey: 'id_acessibilidade',
         as: 'acessibilidade',
         onDelete: 'CASCADE'
     });
 
-    BarreiraAcessibilidade.belongsTo(models.Barreira, {
+    BarreiraAcessibilidades.belongsTo(models.Barreira, {
         foreignKey: 'id_barreira',
         as: 'barreira',
         onDelete: 'CASCADE'
     });
 };
 
-module.exports = BarreiraAcessibilidade
+module.exports = BarreiraAcessibilidades
