@@ -13,7 +13,6 @@ async function useApi({ endpoint, method = "GET", body = null }) {
     }
   
     try {
-      console.log("Aquiiiiii")
       const response = await fetch(`${API_BASE}${endpoint}`, options);
   
       if (!response.ok) {

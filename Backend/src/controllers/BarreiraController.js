@@ -1,5 +1,5 @@
 const Barreira = require('../models/Barreira');
-const SubTipoBarreira = require('../models/SubTipoBarreira');
+const SubTipoBarreira = require('../models/SubTipoBarreiras');
 
 class BarreiraController {
 

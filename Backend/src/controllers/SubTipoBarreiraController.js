@@ -1,4 +1,4 @@
-const SubTipoBarreira = require('../models/SubTipoBarreira');
+const SubTipoBarreira = require('../models/SubTipoBarreiras');
 
 class SubTipoBarreiraController {
 
