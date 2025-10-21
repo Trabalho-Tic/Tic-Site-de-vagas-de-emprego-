@@ -8,6 +8,7 @@ function CriarVaga() {
     const [pais, setPais] = useState("")
     const [cidade, setCidade] = useState("")
     const [modelo, setModelo] = useState("")
+    const [idCompany, setIdCompany] = useState("")
     const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
@@ -23,7 +24,7 @@ function CriarVaga() {
             const data = await useApi({
                 endpoint: "/vaga/create",
                 method: "POST",
-                body: { nome, pais, cidade, modelo },
+                body: { nome, pais, cidade, modelo, id_company: idCompany },
             });
 
             navigate(`/criarVaga/beneficio/${data.id}`);
@@ -87,6 +88,18 @@ function CriarVaga() {
           value={modelo}
           onChange={(e) => setModelo(e.target.value)}
           placeholder="Coloque o modelo da vaga"
+          className="border border-gray-300 h-[83px] rounded-md px-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+        />
+      </div>
+      
+      <div className="flex flex-col">
+        <label className="text-sm font-medium text-gray-800 mb-1">
+          Id da vaga
+        </label>
+        <Input
+          value={idCompany}
+          onChange={(e) => setIdCompany(e.target.value)}
+          placeholder="Coloque o id da Empresa"
           className="border border-gray-300 h-[83px] rounded-md px-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
         />
       </div>

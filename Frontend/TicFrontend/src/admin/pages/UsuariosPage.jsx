@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import useApi from "../../api/Api";
 import Modal from "../../components/Modal";
 
@@ -8,7 +8,7 @@ export default function UsuariosPage() {
   const [form, setForm] = useState({});
   const [idEdicao, setIdEdicao] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
-  const [mensagem, setMensagem] = useState(""); // ✅ feedback básico via texto no topo
+  const [mensagem, setMensagem] = useState(""); // ✅ feedback via texto
 
   const usuarioVazio = {
     nome: "",

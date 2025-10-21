@@ -1,11 +1,6 @@
 import React from "react";
 import { Zap } from "lucide-react";
 
-import imgGrande from "../assets/imgGrande.png"
-import imgPequena from "../assets/imgPequena.png"
-import imgPequena2 from "../assets/imgPequena2.png"
-import imgPequena3 from "../assets/imgPequena3.png"
-import imgPequena4 from "../assets/imgPequena4.png"
 import logo from "../assets/js moderno.webp"
 
 

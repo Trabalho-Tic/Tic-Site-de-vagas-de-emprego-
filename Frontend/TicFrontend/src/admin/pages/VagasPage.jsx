@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import useApi from "../../api/Api";
 import Modal from "../../components/Modal";
 
@@ -10,18 +10,18 @@ const vagaVazia = {
 };
 
 export default function VagasPage() {
-  const [vagas, setVagas] = React.useState([]);
-  const [busca, setBusca] = React.useState("");
-  const [form, setForm] = React.useState(vagaVazia);
-  const [modalAberto, setModalAberto] = React.useState(false);
-  const [idEdicao, setIdEdicao] = React.useState(null);
+  const [vagas, setVagas] = useState([]);
+  const [busca, setBusca] = useState("");
+  const [form, setForm] = useState(vagaVazia);
+  const [modalAberto, setModalAberto] = useState(false);
+  const [idEdicao, setIdEdicao] = useState(null);
 
   async function carregarVagas() {
     const data = await useApi({ endpoint: "/Vaga" });
     setVagas(data || []);
   }
 
-  React.useEffect(() => {
+ useEffect(() => {
     carregarVagas();
   }, []);
 
