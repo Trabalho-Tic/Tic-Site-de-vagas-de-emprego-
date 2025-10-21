@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/input";
 import Select from "../components/select";
 import useApi from "../api/Api";
-import { motion, AnimatePresence } from "framer-motion"
+//import { motion, AnimatePresence } from "framer-motion"
 
 // Funções de validação
 const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
