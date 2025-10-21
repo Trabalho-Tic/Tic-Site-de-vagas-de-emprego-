@@ -29,7 +29,7 @@ async function useApi({ endpoint, method = "GET", body = null }) {
       console.error("[useApi] ❌ Status:", response.status);
       console.error("[useApi] ❌ Resposta do servidor:", text);
 
-      // Tenta interpretar como JSON pra extrair a mensagem
+      // Tenta interpretar como JSON pra extrair a mensagem de erro
       let errorMessage = "";
       try {
         const parsed = JSON.parse(text);
@@ -44,7 +44,6 @@ async function useApi({ endpoint, method = "GET", body = null }) {
     const data = await response.json();
     console.log("[useApi] ✅ Resposta recebida:", data);
     return data;
-
   } catch (error) {
     console.error("[useApi] ⚠️ Erro ao buscar API:", error.message);
     throw error;
