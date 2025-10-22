@@ -99,7 +99,6 @@ router.put("/vagarequisicao/:id", VagaRequisicaoController.update);
 
 router.get('/user', UserController.index);
 router.get('/user/:id', UserController.show);
-router.post('/user/create', (req, res) => UserController.create(req, res));
 router.put('/user/update/:id', UserController.update);
 router.delete('/user/delete/:id', UserController.delete);
 
