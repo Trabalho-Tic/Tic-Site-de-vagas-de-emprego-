@@ -18,14 +18,19 @@ import EmpresaVagas from "./pages/EmpresaVagas";
 import AdminLayout from "./admin/Layout";
 import UsuariosPage from "./admin/pages/UsuariosPage";
 import VagasPage from "./admin/pages/VagasPage";
+import LandingPage from "./Pages/LandingPage";
 
 const routes = createBrowserRouter([
+  {
+    path: "/",
+    element: <LandingPage />,
+  },
   {
     path: "/login",
     element: <Login />,
   },
   {
-    path: "/",
+    path: "/home",
     element: <Home />,
   },
   {
@@ -61,10 +66,18 @@ const routes = createBrowserRouter([
     element: <Company />,
   },
   {
+    path: "/empresa/:id/sobre",
+    element: <EmpresaSobre />,
+  },
+  {
+    path: "/empresa/:id/vagas",
+    element: <EmpresaVagas />,
+  },
+  {
     path: "/admin",
     element: <AdminLayout />,
     children: [
-      { index: true, element: <UsuariosPage /> }, // renderiza /admin direto
+      { index: true, element: <UsuariosPage /> },
       { path: "usuarios", element: <UsuariosPage /> },
       { path: "vagas", element: <VagasPage /> },
     ],
@@ -74,16 +87,8 @@ const routes = createBrowserRouter([
     element: <Profile />,
   },
   {
-    path: "/",
+    path: "/card-companies",
     element: <CardCompanies />,
-  },
-  {
-    path: "/empresa/:id/sobre",
-    element: <EmpresaSobre />,
-  },
-  {
-    path: "/empresa/:id/vagas",
-    element: <EmpresaVagas />,
   },
 ]);
 

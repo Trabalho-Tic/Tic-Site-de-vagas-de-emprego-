@@ -23,8 +23,12 @@ function Register() {
   const [categoria, setCategoria] = useState("")
   const [cellphone, setCellphone] = useState("");
   const [cpf, setCpf] = useState("");
+  const [cnpj, setCnpj] = useState("");
   const [type, setType] = useState(false);
   const [password, setPassword] = useState("");
+  const [pais, setPais] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [sobre, setSobre] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -69,11 +73,73 @@ function Register() {
       });
 
       // Redireciona após sucesso
-      navigate("/");
+      navigate("/login");
     } catch (err) {
       console.error(err);
 
       // Verifica se o erro é devido ao email ou CPF já existentes
+      if (err.message.includes("email")) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: "Este e-mail já está em uso.",
+        }));
+      } else if (err.message.includes("CPF")) {  // Verifica a mensagem de erro para CPF
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          cpf: "Este CPF já está em uso.",  // Mensagem de erro para CPF já existente
+        }));
+      } else {
+        alert(err?.message || "Erro no cadastro. Verifique os dados e tente novamente.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const handleRegisterCompany = async (e) => {
+    e.preventDefault();
+    if (loading) return;
+
+    // Validações inline
+    let formErrors = {};
+
+    if (!validateEmail(email)) formErrors.email = "Email inválido.";
+    if (!validatePassword(password)) formErrors.password = "A senha deve ter pelo menos 6 caracteres.";
+
+    // Se existirem erros, não continuar
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const payload = {
+        nome: name,
+        cnpj,
+        logo: file,
+        url_site: url,
+        email,
+        category: categoria,
+        pais,
+        cidade,
+        sobre
+      };
+
+      console.log(payload)
+
+      const response = await useApi({
+        endpoint: "/company/create",
+        method: "POST",
+        body: payload,
+      });
+
+      response.ok ? console.log("Criado com sucesso") : console.log("Erro") 
+
+      navigate("/login");
+    } catch (err) {
+      console.error(err);
+
       if (err.message.includes("email")) {
         setErrors((prevErrors) => ({
           ...prevErrors,
@@ -110,9 +176,9 @@ function Register() {
   };
 
   return (
-    <section className="flex justify-center items-center gap-10 py-4 transition-all duration-300 lg:py-0 lg:px-75 sm:h-screen">
-      <div className="flex flex-col w-auto lg:w-full h-screen justify-center p-5 lg:p-10">
-        <div className="flex justify-between items-center">
+    <section className="flex flex-col items-center py-10 justify-center h-full md:h-screen transition-all duration-300">
+      <div className="flex flex-col w-auto lg:w-full gap-10 justify-center p-5 lg:p-10">
+        <div className="flex flex-col md:flex-row justify-between items-center">
           <h1 className="!text-2xl pb-4">Cadastrar como {!type ? "Candidato" : "Empresa"} !</h1>
           <div className="flex items-center gap-3 mb-2">
             <span
@@ -146,7 +212,7 @@ function Register() {
           </div>
         </div>
 
-        <div className="relative min-h-[350px]">
+        <div className="flex flex-col items-center min-h-[350px]">
           <AnimatePresence custom={type ? 1 : -1} mode="wait">
             {!type ? (
               <motion.form
@@ -157,7 +223,7 @@ function Register() {
                 exit="exit"
                 custom={-1}
                 onSubmit={handleRegister}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-6"
+                className="grid grid-cols-1 md:w-full md:px-20 lg:grid-cols-2 gap-6 pb-6"
               >
                 <div className="flex flex-col">
                   <p className="text-lg pb-2">Nome</p>
@@ -242,8 +308,8 @@ function Register() {
                 animate="animate"
                 exit="exit"
                 custom={1}
-                onSubmit={handleRegister}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-6"
+                onSubmit={handleRegisterCompany}
+                className="grid grid-cols-1 md:w-full md:px-20 lg:grid-cols-3 gap-6 pb-6"
               >
                 <div className="flex flex-col">
                   <p className="text-lg pb-2">Nome Empresa</p>
@@ -273,8 +339,8 @@ function Register() {
                   <p className="text-lg pb-2">CNPJ</p>
                   <Input
                     required
-                    value={cpf}
-                    onChange={(e) => setCpf(e.target.value)}
+                    value={cnpj}
+                    onChange={(e) => setCnpj(e.target.value)}
                     placeholder="Escreva o CNPJ"
                   />
                   {errors.cpf && (
@@ -295,20 +361,7 @@ function Register() {
                     <p className="text-red-500">{errors.email}</p>
                   )}
                 </div>
-                
-                <div className="flex flex-col">
-                  <p className="text-lg pb-2">Site da empresa</p>
-                  <Input
-                    required
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
-                    placeholder="Link para o Site da empresa"
-                  />
-                  {errors.email && (
-                    <p className="text-red-500">{errors.email}</p>
-                  )}
-                </div>
-                
+                              
                 <div className="flex flex-col">
                   <p className="text-lg pb-2">Site da empresa</p>
                   <Input
@@ -334,6 +387,45 @@ function Register() {
                     <p className="text-red-500">{errors.email}</p>
                   )}
                 </div>
+
+                <div className="flex flex-col">
+                  <p className="text-lg pb-2">Pais da Empresa</p>
+                  <Input
+                    required
+                    value={pais}
+                    onChange={(e) => setPais(e.target.value)}
+                    placeholder="Pais sede da empresa"
+                  />
+                  {errors.email && (
+                    <p className="text-red-500">{errors.email}</p>
+                  )}
+                </div>
+
+                <div className="flex flex-col">
+                  <p className="text-lg pb-2">Cidade da Empresa</p>
+                  <Input
+                    required
+                    value={cidade}
+                    onChange={(e) => setCidade(e.target.value)}
+                    placeholder="Cidade da empresa"
+                  />
+                  {errors.email && (
+                    <p className="text-red-500">{errors.email}</p>
+                  )}
+                </div>
+
+                <div className="flex flex-col">
+                  <p className="text-lg pb-2">Sobre a Empresa</p>
+                  <Input
+                    required
+                    value={sobre}
+                    onChange={(e) => setSobre(e.target.value)}
+                    placeholder="Descreva sua empresa"
+                  />
+                  {errors.email && (
+                    <p className="text-red-500">{errors.email}</p>
+                  )}
+                </div>
                 
                 <div className="flex flex-col">
                   <p className="text-lg pb-2">Logo da Empresa</p>
@@ -348,7 +440,7 @@ function Register() {
                   )}
                 </div>
 
-                <div className="lg:col-span-2 pb-2">
+                <div className="lg:col-span-3">
                   <button
                     type="submit"
                     disabled={loading}
@@ -362,13 +454,13 @@ function Register() {
           </AnimatePresence>
         </div>
 
-        <p className="flex justify-center gap-2">
+      </div>
+        <p className="relative justify-center gap-2">
           Já possui uma conta?
           <Link className="text-black font-bold" to={"/login"}>
             Login
           </Link>
         </p>
-      </div>
     </section>
   );
 }

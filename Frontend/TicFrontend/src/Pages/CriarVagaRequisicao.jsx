@@ -106,10 +106,10 @@ function CriarVagaRequisicao() {
         <div className="flex h-screen bg-white">
             <form
                 onSubmit={handleCriar}
-                className="grid grid-cols-2 h-screen w-full py-0 bg-white p-10 gap-6"
+                className="grid md:grid-cols-2 h-screen w-full bg-white md:p-10 gap-6"
             >
             {/* Título */}
-                <div className="flex flex-col w-full h-full justify-center bg-white p-10 gap-6">
+                <div className="flex flex-col w-[400px] md:w-full h-full justify-center bg-white p-10 gap-6">
 
                     <h2 className="text-2xl font-semibold text-black mb-2">Requisição</h2>
 
@@ -128,14 +128,14 @@ function CriarVagaRequisicao() {
 
                     <div className="flex flex-col">
                         <label className="text-sm font-medium text-gray-800 mb-1">
-                            Adicioane os conhecimentos exigidos
+                            Adicione os conhecimentos exigidos
                         </label>
                         <div className="flex gap-3">
                             <Input
                                 value={conhecimento}
                                 onChange={(e) => setConhecimento(e.target.value)}
                                 placeholder="Exemplo: Node.js + anos de experiencia"
-                                className="flex-1 border border-gray-300 h-[83px] rounded-md px-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                className="flex border border-gray-300 h-[83px] rounded-md px-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
                             />
                             <button
                                 className="h-[60px] px-4 bg-gradient-to-r from-[#6A00FF] to-[#8B5CF6] text-white rounded-md font-medium hover:opacity-90 transition disabled:opacity-60 disabled:cursor-not-allowed"
@@ -148,9 +148,9 @@ function CriarVagaRequisicao() {
 
                     <div className="border border-gray-300 rounded-md p-3 min-h-[83px] text-gray-700">
                         {conhecimentos.length > 0 ? (
-                            <ul className="list-disc ml-5 space-y-1">
+                            <ul className="list-disc ml-5 space-y-1 break-words">
                                 {conhecimentos.map((b, index) => (
-                                    <li key={index}>{b}</li>
+                                    <li className="pr-1" key={index}>{b}</li>
                                 ))}
                             </ul>
                         ) : (
@@ -180,7 +180,7 @@ function CriarVagaRequisicao() {
 
                     <div className="border border-gray-300 rounded-md p-3 min-h-[83px] text-gray-700">
                         {destaques.length > 0 ? (
-                        <ul className="list-disc ml-5 space-y-1">
+                        <ul className="list-disc ml-5 space-y-1 break-words">
                             {destaques.map((b, index) => (
                                 <li key={index}>{b}</li>
                             ))}
