@@ -83,23 +83,23 @@ function LandingPage() {
     return (
         <>
             <Header />
-            <section className="flex px-20 pt-20 pb-30 items-center gap-20">
+            <section className="flex flex-col md:flex-row px-20 pt-20 pb-30 items-center gap-20">
                 <div className="flex flex-col gap-10">
-                    <h1 className="text-6xl font-bold">Encontre sua proxima <span className="text-green-400">oportunidade</span></h1>
-                    <p className="text-xl font-semibold text-gray-600">Conectamos talentos com as melhores empresas. Milhares de vagas atualizadas diariamente para impulsionar sua carreira.</p>
-                    <div className="flex items-center gap-10">
+                    <h1 className="text-4xl text-center md:text-start md:text-6xl font-bold">Encontre sua proxima <span className="text-green-400">oportunidade</span></h1>
+                    <p className="text-xl text-center md:text-start font-semibold text-gray-600">Conectamos talentos com as melhores empresas. Milhares de vagas atualizadas diariamente para impulsionar sua carreira.</p>
+                    <div className="flex flex-col md:flex-row items-center gap-10">
                         <Link className="flex gap-3 px-10 py-4 text-white rounded-2xl text-sm font-bold bg-gradient-to-r from-green-400 to-green-300 transition-all duration-300 hover:-translate-y-1"><Search className="w-5" />Buscar Vagas</Link>
                         <Link className="flex gap-3 px-10 py-4 text-white rounded-2xl text-sm font-bold bg-gradient-to-r from-green-400 to-green-300 transition-all duration-300 hover:-translate-y-1"><Briefcase className="w-5"/>Para Empresas</Link>
                     </div>
                 </div>
                 <div>
-                    <img className="w-270 rounded-2xl shadow-2xl" src={hero} alt="" />
+                    <img className="flex w-270 rounded-2xl shadow-2xl" src={hero} alt="" />
                 </div>
             </section>
             <section className="pb-30">
                 <div className="text-center mb-16">
                     <h1 className="text-4xl lg:text-5xl mb-4 font-bold">Como funciona</h1>
-                    <p className="text-xl text-gray-600 max-w-2xl font-semibold mx-auto">Apenas 4 passos simples para encontrar a vaga perfeita</p>
+                    <p className="text-xl text-gray-600 max-w-2xl font-semibold mx-2 md:mx-auto">Apenas 4 passos simples para encontrar a vaga perfeita</p>
                 </div>
                 <div className="grid md:grid-cols-4 gap-5 px-20">
                     {
@@ -115,7 +115,7 @@ function LandingPage() {
                         <h2 className="text-4xl lg:text-5xl mb-4 font-bold">
                             Explore por categoria
                         </h2>
-                        <p className="text-xl text-gray-600 max-w-2xl font-semibold mx-auto">
+                        <p className="text-xl text-gray-600 max-w-2xl font-semibold mx-2 md:mx-auto">
                             Encontre oportunidades na sua área de atuação
                         </p>
                     </div>
@@ -147,7 +147,7 @@ function LandingPage() {
                         <h2 className="text-4xl lg:text-5xl mb-4 font-bold">
                             Por que escolher nossa plataforma?
                         </h2>
-                        <p className="text-xl text-gray-600 max-w-2xl font-semibold mx-auto">
+                        <p className="text-xl text-gray-600 max-w-2xl font-semibold mx-2 md:mx-auto">
                             A melhor experiência para candidatos e empresas
                         </p>
                     </div>

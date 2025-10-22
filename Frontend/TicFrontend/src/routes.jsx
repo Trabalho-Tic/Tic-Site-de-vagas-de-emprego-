@@ -66,7 +66,7 @@ const routes = createBrowserRouter([
       path: "/admin",
       element: <AdminLayout />,
       children: [
-        { index: true, element: <UsuariosPage /> }, // renderiza /admin direto
+        { index: true, element: <UsuariosPage /> },
         { path: "usuarios", element: <UsuariosPage /> },
         { path: "vagas", element: <VagasPage /> },
       ],
