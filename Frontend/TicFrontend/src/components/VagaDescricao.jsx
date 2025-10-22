@@ -15,18 +15,24 @@ import logo from "../assets/js moderno.webp"
 function VagaDescricao() {
     const { id } = useParams()
     const [vaga, setVaga] = useState([])
+    const [empresa, setEmpresa] = useState([])
 
     useEffect(() => {
         async function fetchVagas() {
             try {
-            const result = await useApi({ endpoint: `/vaga/${id}` });
-            setVaga(result);
-            console.log(result)
+                const result = await useApi({ endpoint: `/vaga/${id}` });
+                setVaga(result);
+                console.log(result)
+                
+                if (result?.id_company) {
+                    const response = await useApi({ endpoint: `/company/${result.id_company}` });
+                    setEmpresa(response);
+                }
             } catch (error) {
-            console.error("Erro ao buscar vagas:", error);
+                console.error("Erro ao buscar vagas:", error);
             }
         }
-
+    
         fetchVagas();
     }, [id]);
 
@@ -37,12 +43,12 @@ function VagaDescricao() {
     return (
         <>
             <div className="flex items-center gap-2">
-                <img className="h-8 w-8 rounded-4xl" src={logo} alt="" />
-                <p>Meta Company</p>
+                <img className="h-8 w-8 rounded-4xl" src={empresa.logo} alt="" />
+                <p>{empresa.nome}</p>
             </div>
             <div className="flex justify-between items-center pt-4">
                 <div className="flex flex-col">
-                    <p className="text-2xl pb-3 font-bold">{vaga.nome}</p>
+                    <p className="text-2xl pb-3 font-bold max-w-150">{vaga.nome}</p>
                     <p className="text-sm font-medium text-gray-600">{vaga.cidade}, {vaga.pais} (On site)</p>
                 </div>
                 <button className="flex text-lg rounded-4xl items-center px-6 h-12 gap-2 font-semibold bg-green-400 transition-all duration-500 hover:-translate-y-1 hover:bg-green-300"><Zap size={20} />Candidatar-se</button>
