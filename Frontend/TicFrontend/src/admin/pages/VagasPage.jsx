@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useApi from "../../api/Api";
 import Modal from "../../components/Modal";
+import { useNavigate } from "react-router-dom";
 
 const vagaVazia = {
   nome: "",
@@ -15,6 +16,8 @@ export default function VagasPage() {
   const [form, setForm] = useState(vagaVazia);
   const [modalAberto, setModalAberto] = useState(false);
   const [idEdicao, setIdEdicao] = useState(null);
+
+  const navigate = useNavigate()
 
   async function carregarVagas() {
     const data = await useApi({ endpoint: "/Vaga" });
@@ -76,7 +79,7 @@ export default function VagasPage() {
           </p>
         </div>
         <button
-          onClick={novaVaga}
+          onClick={() => {navigate("/criarVaga")}}
           className="bg-indigo-600 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-indigo-500"
         >
           <span className="material-symbols-outlined">add</span>
