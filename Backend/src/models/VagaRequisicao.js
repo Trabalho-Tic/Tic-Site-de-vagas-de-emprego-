@@ -19,6 +19,14 @@ const VagaRequisicao = sequelize.define("vagaRequisicao", {
         type: DataTypes.JSON,
         allowNull: false
     },
+    deficiencia: {
+        type: DataTypes.JSON,
+        allowNull: false,
+    },
+    acessibilidade: {
+        type: DataTypes.JSON,
+        allowNull: false,
+    },
     id_vaga: {
         type: DataTypes.UUID,
         allowNull: false,

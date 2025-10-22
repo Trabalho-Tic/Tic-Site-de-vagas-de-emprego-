@@ -22,6 +22,16 @@ const Vaga = sequelize.define("vaga", {
     modelo: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    id_company: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+            model: "tb_company",
+            key: "id"
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
     }
 }, {
     tableName: "tb_vaga",
@@ -48,6 +58,11 @@ Vaga.associate = (models) => {
     Vaga.hasOne(models.vagaRequisicao, {
         foreignKey: 'id_vaga',
         as: 'requisicao'
+    });
+
+    Vaga.belongsTo(models.company, {
+        foreignKey: "id_company",
+        as: "empresa",
     });
 };
 

@@ -15,10 +15,10 @@ function Vagas() {
     useEffect(() => {
         async function fetchVagas() {
             try {
-            const vaga = await useApi({ endpoint: "/vaga" });
-            setVagas(vaga);
+                const vaga = await useApi({ endpoint: "/vaga" });
+                setVagas(vaga);
             } catch (error) {
-            console.error("Erro ao buscar vagas:", error);
+                console.error("Erro ao buscar vagas:", error);
             }
         }
 

@@ -15,8 +15,13 @@ import CriarVagaDescricao from "./Pages/CriarVagaDescricao";
 import AdminLayout from "./admin/Layout";
 import UsuariosPage from "./admin/pages/UsuariosPage";
 import VagasPage from "./admin/pages/VagasPage";
+import LandingPage from "./Pages/LandingPage";
 
 const routes = createBrowserRouter([
+    {
+        path: '/',
+        element: <LandingPage />
+    },
     {
         path: '/login',
         element: <Login />

@@ -2,80 +2,113 @@ import React, { useState, useEffect } from "react";
 import useApi from "../../api/Api";
 import Modal from "../../components/Modal";
 
-const usuarioVazio = {
-  nome: "",
-  email: "",
-  cpf: "",
-  telefone: "",
-  typeUser: "candidato",
-  deficiencias: [],
-  password: "",
-};
-
 export default function UsuariosPage() {
   const [usuarios, setUsuarios] = useState([]);
   const [busca, setBusca] = useState("");
-  const [form, setForm] = useState(usuarioVazio);
-  const [modalAberto, setModalAberto] = useState(false);
+  const [form, setForm] = useState({});
   const [idEdicao, setIdEdicao] = useState(null);
+  const [modalAberto, setModalAberto] = useState(false);
+  const [mensagem, setMensagem] = useState(""); // ✅ feedback via texto
 
+  const usuarioVazio = {
+    nome: "",
+    email: "",
+    cpf: "",
+    telefone: "",
+    password: "",
+    typeUser: "candidato",
+    deficiencias: [],
+  };
+
+  // 🟢 Buscar usuários
   async function carregarUsuarios() {
-    const data = await useApi({ endpoint: "/user" });
-    setUsuarios(data || []);
+    try {
+      const data = await useApi({ endpoint: "/user" });
+      setUsuarios(data);
+    } catch (err) {
+      setMensagem("❌ Erro ao carregar usuários.");
+    }
   }
 
   useEffect(() => {
     carregarUsuarios();
   }, []);
 
+  // 🔍 Filtro
   const filtrados = usuarios.filter(
     (u) =>
-      u.nome.toLowerCase().includes(busca.toLowerCase()) ||
-      u.email.toLowerCase().includes(busca.toLowerCase()) ||
-      u.cpf.toLowerCase().includes(busca.toLowerCase())
+      u.nome?.toLowerCase().includes(busca.toLowerCase()) ||
+      u.email?.toLowerCase().includes(busca.toLowerCase()) ||
+      u.cpf?.includes(busca)
   );
 
-  function novoUsuario() {
-    setForm(usuarioVazio);
-    setIdEdicao(null);
-    setModalAberto(true);
-  }
-
+  // ✏️ Editar
   function editarUsuario(u) {
     setForm(u);
     setIdEdicao(u.id);
     setModalAberto(true);
   }
 
-  async function excluirUsuario(u) {
-    if (!confirm(`Excluir ${u.nome}?`)) return;
-    await useApi({ endpoint: `/user/delete/${u.id}`, method: "DELETE" });
-    carregarUsuarios();
+  // ➕ Novo
+  function novoUsuario() {
+    setForm(usuarioVazio);
+    setIdEdicao(null);
+    setModalAberto(true);
   }
 
-  async function onSubmit(e) {
-    e.preventDefault();
-    if (idEdicao) {
-      await useApi({
-        endpoint: `/user/update/${idEdicao}`,
-        method: "PUT",
-        body: form,
-      });
-    } else {
-      await useApi({ endpoint: "/user/create", method: "POST", body: form });
+  // ❌ Excluir
+  async function excluirUsuario(u) {
+    if (!confirm(`Excluir ${u.nome}?`)) return;
+    try {
+      await useApi({ endpoint: `/user/delete/${u.id}`, method: "DELETE" });
+      carregarUsuarios();
+      setMensagem("✅ Usuário excluído com sucesso.");
+    } catch {
+      setMensagem("❌ Erro ao excluir usuário.");
     }
-    setModalAberto(false);
-    carregarUsuarios();
+  }
+
+  // 💾 Criar / Atualizar
+  async function salvarUsuario(e) {
+    e.preventDefault();
+    try {
+      if (idEdicao) {
+        await useApi({
+          endpoint: `/user/update/${idEdicao}`,
+          method: "PUT",
+          body: form,
+        });
+        setMensagem("✅ Usuário atualizado com sucesso!");
+      } else {
+        await useApi({
+          endpoint: "/user/create",
+          method: "POST",
+          body: form,
+        });
+        setMensagem("✅ Usuário criado com sucesso!");
+      }
+      setModalAberto(false);
+      carregarUsuarios();
+    } catch (err) {
+      setMensagem(`❌ ${err.message || "Erro ao salvar usuário."}`);
+    }
   }
 
   return (
     <div>
+      {/* Mensagem simples de feedback */}
+      {mensagem && (
+        <div className="bg-gray-100 text-gray-800 border border-gray-300 px-4 py-2 rounded-md mb-4 text-sm">
+          {mensagem}
+        </div>
+      )}
+
       {/* Cabeçalho */}
       <div className="flex justify-between items-center mb-8">
         <div>
           <h2 className="text-2xl font-bold">Gerenciamento de Usuários</h2>
           <p className="text-gray-600 text-sm">
-            Gerencie usuários e atribua funções de acesso.
+            Adicione, edite ou remova usuários do sistema.
           </p>
         </div>
         <button
@@ -83,7 +116,7 @@ export default function UsuariosPage() {
           className="bg-indigo-600 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-indigo-500"
         >
           <span className="material-symbols-outlined">add</span>
-          Adicionar Usuário
+          Novo Usuário
         </button>
       </div>
 
@@ -116,10 +149,10 @@ export default function UsuariosPage() {
           <table className="w-full text-left text-sm">
             <thead>
               <tr className="border-b text-gray-500 text-xs uppercase">
-                <th className="py-3 px-4">Usuário</th>
+                <th className="py-3 px-4">Nome</th>
+                <th className="py-3 px-4">Email</th>
                 <th className="py-3 px-4">CPF</th>
                 <th className="py-3 px-4">Telefone</th>
-                <th className="py-3 px-4">Tipo</th>
                 <th className="py-3 px-4 text-right">Ações</th>
               </tr>
             </thead>
@@ -129,13 +162,10 @@ export default function UsuariosPage() {
                   key={u.id}
                   className="border-b hover:bg-gray-50 transition-colors"
                 >
-                  <td className="py-3 px-4">
-                    <p className="font-medium">{u.nome}</p>
-                    <p className="text-gray-500 text-xs">{u.email}</p>
-                  </td>
+                  <td className="py-3 px-4 font-medium">{u.nome}</td>
+                  <td className="py-3 px-4 text-sm">{u.email}</td>
                   <td className="py-3 px-4 text-sm">{u.cpf}</td>
                   <td className="py-3 px-4 text-sm">{u.telefone}</td>
-                  <td className="py-3 px-4 text-sm capitalize">{u.typeUser}</td>
                   <td className="py-3 px-4 text-right">
                     <div className="flex justify-end gap-2">
                       <button
@@ -163,27 +193,30 @@ export default function UsuariosPage() {
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Modal de Criação/Edição */}
       <Modal
         open={modalAberto}
         title={idEdicao ? "Editar Usuário" : "Novo Usuário"}
         onClose={() => setModalAberto(false)}
       >
-        <form onSubmit={onSubmit} className="space-y-4">
-          {["nome", "email", "cpf", "telefone"].map((campo) => (
+        <form onSubmit={salvarUsuario} className="space-y-4">
+          {["nome", "email", "cpf", "telefone", "password"].map((campo) => (
             <div key={campo}>
-              <label className="block text-sm font-medium mb-1 capitalize">
+              <label className="block text-sm font-medium text-gray-600 mb-1 capitalize">
                 {campo}
               </label>
               <input
-                type={campo === "email" ? "email" : "text"}
-                value={form[campo]}
-                onChange={(e) => setForm({ ...form, [campo]: e.target.value })}
-                required
+                type={campo === "password" ? "password" : "text"}
+                value={form[campo] || ""}
+                onChange={(e) =>
+                  setForm({ ...form, [campo]: e.target.value })
+                }
+                required={campo !== "telefone"}
                 className="w-full bg-gray-100 border-none rounded-md py-2 px-3 focus:ring-2 focus:ring-indigo-500"
               />
             </div>
           ))}
+
           <div className="flex justify-end gap-3 pt-2">
             <button
               type="button"
