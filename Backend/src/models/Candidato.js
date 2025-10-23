@@ -25,7 +25,7 @@ const Candidato = sequelize.define("Candidato", {
   timestamps: true,
 });
 
-Candidato.belongsTo(User, { foreignKey: "id_user", as: "user" });
-User.hasOne(Candidato, { foreignKey: "id_user", as: "candidato" });
+Candidato.belongsTo(User, { foreignKey: "id_user", as: "user", onDelete: "CASCADE" });
+User.hasOne(Candidato, { foreignKey: "id_user", as: "candidato", onDelete: "CASCADE" });
 
 module.exports = Candidato;

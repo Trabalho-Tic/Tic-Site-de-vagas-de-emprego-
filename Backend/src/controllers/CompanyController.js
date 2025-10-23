@@ -1,66 +1,82 @@
 const Company = require('../models/Company');
+const User = require('../models/User');
 
 class CompanyController {
 
-    async index(request, response) {
-        try {
-            const companys = await Company.findAll();
-            return response.json(companys);
-        } catch (error) {
-            return response.status(500).json({ error: "Erro ao buscar Companys" })
-        }
+  // Listar todas as empresas com dados do usuário dono
+  async index(req, res) {
+    try {
+      const companies = await Company.findAll({
+        include: { model: User, as: 'user', attributes: ['id', 'nome', 'email', 'telefone'] },
+      });
+      return res.json(companies);
+    } catch (error) {
+      return res.status(500).json({ error: "Erro ao buscar empresas" });
     }
+  }
 
-    async show(request, response) {
-        const { id } = request.params
-        try {
-            const company = await Company.findByPk(id)
-            if (!company) {
-                return response.status(404).json({ error: "Company não encontrado" })
-            }
-            return response.json(company)
-        } catch (error) {
-            return response.status(500).json({ error: "Erro ao buscar por Company"})
-        }
+  // Mostrar empresa específica
+  async show(req, res) {
+    const { id } = req.params;
+    try {
+      const company = await Company.findByPk(id, {
+        include: { model: User, as: 'user', attributes: ['id', 'nome', 'email'] },
+      });
+      if (!company) return res.status(404).json({ error: "Empresa não encontrada" });
+      return res.json(company);
+    } catch (error) {
+      return res.status(500).json({ error: "Erro ao buscar empresa" });
     }
+  }
 
-    async create(request, response) {
-        try {
-            const company = await Company.create(request.body)
-            return response.json(company)
-        } catch (error) {
-            return response.status(500).json({ error: "Erro ao criar Company"})
-        }
+  // Criar empresa (rota pública)
+  async create(req, res) {
+    const { id_user, cnpj } = req.body;
+    try {
+      const existing = await Company.findOne({ where: { cnpj } });
+      if (existing) {
+        return res.status(400).json({ error: "CNPJ já cadastrado" });
+      }
+
+      const company = await Company.create(req.body);
+      return res.status(201).json(company);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Erro ao criar empresa" });
     }
-    
-    async update(request, response) {
-        const { id } = request.params
-        try {
-            const company = await Company.findByPk(id)
-            if (!company) {
-                return response.status(404).json({ error: "Company não encontrado"})
-            }
-            await company.update(request.body)
-            return response.json(company)
-        } catch (error) {
-            return response.status(500).json({ error: "Erro ao atualizar Company"})
-        }
+  }
+
+  // Atualizar dados da empresa
+  async update(req, res) {
+    const { id } = req.params;
+    try {
+      const company = await Company.findByPk(id);
+      if (!company) {
+        return res.status(404).json({ error: "Empresa não encontrada" });
+      }
+
+      await company.update(req.body);
+      return res.json(company);
+    } catch (error) {
+      return res.status(500).json({ error: "Erro ao atualizar empresa" });
     }
-    
-    async delete(request, response) {
-        const { id } = request.params
-        try {
-            const company = await Company.findByPk(id);
-            if (!company) {
-                return response.status(404).json({ error: 'Company não encontrado.' });
-            }
-            await company.destroy();
-            return response.status(204).send();
-        } catch (error) {
-            return res.status(500).json({ error: 'Erro ao deletar Company.' });
-        }
+  }
+
+  // Deletar empresa
+  async delete(req, res) {
+    const { id } = req.params;
+    try {
+      const company = await Company.findByPk(id);
+      if (!company) {
+        return res.status(404).json({ error: "Empresa não encontrada" });
+      }
+
+      await company.destroy();
+      return res.status(204).send();
+    } catch (error) {
+      return res.status(500).json({ error: "Erro ao deletar empresa" });
     }
+  }
 }
 
-module.exports = new CompanyController()
- 
+module.exports = new CompanyController();

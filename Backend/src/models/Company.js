@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize")
 const sequelize = require("../config/database")
+const User = require("./User");
 
 const Company = sequelize.define('company', {
     id: {
@@ -55,5 +56,9 @@ Company.associate = (models) => {
         as: "vagas",
     });
 }
+
+Company.belongsTo(User, { foreignKey: "id_user", as: "user", onDelete: "CASCADE" });
+User.hasOne(Company, { foreignKey: "id_user", as: "company", onDelete: "CASCADE" });
+
 
 module.exports = Company
