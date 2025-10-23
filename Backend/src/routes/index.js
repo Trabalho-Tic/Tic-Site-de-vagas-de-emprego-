@@ -30,13 +30,12 @@ const authMiddleware = require("../middlewares/authMiddleware");
 // Login
 router.post('/auth/login', (req, res) => AuthController.login(req, res));
 
-router.post("/company/create", upload.single("logo"), CompanyController.create);
 
 // Registro de usuário base
 router.post('/user/create', (req, res) => UserController.create(req, res));
 
 // Registro público de empresas e candidatos
-router.post('/company/create', (req, res) => CompanyController.create(req, res));
+router.post("/company/create", upload.single("logo"), CompanyController.create);
 router.post('/candidato/create', (req, res) => CandidatoController.create(req, res));
 
 // ====================================================
