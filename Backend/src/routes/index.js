@@ -16,6 +16,7 @@ const VagaDescricaoController = require('../controllers/VagaDescricaoController'
 const VagaBeneficioController = require('../controllers/VagaBeneficioController');
 const VagaProcessoController = require('../controllers/VagaProcessoController');
 const VagaRequisicaoController = require('../controllers/VagaRequisicaoController');
+const CompanyController = require('../controllers/CompanyController');
 
 // ------------------ AUTENTICAÇÃO ------------------
 const AuthController = require("../controllers/AuthController");

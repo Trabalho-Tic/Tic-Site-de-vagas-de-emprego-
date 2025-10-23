@@ -12,7 +12,7 @@ function Company() {
             <Header />
 
             <section className="flex flex-col items-center gap-10 py-10 border-b-1 border-gray-300">
-                <p className="text-4xl">Procure por uma empresa de job</p>
+                <p className="text-4xl text-center px-3 md:px-0">Procure por uma empresa de job</p>
                 <div className="flex flex-col items-center lg:flex-row gap-5 lg:w-200">
                     <Input placeholder="Procure pelo nome da empresa"></Input>
                     <Input placeholder="Procure pela Localização"></Input>

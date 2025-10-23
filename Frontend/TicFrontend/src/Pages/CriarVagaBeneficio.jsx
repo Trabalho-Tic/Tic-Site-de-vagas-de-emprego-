@@ -91,7 +91,7 @@ function CriarVagaBeneficio() {
       {/* Lista de benefícios adicionados */}
       <div className="border border-gray-300 rounded-md p-3 min-h-[83px] text-gray-700">
         {beneficios.length > 0 ? (
-          <ul className="list-disc ml-5 space-y-1">
+          <ul className="list-disc ml-5 space-y-1 break-words">
             {beneficios.map((b, index) => (
               <li key={index}>{b}</li>
             ))}
