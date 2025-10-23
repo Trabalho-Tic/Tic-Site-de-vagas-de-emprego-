@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/input";
 import Select from "../components/select";
 import useApi from "../api/Api";
-//import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 // Funções de validação
 const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
@@ -176,8 +176,8 @@ function Register() {
   };
 
   return (
-    <section className="flex flex-col items-center py-10 justify-center h-full md:h-screen transition-all duration-300">
-      <div className="flex flex-col w-auto lg:w-full gap-10 justify-center p-5 lg:p-10">
+    <section className="flex flex-col items-center pt-10 justify-center h-full md:h-screen transition-all duration-300">
+      <div className="flex flex-col w-auto lg:w-full gap-5 justify-center p-5 lg:px-10 lg:py-0">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <h1 className="!text-2xl pb-4">Cadastrar como {!type ? "Candidato" : "Empresa"} !</h1>
           <div className="flex items-center gap-3 mb-2">

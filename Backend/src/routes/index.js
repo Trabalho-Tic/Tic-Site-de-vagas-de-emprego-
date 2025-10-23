@@ -16,7 +16,6 @@ const VagaDescricaoController = require('../controllers/VagaDescricaoController'
 const VagaBeneficioController = require('../controllers/VagaBeneficioController');
 const VagaProcessoController = require('../controllers/VagaProcessoController');
 const VagaRequisicaoController = require('../controllers/VagaRequisicaoController');
-const CompanyController = require('../controllers/CompanyController');
 
 // ------------------ AUTENTICAÇÃO ------------------
 const AuthController = require("../controllers/AuthController");
@@ -39,7 +38,7 @@ router.post('/candidato/create', (req, res) => CandidatoController.create(req, r
 // ====================================================
 // ROTAS PROTEGIDAS (JWT OBRIGATÓRIO)
 // ====================================================
-router.use(authMiddleware);
+// router.use(authMiddleware);
 
 // ------------------ USUÁRIOS ------------------
 router.get('/user', UserController.index);
