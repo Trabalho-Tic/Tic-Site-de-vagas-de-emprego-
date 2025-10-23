@@ -35,11 +35,11 @@ const Company = sequelize.define('company', {
     },
     pais: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     cidade: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     sobre: {
         type: DataTypes.TEXT,

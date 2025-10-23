@@ -31,28 +31,37 @@ function Login() {
     }
 
     try {
-      setLoading(true);
+  setLoading(true);
 
-      const data = await useApi({
-        endpoint: "/auth/login",
-        method: "POST",
-        body: { email: login, password },
-      });
+  const data = await useApi({
+    endpoint: "/auth/login",
+    method: "POST",
+    body: { email: login, password },
+  });
 
-      // Guarda o token e dados do usuário
-      localStorage.setItem("token", data.token);
-      if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
+  // Guarda token e dados do usuário
+  localStorage.setItem("token", data.token);
+  if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
 
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-      alert(
-        (err?.message?.includes("401") && "Credenciais inválidas.") ||
-          "Falha no login. Tente novamente."
-      );
-    } finally {
-      setLoading(false);
-    }
+  // 🔹 Verifica o tipo e redireciona
+  const user = data.user;
+  if (user?.typeUser === "empresa") {
+    navigate("/dashboard-company");
+  } else if (user?.typeUser === "candidato") {
+    navigate("/dashboard-candidato");
+  } else {
+    navigate("/"); // fallback genérico
+  }
+
+} catch (err) {
+  console.error(err);
+  alert(
+    (err?.message?.includes("401") && "Credenciais inválidas.") ||
+    "Falha no login. Tente novamente."
+  );
+  } finally {
+    setLoading(false);
+}
   };
 
   return (
