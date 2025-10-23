@@ -41,7 +41,7 @@ router.post('/candidato/create', (req, res) => CandidatoController.create(req, r
 // ====================================================
 // ROTAS PROTEGIDAS (JWT OBRIGATÓRIO)
 // ====================================================
-router.use(authMiddleware);
+// router.use(authMiddleware);
 
 // ------------------ USUÁRIOS ------------------
 router.get('/user', UserController.index);
