@@ -4,10 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/input";
 import Select from "../components/select";
 import useApi from "../api/Api";
+import ImageUpload from "../components/ImageUpload";
 
 // 🧩 Funções de validação inline
 const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
-const validateCnpj = (cnpj) => /^\d{14}$/.test(cnpj.replace(/\D/g, ""));
 const validatePassword = (password) => password.length >= 6;
 
 function RegisterEmpresa() {
@@ -28,17 +28,15 @@ function RegisterEmpresa() {
   // 🧭 Submissão
   const handleRegisterCompany = async (e) => {
     e.preventDefault();
-
     if (loading) return;
     setErrors({});
 
     // 🔍 Validações inline apenas dos campos principais
     let formErrors = {};
-
     if (!nome.trim()) formErrors.nome = "O nome da empresa é obrigatório.";
     if (!validateEmail(email)) formErrors.email = "Email inválido.";
-    if (!validatePassword(password)) formErrors.password = "A senha deve ter no mínimo 6 caracteres.";
-    if (!validateCnpj(cnpj)) formErrors.cnpj = "CNPJ inválido (14 dígitos).";
+    if (!validatePassword(password))
+      formErrors.password = "A senha deve ter no mínimo 6 caracteres.";
     if (!categoria.trim()) formErrors.categoria = "Selecione a categoria.";
 
     // 🚫 Bloqueia o POST se houver erro
@@ -51,7 +49,7 @@ function RegisterEmpresa() {
     try {
       setLoading(true);
 
-      // 🧩 1ª etapa → criar usuário base
+      // 🧩 1ª etapa → criar o usuário base
       const user = await useApi({
         endpoint: "/user/create",
         method: "POST",
@@ -59,40 +57,49 @@ function RegisterEmpresa() {
           nome,
           email,
           password,
+          telefone: "00000000000", // 👈 obrigatório no model User
           typeUser: "empresa",
         },
       });
 
       // 🧩 2ª etapa → criar empresa vinculada ao usuário
+      const formData = new FormData();
+      formData.append("nome", nome);
+      formData.append("cnpj", cnpj || "");
+      formData.append("url_site", url || "");
+      formData.append("email", email);
+      formData.append("category", categoria);
+      formData.append("pais", pais || "");
+      formData.append("cidade", cidade || "");
+      formData.append("sobre", sobre || "");
+      formData.append("id_user", user.id);
+      if (file) formData.append("logo", file);
+
       const response = await useApi({
         endpoint: "/company/create",
         method: "POST",
-        body: {
-          nome,
-          cnpj,
-          logo: file || null,
-          url_site: url || null,
-          email,
-          category: categoria,
-          pais: pais || null,
-          cidade: cidade || null,
-          sobre: sobre || null,
-          id_user: user.id,
-        },
+        body: formData,
+        isFormData: true,
       });
 
-      if (response?.id_user) {
+      if (response?.id_user || response?.id) {
         navigate("/login");
       } else {
         setErrors({ general: "Erro ao registrar empresa. Tente novamente." });
       }
     } catch (err) {
-      console.error(err);
+      console.error("❌ Erro no registro de empresa:", err);
       const msg = err?.message?.toLowerCase() || "";
 
-      if (msg.includes("email")) setErrors({ email: "Este e-mail já está em uso." });
-      else if (msg.includes("cnpj")) setErrors({ cnpj: "Este CNPJ já está em uso." });
-      else setErrors({ general: "Erro ao registrar. Verifique os dados e tente novamente." });
+      if (msg.includes("email"))
+        setErrors({ email: "Este e-mail já está em uso." });
+      else if (msg.includes("cnpj"))
+        setErrors({ cnpj: "Este CNPJ já está em uso." });
+      else
+        setErrors({
+          general:
+            "Erro ao registrar. Verifique os dados e tente novamente.",
+        });
     } finally {
       setLoading(false);
     }
@@ -150,7 +157,7 @@ function RegisterEmpresa() {
             <Input
               value={cnpj}
               onChange={(e) => setCnpj(e.target.value)}
-              placeholder="Apenas números"
+              placeholder="Insira o CNPJ de sua empresa"
             />
             {errors.cnpj && <p className="text-red-500">{errors.cnpj}</p>}
           </div>
@@ -170,12 +177,14 @@ function RegisterEmpresa() {
                 { label: "Outros", value: "Outros" },
               ]}
             />
-            {errors.categoria && <p className="text-red-500">{errors.categoria}</p>}
+            {errors.categoria && (
+              <p className="text-red-500">{errors.categoria}</p>
+            )}
           </div>
 
-          {/* Campos opcionais */}
+          {/* Site da Empresa */}
           <div className="flex flex-col">
-            <p className="text-lg pb-2">Site da Empresa (opcional)</p>
+            <p className="text-lg pb-2">Site da Empresa</p>
             <Input
               value={url}
               onChange={(e) => setUrl(e.target.value)}
@@ -183,16 +192,22 @@ function RegisterEmpresa() {
             />
           </div>
 
+          {/* Logo da Empresa */}
           <div className="flex flex-col">
-            <p className="text-lg pb-2">Logo (opcional)</p>
-            <Input
-              type="file"
-              onChange={(e) => setFile(e.target.files[0]?.name || "")}
-            />
+            <p className="text-lg pb-2">Logo da Empresa</p>
+            <div className="border-2 border-dashed rounded-lg flex flex-col items-center justify-center hover:border-gray-400 transition-all duration-200 h-[105px]">
+              <ImageUpload
+                label=""
+                onFileSelect={(file) => setFile(file)}
+                error={errors.file}
+                className="w-24 h-24 object-cover rounded-lg shadow-sm"
+              />
+            </div>
           </div>
 
+          {/* País */}
           <div className="flex flex-col">
-            <p className="text-lg pb-2">País (opcional)</p>
+            <p className="text-lg pb-2">País</p>
             <Input
               value={pais}
               onChange={(e) => setPais(e.target.value)}
@@ -200,8 +215,9 @@ function RegisterEmpresa() {
             />
           </div>
 
+          {/* Cidade */}
           <div className="flex flex-col">
-            <p className="text-lg pb-2">Cidade (opcional)</p>
+            <p className="text-lg pb-2">Cidade</p>
             <Input
               value={cidade}
               onChange={(e) => setCidade(e.target.value)}
@@ -209,8 +225,9 @@ function RegisterEmpresa() {
             />
           </div>
 
+          {/* Sobre */}
           <div className="flex flex-col lg:col-span-3">
-            <p className="text-lg pb-2">Sobre (opcional)</p>
+            <p className="text-lg pb-2">Sobre</p>
             <Input
               value={sobre}
               onChange={(e) => setSobre(e.target.value)}
@@ -220,7 +237,9 @@ function RegisterEmpresa() {
 
           {/* Erro geral */}
           {errors.general && (
-            <p className="text-red-500 text-center lg:col-span-3">{errors.general}</p>
+            <p className="text-red-500 text-center lg:col-span-3">
+              {errors.general}
+            </p>
           )}
 
           {/* Botão */}

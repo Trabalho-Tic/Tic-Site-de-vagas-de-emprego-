@@ -16,6 +16,7 @@ const VagaDescricaoController = require('../controllers/VagaDescricaoController'
 const VagaBeneficioController = require('../controllers/VagaBeneficioController');
 const VagaProcessoController = require('../controllers/VagaProcessoController');
 const VagaRequisicaoController = require('../controllers/VagaRequisicaoController');
+const upload = require("../middlewares/upload");
 
 
 // ------------------ AUTENTICAÇÃO ------------------
@@ -28,6 +29,8 @@ const authMiddleware = require("../middlewares/authMiddleware");
 
 // Login
 router.post('/auth/login', (req, res) => AuthController.login(req, res));
+
+router.post("/company/create", upload.single("logo"), CompanyController.create);
 
 // Registro de usuário base
 router.post('/user/create', (req, res) => UserController.create(req, res));
