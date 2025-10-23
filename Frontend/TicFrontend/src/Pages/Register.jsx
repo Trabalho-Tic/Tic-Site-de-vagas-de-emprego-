@@ -63,7 +63,7 @@ function Register() {
         cpf,
         password,
         telefone: cellphone,
-        typeUser: type,
+        typeUser: "candidato",
       };
 
       const response = await useApi({
