@@ -23,6 +23,7 @@ import RegisterEmpresa from "./Pages/RegisterEmpresa";
 import AdminLayout from "./admin/Layout";
 import UsuariosPage from "./admin/pages/UsuariosPage";
 import VagasPage from "./admin/pages/VagasPage";
+import Curriculo from "./Pages/Curriculo";
 
 const routes = createBrowserRouter([
   {
@@ -37,11 +38,13 @@ const routes = createBrowserRouter([
     path: "/home",
     element: <Home />,
   },
-
-  // 🔹 Novo fluxo de registro
+  {
+    path: "/curriculo",
+    element: <Curriculo />
+  },
   {
     path: "/register",
-    element: <RegisterSelect />, // tela de escolha do tipo de usuário
+    element: <RegisterSelect />,
   },
   {
     path: "/register-candidato",
@@ -51,8 +54,6 @@ const routes = createBrowserRouter([
     path: "/register-empresa",
     element: <RegisterEmpresa />,
   },
-
-  // 🔹 Vagas e empresas
   {
     path: "/vagas/:id",
     element: <Vaga />,
@@ -61,8 +62,6 @@ const routes = createBrowserRouter([
     path: "/empresas",
     element: <Company />,
   },
-
-  // 🔹 Criação de vagas
   {
     path: "/criarVaga",
     element: <CriarVaga />,
@@ -83,14 +82,10 @@ const routes = createBrowserRouter([
     path: "/criarVaga/descricao/:id",
     element: <CriarVagaDescricao />,
   },
-
-  // 🔹 Perfil do usuário
   {
     path: "/profile",
     element: <Profile />,
   },
-
-  // 🔹 Admin
   {
     path: "/admin",
     element: <AdminLayout />,

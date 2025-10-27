@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useApi from "../api/Api";
 
 import { Zap } from "lucide-react";
@@ -16,6 +16,7 @@ function VagaDescricao() {
     const { id } = useParams()
     const [vaga, setVaga] = useState([])
     const [empresa, setEmpresa] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         async function fetchVagas() {
@@ -51,7 +52,7 @@ function VagaDescricao() {
                     <p className="text-2xl pb-3 font-bold max-w-150">{vaga.nome}</p>
                     <p className="text-sm font-medium text-gray-600">{vaga.cidade}, {vaga.pais} (On site)</p>
                 </div>
-                <button className="flex text-lg rounded-4xl items-center px-6 h-12 gap-2 font-semibold bg-green-400 transition-all duration-500 hover:-translate-y-1 hover:bg-green-300"><Zap size={20} />Candidatar-se</button>
+                <button onClick={() => navigate("/curriculo")} className="flex text-lg rounded-4xl items-center px-6 h-12 gap-2 font-semibold bg-green-400 transition-all duration-500 hover:-translate-y-1 hover:bg-green-300"><Zap size={20} />Candidatar-se</button>
             </div>
             <div className="flex flex-col pt-14">
                 <p className="text-sm font-medium pb-1"><span className="text-lg font-semibold">Modelo de vaga:</span> {vaga.modelo}</p>

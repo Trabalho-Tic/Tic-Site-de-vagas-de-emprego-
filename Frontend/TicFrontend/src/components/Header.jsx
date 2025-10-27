@@ -45,7 +45,7 @@ function Header() {
                 token 
                 ?   (   
                 <div className="flex gap-2 md:gap-10">
-                    <Link to="/login" className="sm:flex items-center gap-3 border-1 border-black text-white px-2 lg:pl-1 lg:pr-3 py-2 md:py-1 transition-all duration-500 hover:bg-gray-300 rounded-4xl">
+                    <Link to="/profile" className="sm:flex items-center gap-3 border-1 border-black text-white px-2 lg:pl-1 lg:pr-3 py-2 md:py-1 transition-all duration-500 hover:bg-gray-300 rounded-4xl">
                         <img className="w-6 md:w-8 rounded-4xl md:p-1 md:border-1 md:border-black" src={profile} alt="" />
                         <p className="hidden md:flex text-black">{user.nome}</p>
                     </Link>
