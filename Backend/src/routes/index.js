@@ -21,6 +21,7 @@ const VagaRequisicaoController = require('../controllers/VagaRequisicaoControlle
 const upload = require("../middlewares/upload");
 const AuthController = require("../controllers/AuthController");
 const authMiddleware = require("../middlewares/authMiddleware");
+const CurriculoController = require('../controllers/CurriculoController');
 
 // ====================================================
 // ROTAS PÚBLICAS
@@ -125,6 +126,10 @@ router.put("/vagaprocesso/:id", VagaProcessoController.update);
 // ------------------ VAGA REQUISIÇÃO ------------------
 router.post("/vagarequisicao/:id", VagaRequisicaoController.create);
 router.put("/vagarequisicao/:id", VagaRequisicaoController.update);
+
+router.post('/criarCurriculo/:id', upload.single("curriculo"), CurriculoController.create);
+router.put('/updateCurriculo/:id', upload.single("curriculo"), CurriculoController.update);
+router.get('/buscarCurriculo/:id', CurriculoController.getByUserId);
 
 // ------------------ ASSOCIAÇÕES ------------------
 router.post('/TipoDeficiencia/:id/SubTipoDeficiencia', TipoDeficienciaController.associarSubtipos);

@@ -3,6 +3,8 @@ import Input from "../components/input";
 import { Trash } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import useApi from "../api/Api";
+import { useNavigate } from "react-router-dom";
 
 function Curriculo() {
 
@@ -10,8 +12,8 @@ function Curriculo() {
     const [resumo, setResumo] = useState("");
     const [cargo, setCargo] = useState("")
     const [empresa, setEmpresa] = useState("")
-    const [dataInicio, setDataInicio] = useState()
-    const [dataFim, setDataFim] = useState()
+    const [dataInicio, setDataInicio] = useState("")
+    const [dataFim, setDataFim] = useState("")
     const [atividade, setAtividade] = useState("")
     const [curso, setCurso] = useState("")
     const [instituicao, setInstituicao] = useState("")
@@ -26,6 +28,9 @@ function Curriculo() {
     const [cursosB, setCursosB] = useState([])
     const [experiencias, setExperiencias] = useState([])
     const inputRef = useRef(null);
+
+    const user = JSON.parse(localStorage.getItem("user"))
+    const navigate = useNavigate()
 
     const options = [
         "Ensino Fundamental",
@@ -116,6 +121,36 @@ function Curriculo() {
     const removeCursoB = (i) => {
         const novosCursos = cursosB.filter((_, index) => index !== i);
         setCursosB(novosCursos);
+    };
+
+    const handleCriarCurriculo = async (event) => {
+        event.preventDefault();
+
+        try {
+            const formData = new FormData();
+            
+            if (file) formData.append("curriculo", file); // nome precisa bater com multer.single("curriculo")
+            
+            formData.append("resumoProf", resumo);
+            formData.append("experiencias", JSON.stringify(experiencias));
+            formData.append("formacao", JSON.stringify(cursos));
+            formData.append("cursos", JSON.stringify(cursosB));
+
+            const response = await fetch(`http://localhost:8000/criarCurriculo/${user.id}`, {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Erro no envio:", errorData);
+                return;
+            }
+
+            navigate("/");
+        } catch (error) {
+            console.error("Erro ao criar currículo:", error);
+        }
     };
 
     return (
@@ -426,6 +461,7 @@ function Curriculo() {
             </div>
             <div className="px-10 pb-10">
                 <button
+                    onClick={handleCriarCurriculo}
                     className="h-[60px] w-full px-4 bg-gradient-to-r from-[#6A00FF] to-[#8B5CF6] text-white rounded-md font-medium hover:opacity-90 transition disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                     Adicionar Curriculo

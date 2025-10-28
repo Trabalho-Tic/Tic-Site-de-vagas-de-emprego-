@@ -19,7 +19,7 @@ const CandidatoCurriculo = sequelize.define("CandidatoCurriculo", {
     type: DataTypes.TEXT,
     allowNull: true,
   },
-  expericencias: {
+  experiencias: {
     type: DataTypes.JSON,
     allowNull: true,
   },
