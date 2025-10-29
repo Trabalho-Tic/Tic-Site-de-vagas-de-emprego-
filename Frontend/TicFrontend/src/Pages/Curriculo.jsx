@@ -24,6 +24,9 @@ function Curriculo() {
     const [nivelB, setNivelB] = useState("")
     const [conclusaoB, setConclusaoB] = useState("")
     const [descricao, setdescricao] = useState("")
+    const [habilidade, setHabilidade] = useState("")
+    const [user, setUser] = useState([])
+    const [habilidades, setHabilidades] = useState([])
     const [cursos, setCursos] = useState([])
     const [cursosB, setCursosB] = useState([])
     const [experiencias, setExperiencias] = useState([])
@@ -31,11 +34,11 @@ function Curriculo() {
     const [curriculo, setCurriculo] = useState(false)
     const inputRef = useRef(null);
 
-    const user = JSON.parse(localStorage.getItem("user"))
-
     useEffect(() => {
         async function fetchCurriculo() {
             try {
+                const user = JSON.parse(localStorage.getItem("user"))
+                setUser(user)
                 const response = await useApi({
                     endpoint: `/buscarCurriculo/${user.id}`
                 })
@@ -143,6 +146,18 @@ function Curriculo() {
         const novosCursos = cursosB.filter((_, index) => index !== i);
         setCursosB(novosCursos);
     };
+    
+    const handleAddHabilidade = (event) => {
+        event.preventDefault();
+
+        setHabilidades([...habilidades, habilidade]);
+        setHabilidade("");
+    }
+
+    const removeHabilidade = (i) => {
+        const novasHabi = habilidades.filter((_, index) => index !== i);
+        setHabilidades(novasHabi);
+    };
 
     const handleCriarCurriculo = async (event) => {
         event.preventDefault();
@@ -150,12 +165,15 @@ function Curriculo() {
         try {
             const formData = new FormData();
             
-            if (file) formData.append("curriculo", file); // nome precisa bater com multer.single("curriculo")
+            if (file) formData.append("curriculo", file);
             
             formData.append("resumoProf", resumo);
             formData.append("experiencias", JSON.stringify(experiencias));
             formData.append("formacao", JSON.stringify(cursos));
             formData.append("cursos", JSON.stringify(cursosB));
+            formData.append("habilidades", JSON.stringify(habilidades))
+
+            console.log(formData)
 
             const response = await fetch(`http://localhost:8000/criarCurriculo/${user.id}`, {
                 method: "POST",
@@ -176,11 +194,12 @@ function Curriculo() {
 
     return (
         <>
-
             {
-                curriculo 
+                curriculo
                 ? navigate("/profile") 
-                : ( <>
+                : user.tipo == "empresa" 
+                    ? navigate("/profile") 
+                    : ( <>
                 <Header />
                 
                 <div className="pt-10 flex w-full justify-center">
@@ -398,9 +417,6 @@ function Curriculo() {
                         </div>    
                     </section>
     
-                </div>
-                
-                <div className="px-100 pb-10">
                     <section className="flex justify-start w-auto h-full bg-gray-50 rounded-xl">
                         <div className="flex flex-col py-10 px-10 w-full">
                             <p className="text-lg font-bold pb-5">Cursos e certificações</p>
@@ -445,12 +461,12 @@ function Curriculo() {
                                         onChange={(e) => setdescricao(e.target.value)}
                                         placeholder="Descreva o seu Curso/Certificado"
                                         className="bg-white border-2 p-6 shadow-xl rounded-lg text-black text-sm w-80 md:w-full min-h-50"
-                                    />
+                                        />
     
                                     <button
                                         type="submit"
                                         className="h-[60px] px-4 bg-gradient-to-r from-[#6A00FF] to-[#8B5CF6] text-white rounded-md font-medium hover:opacity-90 transition disabled:opacity-60 disabled:cursor-not-allowed"
-                                    >
+                                        >
                                         Adicionar
                                     </button>
                                 </div>
@@ -470,7 +486,7 @@ function Curriculo() {
                                                         type="button"
                                                         onClick={() => removeCursoB(index)}
                                                         className="ml-2 text-red-500 hover:text-red-700"
-                                                    >
+                                                        >
                                                         <Trash size={16} />
                                                     </button>
                                                 </li>
@@ -482,6 +498,48 @@ function Curriculo() {
                                 </div>
                             </form>
                         </div>    
+                    </section>
+
+                    <section className="flex flex-col p-10 gap-5 justify-start w-auto h-full bg-gray-50 rounded-xl">
+                            <p className="text-sm font-semibold">Coloque suas habilidades</p>
+                            <div className="flex gap-5">
+                                <Input
+                                    value={habilidade}
+                                    onChange={(e) => setHabilidade(e.target.value)}
+                                    placeholder="Ex: 2022"
+                                />
+
+                                <button
+                                    type="button"
+                                    onClick={handleAddHabilidade}
+                                    className="h-[60px] px-4 bg-gradient-to-r from-[#6A00FF] to-[#8B5CF6] text-white rounded-md font-medium hover:opacity-90 transition disabled:opacity-60 disabled:cursor-not-allowed"
+                                >
+                                    Adicionar
+                                </button>
+                            </div>
+
+                            <div className="border border-gray-300 rounded-md p-3 min-h-[83px] text-gray-700">
+                                {habilidades.length > 0 ? (
+                                    <ul className="list-disc ml-5 space-y-1 break-words">
+                                        {habilidades.map((hab, index) => (
+                                            <li className="pr-1 flex justify-between items-start" key={index}>
+                                                <div>
+                                                    <p className="text-lg font-bold">{hab}</p>
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeHabilidade(index)}
+                                                    className="ml-2 text-red-500 hover:text-red-700"
+                                                >
+                                                    <Trash size={16} />
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p className="text-gray-400 italic">Nenhuma experiência adicionada ainda.</p>
+                                )}
+                            </div>
                     </section>
     
                 </div>

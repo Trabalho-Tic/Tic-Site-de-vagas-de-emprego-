@@ -35,10 +35,10 @@ function CriarVaga() {
         }
     };
    return (
-  <div className="flex justify-center items-center min-h-screen bg-white">
+  <div className="flex justify-center items-center min-h-screen bg-white md:py-10">
     <form
       onSubmit={handleLogin}
-      className="flex flex-col w-[600px] bg-white border border-gray-200 rounded-xl shadow-md p-10 gap-6"
+      className="flex flex-col w-full md:w-[600px] bg-white border border-gray-200 rounded-xl shadow-md p-10 gap-6"
     >
       <h2 className="text-2xl font-semibold text-black mb-2">
         Criar Vaga

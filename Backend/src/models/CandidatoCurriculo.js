@@ -30,6 +30,10 @@ const CandidatoCurriculo = sequelize.define("CandidatoCurriculo", {
   cursos: {
     type: DataTypes.JSON,
     allowNull: true,
+  },
+  habilidades: {
+    type: DataTypes.JSON,
+    allowNull: true,
   }
 }, {
   tableName: "tb_candidatocurriculo",

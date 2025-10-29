@@ -27,7 +27,7 @@ class AuthController {
 
             return res.json({
                 token,
-                user: { id: user.id, nome: user.nome, email: user.email }
+                user: { id: user.id, nome: user.nome, email: user.email, tipo: user.typeUser }
             });
         } catch (error) {
             return res.status(500).json({

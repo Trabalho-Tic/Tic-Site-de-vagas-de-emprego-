@@ -4,7 +4,7 @@ class CandidatoCurriculoController {
 
    async create(request, response) {
     const { id } = request.params;
-    const { resumoProf, experiencias, formacao, cursos } = request.body;
+    const { resumoProf, experiencias, formacao, cursos, habilidades } = request.body;
 
     try {
       if (!request.file) {
@@ -18,6 +18,7 @@ class CandidatoCurriculoController {
         experiencias,
         formacao,
         cursos,
+        habilidades
       });
 
       return response.json(candidatoCurriculo);

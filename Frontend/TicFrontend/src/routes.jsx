@@ -13,6 +13,7 @@ import CriarVagaRequisicao from "./Pages/CriarVagaRequisicao";
 import CriarVagaDescricao from "./Pages/CriarVagaDescricao";
 import Profile from "./Pages/Profile";
 import LandingPage from "./Pages/LandingPage";
+import Curriculo from "./Pages/Curriculo";
 
 // Registro dividido
 import RegisterSelect from "./Pages/RegisterSelect";
@@ -23,7 +24,6 @@ import RegisterEmpresa from "./Pages/RegisterEmpresa";
 import AdminLayout from "./admin/Layout";
 import UsuariosPage from "./admin/pages/UsuariosPage";
 import VagasPage from "./admin/pages/VagasPage";
-import Curriculo from "./Pages/Curriculo";
 
 const routes = createBrowserRouter([
   {
