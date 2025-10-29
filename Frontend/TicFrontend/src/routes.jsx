@@ -22,8 +22,9 @@ import RegisterEmpresa from "./Pages/RegisterEmpresa";
 
 // Área administrativa
 import AdminLayout from "./admin/Layout";
-import UsuariosPage from "./admin/pages/UsuariosPage";
+import UsuariosPage from "./admin/pages/CandidatosPage";
 import VagasPage from "./admin/pages/VagasPage";
+import CrudEmpresasPage from "./admin/pages/CrudEmpresasPage"; // Importa a página do CRUD de Empresas
 
 const routes = createBrowserRouter([
   {
@@ -40,7 +41,7 @@ const routes = createBrowserRouter([
   },
   {
     path: "/curriculo",
-    element: <Curriculo />
+    element: <Curriculo />,
   },
   {
     path: "/register",
@@ -93,6 +94,7 @@ const routes = createBrowserRouter([
       { index: true, element: <UsuariosPage /> },
       { path: "usuarios", element: <UsuariosPage /> },
       { path: "vagas", element: <VagasPage /> },
+      { path: "empresas", element: <CrudEmpresasPage /> }, // Rota para o CRUD de Empresas
     ],
   },
 ]);
