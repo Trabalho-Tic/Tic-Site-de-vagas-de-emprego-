@@ -106,6 +106,7 @@ router.delete('/TipoDeficiencia/delete/:id', TipoDeficienciaController.delete);
 
 // ------------------ VAGAS ------------------
 router.get('/Vaga', VagaController.index);
+router.get("/vaga/empresa/:idCompany", VagaController.vagasPorEmpresa);
 router.get('/Vaga/:id', VagaController.show);
 router.post('/Vaga/create', VagaController.create);
 router.put('/Vaga/update/:id', VagaController.update);
