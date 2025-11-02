@@ -1,109 +1,216 @@
-import React, { useState } from "react";
-import Input from "../components/input";
-import useApi from "../api/Api";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import useApi from "../api/Api";
+import { Zap } from "lucide-react";
 
-function CriarVagaDescricao() {
-    const { id } = useParams()
-    const [descricao, setDescricao] = useState("")
-    const [descricaos, setDescricaos] = useState([])
-    const [validacao, setValidacao] = useState(false)
-    const [loading, setLoading] = useState(false)
+import imgGrande from "../assets/imgGrande.png";
+import imgPequena from "../assets/imgPequena.png";
+import imgPequena2 from "../assets/imgPequena2.png";
+import imgPequena3 from "../assets/imgPequena3.png";
+import imgPequena4 from "../assets/imgPequena4.png";
+import logo from "../assets/js moderno.webp";
 
-    const navigate = useNavigate()
+function VagaDescricao() {
+  const { id } = useParams();
+  const [vaga, setVaga] = useState([]);
+  const [empresa, setEmpresa] = useState([]);
+  const [user, setUser] = useState(null); // 👈 controle do usuário logado
+  const navigate = useNavigate();
 
-    const handleAddDescricao = (event) => {
-        event.preventDefault();
+  // 🔍 Verifica usuário logado
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    if (userData) {
+      setUser(userData);
+    }
+  }, []);
 
-        if (descricao.trim() === "") return;
+  // 🔄 Busca dados da vaga e da empresa
+  useEffect(() => {
+    async function fetchVagas() {
+      try {
+        const result = await useApi({ endpoint: `/vaga/${id}` });
+        setVaga(result);
 
-        setDescricaos([...descricaos, descricao]);
-        setDescricao("");
+        if (result?.id_company) {
+          const response = await useApi({ endpoint: `/company/${result.id_company}` });
+          setEmpresa(response);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar vaga:", error);
+      }
     }
 
-    const handleLogin = async (event) => {
-        event.preventDefault();
-        
-        if (loading) return;
+    fetchVagas();
+  }, [id]);
 
-        try {
-            setLoading(true);
+  if (!vaga || !vaga.id) {
+    return <p>Carregando vaga...</p>;
+  }
 
-            const data = await useApi({
-                endpoint: `/vagaDescricao/${id}`,
-                method: "POST",
-                body: { descricao: descricaos },
-            });
+  // ✅ Renderização condicional do botão
+  const podeCandidatar = user && user.tipo === "candidato";
 
-            setValidacao(true)
-
-            setTimeout(() => {
-                setValidacao(false)
-                navigate(`/`);
-            }, 2000)
-
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setLoading(false);
-        }
-    };
   return (
-    <div className="flex justify-center items-center min-h-screen bg-white">
-        {validacao && (
-            <p className="absolute py-6 px-10 shadow-2xl rounded-xl text-white bg-gradient-to-r from-[#6A00FF] to-[#8B5CF6] font-medium">
-            Salvo com sucesso
-            </p>
-        )}
-        <form
-        onSubmit={handleLogin}
-        className="flex flex-col w-[600px] bg-white border border-gray-200 rounded-xl shadow-md p-10 gap-6"
-        >
-        {/* Título */}
-        <h2 className="text-2xl font-semibold text-black mb-2">Descrição</h2>
+    <>
+      <div className="flex items-center gap-2">
+        <img className="h-8 w-8 rounded-4xl" src={empresa.logo || logo} alt="Logo da empresa" />
+        <p>{empresa.nome}</p>
+      </div>
 
+      <div className="flex justify-between items-center pt-4">
         <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-800 mb-1">
-                Adicione a descrição em topicos sobre a vaga
-            </label>
-            <div className="flex gap-3">
-                <Input
-                    value={descricao}
-                    onChange={(e) => setDescricao(e.target.value)}
-                    placeholder="Exemplo: Você contribuira no desenvolvimento de software"
-                    className="flex-1 border border-gray-300 h-[83px] rounded-md px-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                />
-                <button
-                    className="h-[60px] px-4 bg-gradient-to-r from-[#6A00FF] to-[#8B5CF6] text-white rounded-md font-medium hover:opacity-90 transition disabled:opacity-60 disabled:cursor-not-allowed"
-                    onClick={handleAddDescricao}
-                >
-                    Adicionar
-                </button>
-            </div>
+          <p className="text-2xl pb-3 font-bold max-w-150">{vaga.nome}</p>
+          <p className="text-sm font-medium text-gray-600">
+            {vaga.cidade}, {vaga.pais} ({vaga.modelo})
+          </p>
         </div>
 
-        <div className="border border-gray-300 rounded-md p-3 min-h-[83px] text-gray-700">
-            {descricaos.length > 0 ? (
-                <ul className="list-disc ml-5 space-y-1 break-words">
-                    {descricaos.map((b, index) => (
-                        <li key={index}>{b}</li>
-                    ))}
-                </ul>
-            ) : (
-                <p className="text-gray-400 italic">Nenhum benefício adicionado ainda.</p>
-            )}
-        </div>
+        {/* 🔒 Só exibe se for candidato */}
+        {podeCandidatar ? (
+          <button
+            onClick={() => navigate("/curriculo")}
+            className="flex text-lg rounded-4xl items-center px-6 h-12 gap-2 font-semibold bg-green-400 transition-all duration-500 hover:-translate-y-1 hover:bg-green-300"
+          >
+            <Zap size={20} />
+            Candidatar-se
+          </button>
+        ) : (
+          <button
+            disabled
+            title="Disponível apenas para candidatos logados"
+            className="flex text-lg rounded-4xl items-center px-6 h-12 gap-2 font-semibold bg-gray-300 text-gray-600 cursor-not-allowed"
+          >
+            <Zap size={20} />
+            Candidatar-se
+          </button>
+        )}
+      </div>
 
-        <button
-            type="submit"
-            disabled={loading}
-            className="mt-4 h-[48px] w-[123px] bg-gradient-to-r from-[#6A00FF] to-[#8B5CF6] text-white rounded-md font-medium hover:opacity-90 transition disabled:opacity-60 disabled:cursor-not-allowed self-start"
-        >
-            {loading ? "Criando..." : "Criar"}
-        </button>
-        </form>
-    </div>
-  )
+      {/* ------------------------- CONTEÚDO DA VAGA ------------------------- */}
+      <div className="flex flex-col pt-14">
+        <p className="text-sm font-medium pb-1">
+          <span className="text-lg font-semibold">Modelo de vaga:</span> {vaga.modelo}
+        </p>
+        <p className="text-sm font-medium pb-1">
+          <span className="text-lg font-semibold">Processo seletivo:</span>{" "}
+          {vaga.processo?.processoSeletivo}
+        </p>
+        <p className="text-sm font-medium pb-1">
+          <span className="text-lg font-semibold">Entrevistador:</span>{" "}
+          {vaga.processo?.entrevistador}
+        </p>
+        <p className="text-sm font-medium pb-1">
+          <span className="text-lg font-semibold">Seu time:</span> {vaga.processo?.time}
+        </p>
+      </div>
+
+      {/* Navegação entre seções */}
+      <nav className="pt-15 pb-8 overflow-x-auto">
+        <nav className="flex items-center gap-10 border-b-1 border-gray-400">
+          <a
+            href="#descricao"
+            className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500"
+          >
+            Descrição
+          </a>
+          <a
+            href="#requisicoes"
+            className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500"
+          >
+            Requisições
+          </a>
+          <a
+            href="#beneficios"
+            className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500"
+          >
+            Benefícios
+          </a>
+          <a
+            href="#visaoGeral"
+            className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500"
+          >
+            Visão geral
+          </a>
+        </nav>
+      </nav>
+
+      {/* ------------------------- DESCRIÇÃO ------------------------- */}
+      <section id="descricao" className="border-b-1 border-gray-400">
+        <p className="text-xl font-medium text-gray-400 pb-6">Descrição</p>
+        <p className="text-lg font-bold pb-3">O que te espera:</p>
+        <ul className="pl-5 pb-10">
+          {vaga.descricao?.descricao?.map((desc, index) => (
+            <li key={index} className="list-disc text-sm font-medium pb-2">
+              {desc}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* ------------------------- REQUISIÇÕES ------------------------- */}
+      <section id="requisicoes" className="flex flex-col gap-8 pt-10 border-b-1 border-gray-400">
+        <p className="text-xl font-medium text-gray-400">Requisições</p>
+        <div>
+          <p className="text-lg font-bold pb-3">O que você vai fazer:</p>
+          <p className="text-sm font-medium leading-6">{vaga.requisicao?.atuacao}</p>
+        </div>
+        <div>
+          <p className="text-lg font-bold pb-3">Requisitos e qualificações:</p>
+          <ul className="pl-5 pb-3">
+            {vaga.requisicao?.conhecimentos?.map((c, i) => (
+              <li key={i} className="list-disc text-sm font-medium">
+                {c}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p className="text-lg font-bold pb-3">Se destaca se souber:</p>
+          <ul className="pl-5 pb-10">
+            {vaga.requisicao?.destaque?.map((d, i) => (
+              <li key={i} className="list-disc text-sm font-medium">
+                {d}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ------------------------- BENEFÍCIOS ------------------------- */}
+      <section id="beneficios" className="flex flex-col gap-6 pt-10 border-b-1 border-gray-400">
+        <p className="text-xl font-medium text-gray-400">Benefícios</p>
+        <div>
+          <p className="text-lg font-semibold pb-3">Base Salarial:</p>
+          <p className="text-xl font-semibold">
+            {vaga.beneficio?.salario}{" "}
+            <span className="text-sm font-medium text-gray-400">Por/Mês</span>
+          </p>
+        </div>
+        <div>
+          <p className="text-lg font-bold pb-3">O que temos a lhe oferecer:</p>
+          <ul className="pl-5 pb-10">
+            {vaga.beneficio?.beneficios?.map((b, i) => (
+              <li key={i} className="list-disc text-sm font-medium">
+                {b}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ------------------------- VISÃO GERAL ------------------------- */}
+      <section id="visaoGeral" className="flex justify-center gap-4 pt-10">
+        <img src={imgGrande} alt="Imagem principal" />
+        <div className="grid grid-cols-2 gap-4">
+          <img src={imgPequena} alt="" />
+          <img src={imgPequena2} alt="" />
+          <img src={imgPequena3} alt="" />
+          <img src={imgPequena4} alt="" />
+        </div>
+      </section>
+    </>
+  );
 }
 
-export default CriarVagaDescricao
+export default VagaDescricao;

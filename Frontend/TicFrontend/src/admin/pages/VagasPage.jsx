@@ -1,75 +1,127 @@
 import React, { useState, useEffect } from "react";
 import useApi from "../../api/Api";
 import Modal from "../../components/Modal";
-import { useNavigate } from "react-router-dom";
 
 const vagaVazia = {
   nome: "",
   pais: "",
   cidade: "",
   modelo: "presencial",
+  id_company: "", // empresa vinculada
 };
 
 export default function VagasPage() {
   const [vagas, setVagas] = useState([]);
+  const [empresas, setEmpresas] = useState([]);
   const [busca, setBusca] = useState("");
   const [form, setForm] = useState(vagaVazia);
   const [modalAberto, setModalAberto] = useState(false);
   const [idEdicao, setIdEdicao] = useState(null);
+  const [mensagem, setMensagem] = useState("");
 
-  const navigate = useNavigate()
-
-  async function carregarVagas() {
-    const data = await useApi({ endpoint: "/Vaga" });
-    setVagas(data || []);
+  // 🔄 Carregar vagas e empresas
+  async function carregarDados() {
+    try {
+      const [vagasData, empresasData] = await Promise.all([
+        useApi({ endpoint: "/Vaga" }),
+        useApi({ endpoint: "/company" }),
+      ]);
+      setVagas(Array.isArray(vagasData) ? vagasData : []);
+      setEmpresas(Array.isArray(empresasData) ? empresasData : []);
+    } catch (err) {
+      console.error("Erro ao carregar dados:", err);
+      setMensagem("❌ Erro ao carregar vagas ou empresas.");
+    }
   }
 
- useEffect(() => {
-    carregarVagas();
+  useEffect(() => {
+    carregarDados();
   }, []);
 
-  const filtradas = vagas.filter(
-    (v) =>
-      v.nome.toLowerCase().includes(busca.toLowerCase()) ||
-      v.cidade.toLowerCase().includes(busca.toLowerCase()) ||
-      v.pais.toLowerCase().includes(busca.toLowerCase())
+  // 🔍 Filtro
+  const filtradas = vagas.filter((v) =>
+    [v.nome, v.cidade, v.pais]
+      .filter(Boolean)
+      .some((campo) =>
+        campo.toLowerCase().includes(busca.toLowerCase())
+      )
   );
 
+  // ➕ Nova
   function novaVaga() {
     setForm(vagaVazia);
     setIdEdicao(null);
     setModalAberto(true);
   }
 
+  // ✏️ Editar
   function editarVaga(v) {
-    setForm(v);
+    setForm({
+      nome: v.nome,
+      pais: v.pais,
+      cidade: v.cidade,
+      modelo: v.modelo,
+      id_company: v.id_company,
+    });
     setIdEdicao(v.id);
     setModalAberto(true);
   }
 
+  // ❌ Excluir
   async function excluirVaga(v) {
     if (!confirm(`Excluir ${v.nome}?`)) return;
-    await useApi({ endpoint: `/Vaga/delete/${v.id}`, method: "DELETE" });
-    carregarVagas();
+    try {
+      await useApi({ endpoint: `/Vaga/delete/${v.id}`, method: "DELETE" });
+      carregarDados();
+      setMensagem("✅ Vaga excluída com sucesso.");
+    } catch (err) {
+      console.error(err);
+      setMensagem("❌ Erro ao excluir vaga.");
+    }
   }
 
-  async function onSubmit(e) {
+  // 💾 Criar/Atualizar
+  async function salvarVaga(e) {
     e.preventDefault();
-    if (idEdicao) {
-      await useApi({
-        endpoint: `/Vaga/update/${idEdicao}`,
-        method: "PUT",
-        body: form,
-      });
-    } else {
-      await useApi({ endpoint: "/Vaga/create", method: "POST", body: form });
+    try {
+      if (!form.id_company) {
+        setMensagem("❌ Selecione uma empresa antes de salvar.");
+        return;
+      }
+
+      if (idEdicao) {
+        await useApi({
+          endpoint: `/Vaga/update/${idEdicao}`,
+          method: "PUT",
+          body: form,
+        });
+        setMensagem("✅ Vaga atualizada com sucesso!");
+      } else {
+        await useApi({
+          endpoint: "/Vaga/create",
+          method: "POST",
+          body: form,
+        });
+        setMensagem("✅ Vaga criada com sucesso!");
+      }
+
+      setModalAberto(false);
+      carregarDados();
+    } catch (err) {
+      console.error(err);
+      setMensagem(`❌ ${err.message || "Erro ao salvar vaga."}`);
     }
-    setModalAberto(false);
-    carregarVagas();
   }
 
   return (
     <div>
+      {/* Feedback */}
+      {mensagem && (
+        <div className="bg-gray-100 text-gray-800 border border-gray-300 px-4 py-2 rounded-md mb-4 text-sm">
+          {mensagem}
+        </div>
+      )}
+
       {/* Cabeçalho */}
       <div className="flex justify-between items-center mb-8">
         <div>
@@ -79,7 +131,7 @@ export default function VagasPage() {
           </p>
         </div>
         <button
-          onClick={() => {navigate("/criarVaga")}}
+          onClick={novaVaga}
           className="bg-indigo-600 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-indigo-500"
         >
           <span className="material-symbols-outlined">add</span>
@@ -120,6 +172,7 @@ export default function VagasPage() {
                 <th className="py-3 px-4">Cidade</th>
                 <th className="py-3 px-4">País</th>
                 <th className="py-3 px-4">Modelo</th>
+                <th className="py-3 px-4">Empresa</th>
                 <th className="py-3 px-4 text-right">Ações</th>
               </tr>
             </thead>
@@ -133,6 +186,9 @@ export default function VagasPage() {
                   <td className="py-3 px-4 text-sm">{v.cidade}</td>
                   <td className="py-3 px-4 text-sm">{v.pais}</td>
                   <td className="py-3 px-4 text-sm capitalize">{v.modelo}</td>
+                  <td className="py-3 px-4 text-sm">
+                    {v.company?.nome || "—"}
+                  </td>
                   <td className="py-3 px-4 text-right">
                     <div className="flex justify-end gap-2">
                       <button
@@ -166,7 +222,8 @@ export default function VagasPage() {
         title={idEdicao ? "Editar Vaga" : "Nova Vaga"}
         onClose={() => setModalAberto(false)}
       >
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form onSubmit={salvarVaga} className="space-y-4">
+          {/* Campos de texto */}
           {["nome", "pais", "cidade"].map((campo) => (
             <div key={campo}>
               <label className="block text-sm font-medium mb-1 capitalize">
@@ -182,6 +239,7 @@ export default function VagasPage() {
             </div>
           ))}
 
+          {/* Modelo */}
           <div>
             <label className="block text-sm font-medium mb-1">Modelo</label>
             <select
@@ -195,6 +253,27 @@ export default function VagasPage() {
             </select>
           </div>
 
+          {/* Empresa (select inteligente) */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Empresa</label>
+            <select
+              value={form.id_company}
+              onChange={(e) =>
+                setForm({ ...form, id_company: e.target.value })
+              }
+              required
+              className="w-full bg-gray-100 border-none rounded-md py-2 px-3 focus:ring-2 focus:ring-indigo-500"
+            >
+              <option value="">Selecione uma empresa...</option>
+              {empresas.map((empresa) => (
+                <option key={empresa.id} value={empresa.id}>
+                  {empresa.nome} — {empresa.cnpj}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Botões */}
           <div className="flex justify-end gap-3 pt-2">
             <button
               type="button"

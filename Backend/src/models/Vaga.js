@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize")
-const sequelize = require("../config/database")
+const sequelize = require("../config/database");
+const Candidatura = require("./Candidatura");
 
 const Vaga = sequelize.define("vaga", {
     id: {
@@ -65,5 +66,10 @@ Vaga.associate = (models) => {
         as: "empresa",
     });
 };
+
+Vaga.hasMany(Candidatura, {
+  foreignKey: "id_vaga",
+  as: "candidaturas",
+});
 
 module.exports = Vaga
