@@ -98,7 +98,7 @@ function Header() {
 
               <ul className="flex flex-col gap-2 text-sm">
                 <li
-                  onClick={() => navigate("/perfil")}
+                  onClick={() => navigate("/profile")}
                   className="flex items-center gap-2 text-gray-700 hover:text-green-500 cursor-pointer"
                 >
                   <User size={16} /> Perfil

@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 
 // Caminho para onde os currículos serão salvos
-const uploadDir = path.join(__dirname, "../../uploads/curriculos");
+const uploadDir = path.join(__dirname, "../../uploads/logos");
 
 // Cria o diretório automaticamente se não existir
 if (!fs.existsSync(uploadDir)) {

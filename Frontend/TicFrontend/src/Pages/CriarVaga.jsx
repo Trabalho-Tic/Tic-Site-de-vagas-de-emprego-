@@ -4,6 +4,7 @@ import useApi from "../api/Api";
 import { useNavigate } from "react-router-dom";
 
 function CriarVaga() {
+
   const [nome, setNome] = useState("");
   const [pais, setPais] = useState("");
   const [cidade, setCidade] = useState("");
@@ -21,6 +22,7 @@ function CriarVaga() {
         if (!user) {
           navigate("/login");
           return;
+
         }
 
         // Busca todas as empresas e filtra pela do usuário logado

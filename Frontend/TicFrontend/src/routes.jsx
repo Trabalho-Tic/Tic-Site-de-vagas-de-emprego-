@@ -56,13 +56,13 @@ const routes = createBrowserRouter([
     element: <RegisterEmpresa />,
   },
   {
-  path: "/vagas",
-  element: <Vaga />,
-},
-{
-  path: "/vagas/:id",
-  element: <Vaga />,
-},
+    path: "/vagas",
+    element: <Vaga />,
+  },
+  {
+    path: "/vagas/:id",
+    element: <Vaga />,
+  },
   {
     path: "/empresas",
     element: <Company />,

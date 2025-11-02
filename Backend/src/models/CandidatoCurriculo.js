@@ -40,4 +40,8 @@ const CandidatoCurriculo = sequelize.define("CandidatoCurriculo", {
   timestamps: true,
 });
 
+CandidatoCurriculo.belongsTo(User, { foreignKey: "id_user", as: "user", onDelete: "CASCADE" });
+User.hasOne(CandidatoCurriculo, { foreignKey: "id_user", as: "curriculos", onDelete: "CASCADE" });
+
+
 module.exports = CandidatoCurriculo;
