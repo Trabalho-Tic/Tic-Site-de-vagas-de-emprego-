@@ -66,4 +66,9 @@ Vaga.associate = (models) => {
     });
 };
 
+Vaga.hasMany(models.candidatura, {
+  foreignKey: "id_vaga",
+  as: "candidaturas",
+});
+
 module.exports = Vaga
