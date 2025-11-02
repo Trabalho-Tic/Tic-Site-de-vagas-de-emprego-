@@ -2,101 +2,148 @@ import React, { useState, useEffect } from "react";
 import useApi from "../../api/Api";
 import Modal from "../../components/Modal";
 
-export default function UsuariosPage() {
-  const [usuarios, setUsuarios] = useState([]);
+const candidatoVazio = {
+  nome: "",
+  email: "",
+  telefone: "",
+  cpf: "",
+  password: "",
+};
+
+export default function CandidatosPage() {
+  const [candidatos, setCandidatos] = useState([]);
   const [busca, setBusca] = useState("");
-  const [form, setForm] = useState({});
-  const [idEdicao, setIdEdicao] = useState(null);
+  const [form, setForm] = useState(candidatoVazio);
   const [modalAberto, setModalAberto] = useState(false);
-  const [mensagem, setMensagem] = useState(""); // ✅ feedback via texto
+  const [idEdicao, setIdEdicao] = useState(null);
+  const [mensagem, setMensagem] = useState("");
 
-  const usuarioVazio = {
-    nome: "",
-    email: "",
-    cpf: "",
-    telefone: "",
-    password: "",
-    typeUser: "candidato",
-    deficiencias: [],
-  };
-
-  // 🟢 Buscar usuários
-  async function carregarUsuarios() {
+  // 🟢 Buscar candidatos
+  async function carregarCandidatos() {
     try {
-      const data = await useApi({ endpoint: "/user" });
-      setUsuarios(data);
+      const data = await useApi({ endpoint: "/candidato" });
+      // Normaliza estrutura retornada
+      const lista = Array.isArray(data)
+        ? data.map((c) => ({
+            id_user: c.id_user,
+            nome: c.user?.nome || "(sem nome)",
+            email: c.user?.email || "(sem email)",
+            telefone: c.user?.telefone || "-",
+            cpf: c.cpf || "-",
+          }))
+        : [];
+      setCandidatos(lista);
     } catch (err) {
-      setMensagem("❌ Erro ao carregar usuários.");
+      console.error("❌ Erro ao carregar candidatos:", err);
+      setMensagem("❌ Erro ao carregar candidatos.");
     }
   }
 
   useEffect(() => {
-    carregarUsuarios();
+    carregarCandidatos();
   }, []);
 
-  // 🔍 Filtro
-  const filtrados = usuarios.filter(
-    (u) =>
-      u.nome?.toLowerCase().includes(busca.toLowerCase()) ||
-      u.email?.toLowerCase().includes(busca.toLowerCase()) ||
-      u.cpf?.includes(busca)
+  // 🔍 Filtro personalizado
+  const filtrados = candidatos.filter(
+    (c) =>
+      c.nome.toLowerCase().includes(busca.toLowerCase()) ||
+      c.email.toLowerCase().includes(busca.toLowerCase()) ||
+      c.cpf.includes(busca)
   );
 
-  // ✏️ Editar
-  function editarUsuario(u) {
-    setForm(u);
-    setIdEdicao(u.id);
-    setModalAberto(true);
-  }
-
   // ➕ Novo
-  function novoUsuario() {
-    setForm(usuarioVazio);
+  function novoCandidato() {
+    setForm(candidatoVazio);
     setIdEdicao(null);
     setModalAberto(true);
   }
 
+  // ✏️ Editar
+  function editarCandidato(c) {
+    setForm({
+      nome: c.nome,
+      email: c.email,
+      telefone: c.telefone,
+      cpf: c.cpf,
+      id_user: c.id_user,
+      password: "",
+    });
+    setIdEdicao(c.id_user);
+    setModalAberto(true);
+  }
+
   // ❌ Excluir
-  async function excluirUsuario(u) {
-    if (!confirm(`Excluir ${u.nome}?`)) return;
+  async function excluirCandidato(c) {
+    if (!confirm(`Excluir ${c.nome}?`)) return;
     try {
-      await useApi({ endpoint: `/user/delete/${u.id}`, method: "DELETE" });
-      carregarUsuarios();
-      setMensagem("✅ Usuário excluído com sucesso.");
-    } catch {
-      setMensagem("❌ Erro ao excluir usuário.");
+      await useApi({
+        endpoint: `/candidato/delete/${c.id_user}`,
+        method: "DELETE",
+      });
+      carregarCandidatos();
+      setMensagem("✅ Candidato excluído com sucesso.");
+    } catch (err) {
+      console.error(err);
+      setMensagem("❌ Erro ao excluir candidato.");
     }
   }
 
   // 💾 Criar / Atualizar
-  async function salvarUsuario(e) {
+  async function salvarCandidato(e) {
     e.preventDefault();
     try {
       if (idEdicao) {
+        // Atualiza User e Candidato
         await useApi({
-          endpoint: `/user/update/${idEdicao}`,
+          endpoint: `/user/update/${form.id_user}`,
           method: "PUT",
-          body: form,
+          body: {
+            nome: form.nome,
+            email: form.email,
+            telefone: form.telefone,
+          },
         });
-        setMensagem("✅ Usuário atualizado com sucesso!");
-      } else {
         await useApi({
+          endpoint: `/candidato/update/${idEdicao}`,
+          method: "PUT",
+          body: { cpf: form.cpf },
+        });
+        setMensagem("✅ Candidato atualizado com sucesso!");
+      } else {
+        // Cria User base
+        const user = await useApi({
           endpoint: "/user/create",
           method: "POST",
-          body: form,
+          body: {
+            nome: form.nome,
+            email: form.email,
+            telefone: form.telefone || "00000000000",
+            password: form.password,
+            typeUser: "candidato",
+          },
         });
-        setMensagem("✅ Usuário criado com sucesso!");
+        // Cria Candidato vinculado
+        await useApi({
+          endpoint: "/candidato/create",
+          method: "POST",
+          body: {
+            id_user: user.id,
+            cpf: form.cpf,
+          },
+        });
+        setMensagem("✅ Candidato criado com sucesso!");
       }
       setModalAberto(false);
-      carregarUsuarios();
+      carregarCandidatos();
     } catch (err) {
-      setMensagem(`❌ ${err.message || "Erro ao salvar usuário."}`);
+      console.error("❌ Erro ao salvar candidato:", err);
+      setMensagem(`❌ ${err.message || "Erro ao salvar candidato."}`);
     }
   }
 
   return (
     <div>
-      {/* Mensagem simples de feedback */}
+      {/* Feedback */}
       {mensagem && (
         <div className="bg-gray-100 text-gray-800 border border-gray-300 px-4 py-2 rounded-md mb-4 text-sm">
           {mensagem}
@@ -106,25 +153,25 @@ export default function UsuariosPage() {
       {/* Cabeçalho */}
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h2 className="text-2xl font-bold">Gerenciamento de Usuários</h2>
+          <h2 className="text-2xl font-bold">Gerenciamento de Candidatos</h2>
           <p className="text-gray-600 text-sm">
-            Adicione, edite ou remova usuários do sistema.
+            Crie, edite e visualize candidatos cadastrados no sistema.
           </p>
         </div>
         <button
-          onClick={novoUsuario}
+          onClick={novoCandidato}
           className="bg-indigo-600 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-indigo-500"
         >
           <span className="material-symbols-outlined">add</span>
-          Novo Usuário
+          Novo Candidato
         </button>
       </div>
 
       {/* Campo de busca */}
       <div className="bg-white p-6 rounded-lg shadow-sm mb-8 border border-gray-200">
-        <h3 className="text-lg font-semibold mb-1">Buscar Usuários</h3>
+        <h3 className="text-lg font-semibold mb-1">Buscar Candidatos</h3>
         <p className="text-gray-500 mb-4 text-sm">
-          Encontre usuários por nome, email ou CPF.
+          Encontre candidatos por nome, e-mail ou CPF.
         </p>
         <div className="relative">
           <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -134,7 +181,7 @@ export default function UsuariosPage() {
             type="text"
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
-            placeholder="Buscar usuários..."
+            placeholder="Buscar candidatos..."
             className="w-full bg-gray-100 border-none rounded-md pl-10 pr-4 py-2 focus:ring-2 focus:ring-indigo-500"
           />
         </div>
@@ -143,7 +190,7 @@ export default function UsuariosPage() {
       {/* Tabela */}
       <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
         <h3 className="text-lg font-semibold mb-4">
-          Usuários ({filtrados.length})
+          Candidatos ({filtrados.length})
         </h3>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
@@ -151,25 +198,25 @@ export default function UsuariosPage() {
               <tr className="border-b text-gray-500 text-xs uppercase">
                 <th className="py-3 px-4">Nome</th>
                 <th className="py-3 px-4">Email</th>
-                <th className="py-3 px-4">CPF</th>
                 <th className="py-3 px-4">Telefone</th>
+                <th className="py-3 px-4">CPF</th>
                 <th className="py-3 px-4 text-right">Ações</th>
               </tr>
             </thead>
             <tbody>
-              {filtrados.map((u) => (
+              {filtrados.map((c) => (
                 <tr
-                  key={u.id}
+                  key={c.id_user}
                   className="border-b hover:bg-gray-50 transition-colors"
                 >
-                  <td className="py-3 px-4 font-medium">{u.nome}</td>
-                  <td className="py-3 px-4 text-sm">{u.email}</td>
-                  <td className="py-3 px-4 text-sm">{u.cpf}</td>
-                  <td className="py-3 px-4 text-sm">{u.telefone}</td>
+                  <td className="py-3 px-4 font-medium">{c.nome}</td>
+                  <td className="py-3 px-4 text-sm">{c.email}</td>
+                  <td className="py-3 px-4 text-sm">{c.telefone}</td>
+                  <td className="py-3 px-4 text-sm">{c.cpf}</td>
                   <td className="py-3 px-4 text-right">
                     <div className="flex justify-end gap-2">
                       <button
-                        onClick={() => editarUsuario(u)}
+                        onClick={() => editarCandidato(c)}
                         className="text-gray-500 hover:text-indigo-600"
                       >
                         <span className="material-symbols-outlined text-base">
@@ -177,7 +224,7 @@ export default function UsuariosPage() {
                         </span>
                       </button>
                       <button
-                        onClick={() => excluirUsuario(u)}
+                        onClick={() => excluirCandidato(c)}
                         className="text-gray-500 hover:text-red-600"
                       >
                         <span className="material-symbols-outlined text-base">
@@ -193,29 +240,44 @@ export default function UsuariosPage() {
         </div>
       </div>
 
-      {/* Modal de Criação/Edição */}
+      {/* Modal */}
       <Modal
         open={modalAberto}
-        title={idEdicao ? "Editar Usuário" : "Novo Usuário"}
+        title={idEdicao ? "Editar Candidato" : "Novo Candidato"}
         onClose={() => setModalAberto(false)}
       >
-        <form onSubmit={salvarUsuario} className="space-y-4">
-          {["nome", "email", "cpf", "telefone", "password"].map((campo) => (
+        <form onSubmit={salvarCandidato} className="space-y-4">
+          {["nome", "email", "telefone", "cpf"].map((campo) => (
             <div key={campo}>
               <label className="block text-sm font-medium text-gray-600 mb-1 capitalize">
                 {campo}
               </label>
               <input
-                type={campo === "password" ? "password" : "text"}
-                value={form[campo] || ""}
-                onChange={(e) =>
-                  setForm({ ...form, [campo]: e.target.value })
-                }
+                type="text"
+                value={form[campo]}
+                onChange={(e) => setForm({ ...form, [campo]: e.target.value })}
                 required={campo !== "telefone"}
                 className="w-full bg-gray-100 border-none rounded-md py-2 px-3 focus:ring-2 focus:ring-indigo-500"
               />
             </div>
           ))}
+
+          {!idEdicao && (
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-1">
+                Senha
+              </label>
+              <input
+                type="password"
+                value={form.password}
+                onChange={(e) =>
+                  setForm({ ...form, password: e.target.value })
+                }
+                required
+                className="w-full bg-gray-100 border-none rounded-md py-2 px-3 focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+          )}
 
           <div className="flex justify-end gap-3 pt-2">
             <button

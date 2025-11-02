@@ -5,6 +5,7 @@ import DataTable from "../../components/DataTable";
 
 export default function CrudEmpresasPage() {
   const [empresas, setEmpresas] = useState([]);
+  const [busca, setBusca] = useState("");
   const [form, setForm] = useState({
     nome: "",
     cnpj: "",
@@ -25,7 +26,7 @@ export default function CrudEmpresasPage() {
   async function carregarEmpresas() {
     try {
       const data = await useApi({ endpoint: "/company" });
-      setEmpresas(data);
+      setEmpresas(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error("Erro ao carregar empresas:", err);
       setMensagem("❌ Erro ao carregar empresas.");
@@ -35,6 +36,18 @@ export default function CrudEmpresasPage() {
   useEffect(() => {
     carregarEmpresas();
   }, []);
+
+  // 🔍 Filtro personalizado
+  const filtradas = empresas.filter((e) => {
+    const termo = busca.toLowerCase();
+    return (
+      e.nome?.toLowerCase().includes(termo) ||
+      e.cnpj?.toLowerCase().includes(termo) ||
+      e.email?.toLowerCase().includes(termo) ||
+      e.category?.toLowerCase().includes(termo) ||
+      e.cidade?.toLowerCase().includes(termo)
+    );
+  });
 
   // ✏️ Editar empresa
   function editarEmpresa(empresa) {
@@ -76,7 +89,10 @@ export default function CrudEmpresasPage() {
   async function excluirEmpresa(empresa) {
     if (!confirm(`Excluir ${empresa.nome}?`)) return;
     try {
-      await useApi({ endpoint: `/company/delete/${empresa.id}`, method: "DELETE" });
+      await useApi({
+        endpoint: `/company/delete/${empresa.id}`,
+        method: "DELETE",
+      });
       carregarEmpresas();
       setMensagem("✅ Empresa excluída com sucesso.");
     } catch {
@@ -86,69 +102,69 @@ export default function CrudEmpresasPage() {
 
   // 💾 Criar ou atualizar empresa
   async function salvarEmpresa(e) {
-  e.preventDefault();
-  try {
-    if (idEdicao) {
-      // 🟢 Atualização direta da empresa
-      await useApi({
-        endpoint: `/company/update/${idEdicao}`,
-        method: "PUT",
-        body: {
-          nome: form.nome,
-          cnpj: form.cnpj,
-          email: form.email,
-          url_site: form.url,
-          category: form.categoria,
-          pais: form.pais,
-          cidade: form.cidade,
-          sobre: form.sobre,
-        },
-      });
-      setMensagem("✅ Empresa atualizada com sucesso!");
-    } else {
-      // 🧩 1ª etapa → criar o usuário base
-      const user = await useApi({
-        endpoint: "/user/create",
-        method: "POST",
-        body: {
-          nome: form.nome,
-          email: form.email,
-          password: form.password,
-          telefone: "00000000000", // obrigatório no model User
-          typeUser: "empresa",
-        },
-      });
+    e.preventDefault();
+    try {
+      if (idEdicao) {
+        // 🟢 Atualização direta
+        await useApi({
+          endpoint: `/company/update/${idEdicao}`,
+          method: "PUT",
+          body: {
+            nome: form.nome,
+            cnpj: form.cnpj,
+            email: form.email,
+            url_site: form.url,
+            category: form.categoria,
+            pais: form.pais,
+            cidade: form.cidade,
+            sobre: form.sobre,
+          },
+        });
+        setMensagem("✅ Empresa atualizada com sucesso!");
+      } else {
+        // 🧩 1ª etapa → criar o usuário base
+        const user = await useApi({
+          endpoint: "/user/create",
+          method: "POST",
+          body: {
+            nome: form.nome,
+            email: form.email,
+            password: form.password,
+            telefone: "00000000000",
+            typeUser: "empresa",
+          },
+        });
 
-      // 🧩 2ª etapa → criar empresa vinculada ao usuário
-      const formData = new FormData();
-      formData.append("nome", form.nome);
-      formData.append("cnpj", form.cnpj);
-      formData.append("url_site", form.url);
-      formData.append("email", form.email);
-      formData.append("category", form.categoria);
-      formData.append("pais", form.pais);
-      formData.append("cidade", form.cidade);
-      formData.append("sobre", form.sobre);
-      formData.append("id_user", user.id); // ✅ id_user necessário
-      if (form.logo) formData.append("logo", form.logo);
+        // 🧩 2ª etapa → criar empresa vinculada
+        const formData = new FormData();
+        formData.append("nome", form.nome);
+        formData.append("cnpj", form.cnpj);
+        formData.append("url_site", form.url);
+        formData.append("email", form.email);
+        formData.append("category", form.categoria);
+        formData.append("pais", form.pais);
+        formData.append("cidade", form.cidade);
+        formData.append("sobre", form.sobre);
+        formData.append("id_user", user.id);
+        if (form.logo) formData.append("logo", form.logo);
 
-      await useApi({
-        endpoint: "/company/create",
-        method: "POST",
-        body: formData,
-        isFormData: true,
-      });
+        await useApi({
+          endpoint: "/company/create",
+          method: "POST",
+          body: formData,
+          isFormData: true,
+        });
 
-      setMensagem("✅ Empresa criada com sucesso!");
+        setMensagem("✅ Empresa criada com sucesso!");
+      }
+
+      setModalAberto(false);
+      carregarEmpresas();
+    } catch (err) {
+      console.error("Erro ao salvar empresa:", err);
+      setMensagem(`❌ ${err.message || "Erro ao salvar empresa."}`);
     }
-
-    setModalAberto(false);
-    carregarEmpresas();
-  } catch (err) {
-    console.error("Erro ao salvar empresa:", err);
-    setMensagem(`❌ ${err.message || "Erro ao salvar empresa."}`);
   }
-}
 
   return (
     <div>
@@ -176,19 +192,44 @@ export default function CrudEmpresasPage() {
         </button>
       </div>
 
+      {/* 🔍 Campo de busca */}
+      <div className="bg-white p-6 rounded-lg shadow-sm mb-8 border border-gray-200">
+        <h3 className="text-lg font-semibold mb-1">Buscar Empresas</h3>
+        <p className="text-gray-500 mb-4 text-sm">
+          Encontre empresas por nome, CNPJ, categoria, email ou cidade.
+        </p>
+        <div className="relative">
+          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+            search
+          </span>
+          <input
+            type="text"
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+            placeholder="Buscar empresas..."
+            className="w-full bg-gray-100 border-none rounded-md pl-10 pr-4 py-2 focus:ring-2 focus:ring-indigo-500"
+          />
+        </div>
+      </div>
+
       {/* 📋 Tabela */}
-      <DataTable
-        columns={[
-          { header: "Nome", key: "nome" },
-          { header: "CNPJ", key: "cnpj" },
-          { header: "Categoria", key: "category" },
-          { header: "Email", key: "email" },
-          { header: "Cidade", key: "cidade" },
-        ]}
-        data={empresas}
-        onEdit={editarEmpresa}
-        onDelete={excluirEmpresa}
-      />
+      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <h3 className="text-lg font-semibold mb-4">
+          Empresas ({filtradas.length})
+        </h3>
+        <DataTable
+          columns={[
+            { header: "Nome", key: "nome" },
+            { header: "CNPJ", key: "cnpj" },
+            { header: "Categoria", key: "category" },
+            { header: "Email", key: "email" },
+            { header: "Cidade", key: "cidade" },
+          ]}
+          data={filtradas}
+          onEdit={editarEmpresa}
+          onDelete={excluirEmpresa}
+        />
+      </div>
 
       {/* 🧩 Modal */}
       <Modal
@@ -233,9 +274,7 @@ export default function CrudEmpresasPage() {
             <input
               type="file"
               accept="image/*"
-              onChange={(e) =>
-                setForm({ ...form, logo: e.target.files[0] })
-              }
+              onChange={(e) => setForm({ ...form, logo: e.target.files[0] })}
               className="w-full bg-gray-100 border-none rounded-md py-2 px-3 focus:ring-2 focus:ring-indigo-500"
             />
           </div>
