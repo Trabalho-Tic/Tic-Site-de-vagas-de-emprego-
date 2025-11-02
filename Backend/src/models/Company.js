@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 const User = require("./User");
 
-const Company = sequelize.define("company", {
+const Company = sequelize.define("Company", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -18,10 +18,10 @@ const Company = sequelize.define("company", {
     unique: true,
   },
   logo: {
-    type: DataTypes.STRING, 
+    type: DataTypes.STRING,
     allowNull: true,
     get() {
-      const rawValue = this.getDataValue("logo")
+      const rawValue = this.getDataValue("logo");
       return rawValue
         ? `${process.env.BASE_URL || "http://localhost:8000"}/uploads/logos/${rawValue}`
         : null;

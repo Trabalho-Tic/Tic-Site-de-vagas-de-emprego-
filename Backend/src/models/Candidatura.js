@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
-const Candidatura = sequelize.define("candidatura", {
+const Candidatura = sequelize.define("Candidatura", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -11,7 +11,7 @@ const Candidatura = sequelize.define("candidatura", {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: "tb_vaga", // referência à tabela de vagas
+      model: "tb_vaga",
       key: "id",
     },
     onDelete: "CASCADE",
@@ -21,8 +21,8 @@ const Candidatura = sequelize.define("candidatura", {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: "tb_candidato", // referência à tabela de candidatos
-      key: "id_user", // porque no seu model Candidato, a PK é o id_user
+      model: "tb_candidato",
+      key: "id_user",
     },
     onDelete: "CASCADE",
     onUpdate: "CASCADE",
@@ -30,7 +30,7 @@ const Candidatura = sequelize.define("candidatura", {
   status: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: "enviado", // status inicial
+    defaultValue: "enviado",
   },
   data_envio: {
     type: DataTypes.DATE,
@@ -41,20 +41,24 @@ const Candidatura = sequelize.define("candidatura", {
   timestamps: false,
 });
 
-
-// 🔗 RELACIONAMENTOS
 Candidatura.associate = (models) => {
-  // Cada candidatura pertence a uma vaga
-  Candidatura.belongsTo(models.vaga, {
-    foreignKey: "id_vaga",
-    as: "vaga",
-  });
+  if (models.Vaga) {
+    Candidatura.belongsTo(models.Vaga, {
+      foreignKey: "id_vaga",
+      as: "vaga",
+    });
+  } else {
+    console.warn("⚠️ models.Vaga não carregado ao associar Candidatura");
+  }
 
-  // Cada candidatura pertence a um candidato
-  Candidatura.belongsTo(models.Candidato, {
-    foreignKey: "id_candidato",
-    as: "candidato",
-  });
+  if (models.Candidato) {
+    Candidatura.belongsTo(models.Candidato, {
+      foreignKey: "id_candidato",
+      as: "candidato",
+    });
+  } else {
+    console.warn("⚠️ models.Candidato não carregado ao associar Candidatura");
+  }
 };
 
 module.exports = Candidatura;
