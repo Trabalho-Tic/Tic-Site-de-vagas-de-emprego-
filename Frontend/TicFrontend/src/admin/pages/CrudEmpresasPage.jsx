@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useApi from "../../api/Api";
 import Modal from "../../components/Modal";
-import DataTable from "../../components/DataTable"; // Tabela para exibição dos dados
+import DataTable from "../../components/DataTable";
 
 export default function CrudEmpresasPage() {
   const [empresas, setEmpresas] = useState([]);
@@ -15,18 +15,19 @@ export default function CrudEmpresasPage() {
     pais: "",
     cidade: "",
     sobre: "",
-    file: null,
+    logo: null,
   });
   const [idEdicao, setIdEdicao] = useState(null);
   const [modalAberto, setModalAberto] = useState(false);
-  const [mensagem, setMensagem] = useState(""); // Feedback do sistema
+  const [mensagem, setMensagem] = useState("");
 
-  // Função para carregar empresas
+  // 🔄 Buscar empresas
   async function carregarEmpresas() {
     try {
       const data = await useApi({ endpoint: "/company" });
       setEmpresas(data);
     } catch (err) {
+      console.error("Erro ao carregar empresas:", err);
       setMensagem("❌ Erro ao carregar empresas.");
     }
   }
@@ -35,14 +36,25 @@ export default function CrudEmpresasPage() {
     carregarEmpresas();
   }, []);
 
-  // Função para editar a empresa
+  // ✏️ Editar empresa
   function editarEmpresa(empresa) {
-    setForm(empresa);
+    setForm({
+      nome: empresa.nome || "",
+      cnpj: empresa.cnpj || "",
+      email: empresa.email || "",
+      password: "",
+      url: empresa.url_site || "",
+      categoria: empresa.category || "",
+      pais: empresa.pais || "",
+      cidade: empresa.cidade || "",
+      sobre: empresa.sobre || "",
+      logo: null,
+    });
     setIdEdicao(empresa.id);
     setModalAberto(true);
   }
 
-  // Função para criar uma nova empresa
+  // ➕ Nova empresa
   function novaEmpresa() {
     setForm({
       nome: "",
@@ -54,13 +66,13 @@ export default function CrudEmpresasPage() {
       pais: "",
       cidade: "",
       sobre: "",
-      file: null,
+      logo: null,
     });
     setIdEdicao(null);
     setModalAberto(true);
   }
 
-  // Função para excluir empresa
+  // ❌ Excluir empresa
   async function excluirEmpresa(empresa) {
     if (!confirm(`Excluir ${empresa.nome}?`)) return;
     try {
@@ -72,47 +84,82 @@ export default function CrudEmpresasPage() {
     }
   }
 
-  // Função para salvar nova empresa ou atualizar existente
+  // 💾 Criar ou atualizar empresa
   async function salvarEmpresa(e) {
-    e.preventDefault();
-    try {
-      if (idEdicao) {
-        await useApi({
-          endpoint: `/company/update/${idEdicao}`,
-          method: "PUT",
-          body: form,
-        });
-        setMensagem("✅ Empresa atualizada com sucesso!");
-      } else {
-        const formData = new FormData();
-        for (let key in form) {
-          formData.append(key, form[key]);
-        }
-        await useApi({
-          endpoint: "/company/create",
-          method: "POST",
-          body: formData,
-          isFormData: true,
-        });
-        setMensagem("✅ Empresa criada com sucesso!");
-      }
-      setModalAberto(false);
-      carregarEmpresas();
-    } catch (err) {
-      setMensagem(`❌ ${err.message || "Erro ao salvar empresa."}`);
+  e.preventDefault();
+  try {
+    if (idEdicao) {
+      // 🟢 Atualização direta da empresa
+      await useApi({
+        endpoint: `/company/update/${idEdicao}`,
+        method: "PUT",
+        body: {
+          nome: form.nome,
+          cnpj: form.cnpj,
+          email: form.email,
+          url_site: form.url,
+          category: form.categoria,
+          pais: form.pais,
+          cidade: form.cidade,
+          sobre: form.sobre,
+        },
+      });
+      setMensagem("✅ Empresa atualizada com sucesso!");
+    } else {
+      // 🧩 1ª etapa → criar o usuário base
+      const user = await useApi({
+        endpoint: "/user/create",
+        method: "POST",
+        body: {
+          nome: form.nome,
+          email: form.email,
+          password: form.password,
+          telefone: "00000000000", // obrigatório no model User
+          typeUser: "empresa",
+        },
+      });
+
+      // 🧩 2ª etapa → criar empresa vinculada ao usuário
+      const formData = new FormData();
+      formData.append("nome", form.nome);
+      formData.append("cnpj", form.cnpj);
+      formData.append("url_site", form.url);
+      formData.append("email", form.email);
+      formData.append("category", form.categoria);
+      formData.append("pais", form.pais);
+      formData.append("cidade", form.cidade);
+      formData.append("sobre", form.sobre);
+      formData.append("id_user", user.id); // ✅ id_user necessário
+      if (form.logo) formData.append("logo", form.logo);
+
+      await useApi({
+        endpoint: "/company/create",
+        method: "POST",
+        body: formData,
+        isFormData: true,
+      });
+
+      setMensagem("✅ Empresa criada com sucesso!");
     }
+
+    setModalAberto(false);
+    carregarEmpresas();
+  } catch (err) {
+    console.error("Erro ao salvar empresa:", err);
+    setMensagem(`❌ ${err.message || "Erro ao salvar empresa."}`);
   }
+}
 
   return (
     <div>
-      {/* Mensagem simples de feedback */}
+      {/* 🧾 Mensagem de feedback */}
       {mensagem && (
         <div className="bg-gray-100 text-gray-800 border border-gray-300 px-4 py-2 rounded-md mb-4 text-sm">
           {mensagem}
         </div>
       )}
 
-      {/* Cabeçalho */}
+      {/* 🔝 Cabeçalho */}
       <div className="flex justify-between items-center mb-8">
         <div>
           <h2 className="text-2xl font-bold">Gerenciamento de Empresas</h2>
@@ -124,54 +171,88 @@ export default function CrudEmpresasPage() {
           onClick={novaEmpresa}
           className="bg-indigo-600 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-indigo-500"
         >
-          Novo Empresa
+          <span className="material-symbols-outlined">add</span>
+          Nova Empresa
         </button>
       </div>
 
-      {/* Tabela de Empresas */}
+      {/* 📋 Tabela */}
       <DataTable
         columns={[
           { header: "Nome", key: "nome" },
           { header: "CNPJ", key: "cnpj" },
           { header: "Categoria", key: "category" },
           { header: "Email", key: "email" },
+          { header: "Cidade", key: "cidade" },
         ]}
         data={empresas}
         onEdit={editarEmpresa}
         onDelete={excluirEmpresa}
       />
 
-      {/* Modal de Criação/Edição */}
-      <Modal open={modalAberto} title={idEdicao ? "Editar Empresa" : "Nova Empresa"} onClose={() => setModalAberto(false)}>
+      {/* 🧩 Modal */}
+      <Modal
+        open={modalAberto}
+        title={idEdicao ? "Editar Empresa" : "Nova Empresa"}
+        onClose={() => setModalAberto(false)}
+      >
         <form onSubmit={salvarEmpresa} className="space-y-4">
-          {["nome", "cnpj", "email", "password", "url", "categoria", "pais", "cidade", "sobre"].map((campo) => (
-            <div key={campo}>
-              <label className="block text-sm font-medium text-gray-600 mb-1 capitalize">{campo}</label>
+          {/* Campos de texto */}
+          {[
+            { label: "Nome", key: "nome" },
+            { label: "CNPJ", key: "cnpj" },
+            { label: "Email", key: "email" },
+            { label: "Senha", key: "password", type: "password" },
+            { label: "URL do site", key: "url" },
+            { label: "Categoria", key: "categoria" },
+            { label: "País", key: "pais" },
+            { label: "Cidade", key: "cidade" },
+            { label: "Sobre", key: "sobre" },
+          ].map((campo) => (
+            <div key={campo.key}>
+              <label className="block text-sm font-medium text-gray-600 mb-1">
+                {campo.label}
+              </label>
               <input
-                type={campo === "password" ? "password" : "text"}
-                value={form[campo] || ""}
-                onChange={(e) => setForm({ ...form, [campo]: e.target.value })}
-                required
+                type={campo.type || "text"}
+                value={form[campo.key] || ""}
+                onChange={(e) =>
+                  setForm({ ...form, [campo.key]: e.target.value })
+                }
+                required={campo.key !== "url" && campo.key !== "sobre"}
                 className="w-full bg-gray-100 border-none rounded-md py-2 px-3 focus:ring-2 focus:ring-indigo-500"
               />
             </div>
           ))}
 
-          {/* Upload de Logo */}
+          {/* Upload de logo */}
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">Logo</label>
+            <label className="block text-sm font-medium text-gray-600 mb-1">
+              Logo da Empresa
+            </label>
             <input
               type="file"
-              onChange={(e) => setForm({ ...form, file: e.target.files[0] })}
+              accept="image/*"
+              onChange={(e) =>
+                setForm({ ...form, logo: e.target.files[0] })
+              }
               className="w-full bg-gray-100 border-none rounded-md py-2 px-3 focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
+          {/* Botões */}
           <div className="flex justify-end gap-3 pt-2">
-            <button type="button" onClick={() => setModalAberto(false)} className="bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300">
+            <button
+              type="button"
+              onClick={() => setModalAberto(false)}
+              className="bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300"
+            >
               Cancelar
             </button>
-            <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-500">
+            <button
+              type="submit"
+              className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-500"
+            >
               Salvar
             </button>
           </div>
