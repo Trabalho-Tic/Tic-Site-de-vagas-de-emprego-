@@ -2,6 +2,7 @@ const User = require('../models/User');
 const gerarHash = require("../utils/auth");
 const Company = require('../models/Company');
 const Candidato = require('../models/Candidato');
+const CandidatoCurriculo = require('../models/CandidatoCurriculo');
 
 // Helper: remove o campo "password" das respostas
 function sanitizeUser(userInstance) {
@@ -17,7 +18,8 @@ class UserController {
       const users = await User.findAll({
         include: [
           { model: Company, as: 'company', attributes: ['id', 'nome', 'cnpj', 'cidade', 'category'] },
-          { model: Candidato, as: 'candidato', attributes: ['id_user', 'cpf', 'deficiencias'] }
+          { model: Candidato, as: 'candidato', attributes: ['id_user', 'cpf', 'deficiencias'] },
+          { model: CandidatoCurriculo, as: 'curriculos', attributes: ['id_user', 'curriculo', 'resumoProf', 'experiencias', 'formacao', 'cursos', 'habilidades'] }
         ],
       });
       return res.json(users.map(sanitizeUser));
@@ -33,7 +35,7 @@ class UserController {
     try {
       const user = await User.findByPk(id, {
         include: [
-          { model: Company, as: 'company', attributes: ['id', 'nome', 'cnpj', 'cidade', 'category'] },
+          { model: Company, as: 'company', attributes: ['id',"logo", 'nome', 'cnpj', 'cidade', 'category'] },
           { model: Candidato, as: 'candidato', attributes: ['id_user', 'cpf', 'deficiencias'] }
         ],
       });
@@ -44,6 +46,10 @@ class UserController {
     } catch (error) {
       return res.status(500).json({ error: "Erro ao buscar usuário" });
     }
+  }
+
+  async showCurriculo(req, res) {
+
   }
 
   // CRIAR USUÁRIO BASE

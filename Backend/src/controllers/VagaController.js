@@ -43,6 +43,7 @@ class VagaController {
     }
 
     async create(request, response) {
+        console.log(request.body)
         try {
             const vaga = await Vaga.create(request.body)
             return response.json(vaga)
