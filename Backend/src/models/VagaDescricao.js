@@ -1,36 +1,40 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
-const VagaDescricao = sequelize.define("vagaDescricao", {
-    id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true
+const VagaDescricao = sequelize.define("VagaDescricao", {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
+  descricao: {
+    type: DataTypes.JSON,
+    allowNull: false,
+  },
+  id_vaga: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: "tb_vaga",
+      key: "id",
     },
-    descricao: {
-        type: DataTypes.JSON,
-        allowNull: false
-    },
-    id_vaga: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        references: {
-            model: "tb_vaga",
-            key: "id"
-        },
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE"
-    },
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  },
 }, {
-    tableName: "tb_vagaDescricao",
-}
-)
+  tableName: "tb_vagaDescricao",
+  timestamps: false,
+});
 
 VagaDescricao.associate = (models) => {
-    VagaDescricao.belongsTo(models.vaga, {
-        foreignKey: 'id_vaga',
-        as: 'vaga'
+  if (models.Vaga) {
+    VagaDescricao.belongsTo(models.Vaga, {
+      foreignKey: "id_vaga",
+      as: "vaga",
     });
+  } else {
+    console.warn("⚠️ Model Vaga não carregado ao associar VagaDescricao");
+  }
 };
 
-module.exports = VagaDescricao
+module.exports = VagaDescricao;
