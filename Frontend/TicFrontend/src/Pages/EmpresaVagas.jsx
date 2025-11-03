@@ -1,42 +1,59 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
-function EmpresaVagas() {
-  const { id } = useParams();
-  const vagas = [
+function getMock() {
+  return [
     {
       id: 1,
-      titulo: "Desenvolvedor Frontend",
-      local: "São Paulo, SP",
-      tipo: "CLT",
-      descricao: "Responsável por desenvolver interfaces modernas e responsivas.",
+      nome: "NAVA Company",
+      desc: "Tecnologia • São Paulo/SP",
+      vagas: [
+        { title: "UI/UX Designer", local: "São Paulo, SP", tags: ["Candidatura fácil", "Vários candidatos"] },
+        { title: "Product Designer", local: "Remoto", tags: ["Candidatura fácil"] }
+      ]
     },
     {
       id: 2,
-      titulo: "Analista de Dados",
-      local: "Remoto",
-      tipo: "PJ",
-      descricao: "Análise de dados e geração de relatórios estratégicos.",
-    },
+      nome: "Cielo",
+      desc: "Finanças • Barueri/SP",
+      vagas: [
+        { title: "Analista de Dados", local: "Barueri, SP", tags: ["Candidatura fácil"] },
+        { title: "Gestor Comercial", local: "Remoto", tags: ["Vários candidatos"] }
+      ]
+    }
   ];
+}
+
+export default function EmpresaVagas() {
+  const { id } = useParams();
+  const location = useLocation();
+  const companyFromState = location.state?.company;
+  const company = companyFromState || getMock().find((c) => String(c.id) === String(id));
 
   return (
-    <div className="p-8 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Vagas na Empresa</h1>
+    <div className="bg-gray-50 min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-1 max-w-5xl mx-auto px-4 py-10">
+        <h1 className="text-2xl font-semibold text-gray-800">Vagas — {company?.nome}</h1>
+        <p className="text-sm text-gray-500 mt-1">{company?.desc}</p>
 
-      {vagas.map((vaga) => (
-        <div
-          key={vaga.id}
-          className="border border-gray-300 rounded-md p-6 mb-6 shadow-md"
-        >
-          <h2 className="text-xl font-semibold mb-2">{vaga.titulo}</h2>
-          <p className="text-gray-600 mb-1">📍 {vaga.local}</p>
-          <p className="text-gray-600 mb-3">💼 Tipo: {vaga.tipo}</p>
-          <p className="text-gray-700 mb-4">{vaga.descricao}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+          {company?.vagas?.map((vaga, i) => (
+            <div key={i} className="bg-white border rounded-2xl p-5 shadow-sm hover:shadow-md transition">
+              <h3 className="font-semibold text-gray-800 text-sm">{vaga.title}</h3>
+              <p className="text-xs text-gray-500">{vaga.local}</p>
+              <div className="flex gap-2 mt-3">
+                {vaga.tags?.map((t, j) => (
+                  <span key={j} className="bg-green-100 text-green-600 text-xs px-3 py-1 rounded-full">{t}</span>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
+      </main>
+      <Footer />
     </div>
   );
 }
-
-export default EmpresaVagas;

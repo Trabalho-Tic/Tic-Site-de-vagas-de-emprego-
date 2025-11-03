@@ -12,9 +12,8 @@ import Profile from "./Pages/Profile";
 import CriarVagaRequisicao from "./Pages/CriarVagaRequisicao";
 import CriarVagaDescricao from "./Pages/CriarVagaDescricao";
 import CardCompanies from "./components/CardCompanies";
-import EmpresaSobre from "./pages/EmpresaSobre";
-import EmpresaVagas from "./pages/EmpresaVagas";
-
+import EmpresaVagas from "./Pages/EmpresaVagas";
+import EmpresaSobre from "./Pages/EmpresaSobre";
 import AdminLayout from "./admin/Layout";
 import UsuariosPage from "./admin/pages/UsuariosPage";
 import VagasPage from "./admin/pages/VagasPage";
@@ -66,11 +65,11 @@ const routes = createBrowserRouter([
     element: <Company />,
   },
   {
-    path: "/empresa/:id/sobre",
+    path: "/empresa-sobre/:id",
     element: <EmpresaSobre />,
   },
   {
-    path: "/empresa/:id/vagas",
+    path: "/empresa-vagas/:id",
     element: <EmpresaVagas />,
   },
   {
