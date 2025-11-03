@@ -84,7 +84,7 @@ function Vaga() {
       </section>
 
       {/* 🧾 Seção de listagem de vagas */}
-      <section className="flex flex-col w-full md:px-28 md:py-10 gap-6">
+      <section className="flex flex-col w-full md:px-20 md:py-10 gap-6">
         {/* Botão de adicionar vaga - só para empresa */}
         {user?.tipo === "empresa" && (
           <button
@@ -96,7 +96,7 @@ function Vaga() {
         )}
 
         <div className="flex w-full gap-6">
-          <div className="hidden lg:flex flex-col gap-2 w-1/3 overflow-y-auto max-h-[70vh] pr-2">
+          <div className="hidden lg:flex flex-col pt-1 gap-2 w-160 overflow-y-auto max-h-auto">
             {vagasFiltradas.length > 0 ? (
               vagasFiltradas.map((vaga) => <Card key={vaga.id} vaga={vaga} />)
             ) : (

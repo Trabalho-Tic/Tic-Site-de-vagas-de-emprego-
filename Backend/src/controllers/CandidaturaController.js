@@ -72,6 +72,20 @@ class CandidaturaController {
       return res.status(500).json({ error: "Erro ao buscar candidaturas do candidato." });
     }
   }
+  
+  async jaCandidatado(req, res) {
+    try {
+      const { id_vaga, id_candidato } = req.body;
+      const candidatura = await Candidatura.findOne({
+        where: { id_candidato, id_vaga },
+      });
+
+      return res.json(!!candidatura);
+    } catch (error) {
+      console.error("❌ Erro ao listar candidaturas do candidato:", error);
+      return res.status(500).json({ error: "Erro ao buscar candidaturas do candidato." });
+    }
+  }
 
   // ❌ Deletar candidatura (cancelar inscrição)
   async delete(req, res) {

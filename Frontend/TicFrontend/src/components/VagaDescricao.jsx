@@ -14,7 +14,8 @@ function VagaDescricao() {
   const { id } = useParams();
   const [vaga, setVaga] = useState([]);
   const [empresa, setEmpresa] = useState([]);
-  const [user, setUser] = useState(null); // 👈 controle do usuário logado
+  const [user, setUser] = useState(null);
+  const [jaCandidatado, setJaCandidatado] = useState(false);
   const navigate = useNavigate();
 
   // 🔍 Verifica usuário logado
@@ -36,6 +37,7 @@ function VagaDescricao() {
           const response = await useApi({ endpoint: `/company/${result.id_company}` });
           setEmpresa(response);
         }
+
       } catch (error) {
         console.error("Erro ao buscar vaga:", error);
       }
@@ -44,12 +46,54 @@ function VagaDescricao() {
     fetchVagas();
   }, [id]);
 
+  useEffect(() => {
+
+    if (!user?.id || !vaga?.id) return;
+
+    async function fetchValid() {
+      try {
+        console.log(vaga.id + " " + user.id)
+        const validCand = await useApi({
+          endpoint: "/candidatura/validar",
+          method: "POST",
+          body: { id_vaga: vaga.id, id_candidato: user.id}
+        })
+
+        setJaCandidatado(validCand)
+      } catch (error) {
+        console.error("error" + error)
+      }
+    }
+
+    fetchValid()
+  }, [user, vaga])
+
   if (!vaga || !vaga.id) {
     return <p>Carregando vaga...</p>;
   }
 
   // ✅ Renderização condicional do botão
   const podeCandidatar = user && user.tipo === "candidato";
+
+  async function handleCandidatar() {
+      try {
+        const curriculo = await useApi({
+          endpoint: `/buscarCurriculo/${user.id}`
+        })
+
+        if (curriculo) {
+          const candidatou = await useApi({
+            endpoint: `/candidatura/create`,
+            method: "POST",
+            body: { id_vaga: vaga.id, id_candidato: user.id }
+          })
+        }
+
+      } catch (error) {
+        navigate("/curriculo")
+        console.error(error)
+      }
+  }
 
   return (
     <>
@@ -68,13 +112,24 @@ function VagaDescricao() {
 
         {/* 🔒 Só exibe se for candidato */}
         {podeCandidatar ? (
+          jaCandidatado ? (
+            <button
+              onClick={() => handleCandidatar()}
+              disabled
+              className="flex text-lg rounded-4xl items-center px-6 h-12 gap-2 font-semibold bg-gray-300 text-gray-600 cursor-not-allowed"
+            >
+              <Zap size={20} />
+              Ja candidatou
+            </button>
+          ) : (
           <button
-            onClick={() => navigate("/curriculo")}
+            onClick={() => handleCandidatar()}
             className="flex text-lg rounded-4xl items-center px-6 h-12 gap-2 font-semibold bg-green-400 transition-all duration-500 hover:-translate-y-1 hover:bg-green-300"
           >
             <Zap size={20} />
             Candidatar-se
           </button>
+          )
         ) : (
           <button
             disabled

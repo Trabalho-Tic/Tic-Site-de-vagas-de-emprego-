@@ -16,6 +16,7 @@ const VagaDescricaoController = require('../controllers/VagaDescricaoController'
 const VagaBeneficioController = require('../controllers/VagaBeneficioController');
 const VagaProcessoController = require('../controllers/VagaProcessoController');
 const VagaRequisicaoController = require('../controllers/VagaRequisicaoController');
+const CandidaturaController = require('../controllers/CandidaturaController');
 
 // ------------------ MIDDLEWARES ------------------
 const upload = require("../middlewares/upload");
@@ -128,9 +129,14 @@ router.put("/vagaprocesso/:id", VagaProcessoController.update);
 router.post("/vagarequisicao/:id", VagaRequisicaoController.create);
 router.put("/vagarequisicao/:id", VagaRequisicaoController.update);
 
+// ------------------ CURRICULO  ------------------
 router.post('/criarCurriculo/:id', upload.single("curriculo"), CurriculoController.create);
 router.put('/updateCurriculo/:id', upload.single("curriculo"), CurriculoController.update);
 router.get('/buscarCurriculo/:id', CurriculoController.getByUserId);
+
+// ------------------ CANDIDATURA ------------------
+router.post('/candidatura/create', CandidaturaController.create);
+router.post('/candidatura/validar', CandidaturaController.jaCandidatado);
 
 // ------------------ ASSOCIAÇÕES ------------------
 router.post('/TipoDeficiencia/:id/SubTipoDeficiencia', TipoDeficienciaController.associarSubtipos);
