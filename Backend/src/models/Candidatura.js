@@ -42,15 +42,23 @@ const Candidatura = sequelize.define("Candidatura", {
 });
 
 Candidatura.associate = (models) => {
-  Candidatura.belongsTo(models.vaga, {
-    foreignKey: "id_vaga",
-    as: "vaga",
-  });
+  if (models.Vaga) {
+    Candidatura.belongsTo(models.Vaga, {
+      foreignKey: "id_vaga",
+      as: "vaga",
+    });
+  } else {
+    console.warn("⚠️ models.Vaga não carregado ao associar Candidatura");
+  }
 
-  Candidatura.belongsTo(models.Candidato, {
-    foreignKey: "id_candidato",
-    as: "candidato",
-  });
+  if (models.Candidato) {
+    Candidatura.belongsTo(models.Candidato, {
+      foreignKey: "id_candidato",
+      as: "candidato",
+    });
+  } else {
+    console.warn("⚠️ models.Candidato não carregado ao associar Candidatura");
+  }
 };
 
 module.exports = Candidatura;
