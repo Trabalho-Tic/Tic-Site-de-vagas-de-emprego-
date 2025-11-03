@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
-const Candidatura = sequelize.define("candidatura", {
+const Candidatura = sequelize.define("Candidatura", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -30,7 +30,7 @@ const Candidatura = sequelize.define("candidatura", {
   status: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: "enviado", // status inicial
+    defaultValue: "enviado",
   },
   data_envio: {
     type: DataTypes.DATE,
@@ -40,7 +40,6 @@ const Candidatura = sequelize.define("candidatura", {
   tableName: "tb_candidatura",
   timestamps: false,
 });
-
 
 Candidatura.associate = (models) => {
   Candidatura.belongsTo(models.vaga, {
