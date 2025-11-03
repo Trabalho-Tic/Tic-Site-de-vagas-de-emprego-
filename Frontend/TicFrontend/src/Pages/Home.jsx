@@ -41,8 +41,12 @@ function Vagas() {
                 <p className="text-3xl text-center font-semibold px-1 pb-6">Vagas abertas recentemente</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     {
-                        vagas.map((vaga) => (
-                            <Card vaga={vaga} />
+                        vagas.map((vaga, index) => ( 
+                            index < 6 ? (
+                                <Card vaga={vaga} />
+                            ) : (
+                                <></>
+                            )
                         ))
                     }
                 </div>

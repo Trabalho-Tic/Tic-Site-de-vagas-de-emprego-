@@ -3,7 +3,7 @@ import "../Styles/home.css";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import logo from "../assets/Jobior.png";
 import profile from "../assets/profile.png";
-import { LogOut, User, FileText, Heart } from "lucide-react";
+import { LogOut, User, FileText, Heart, ShieldUser  } from "lucide-react";
 
 function Header() {
   const navigate = useNavigate();
@@ -91,7 +91,7 @@ function Header() {
 
           {/* Dropdown */}
           {menuAberto && (
-            <div className="absolute right-0 top-12 bg-white shadow-lg rounded-xl p-4 w-56 border border-gray-200 animate-fade-in z-50">
+            <div className="absolute right-0 top-11 bg-white shadow-lg rounded-xl p-4 w-56 border border-gray-200 animate-fade-in z-50">
               <p className="font-semibold text-gray-800 mb-2">{user?.nome}</p>
               <p className="text-xs text-gray-500 mb-3 truncate">{user?.email}</p>
               <hr className="mb-3" />
@@ -105,7 +105,7 @@ function Header() {
                 </li>
 
                 {/* Somente candidatos */}
-                {user?.tipo === "candidato" && (
+                {user?.tipo === "candidato" || user?.tipo === "admin" && (
                   <>
                     <li
                       onClick={() => navigate("/curriculo")}
@@ -121,6 +121,19 @@ function Header() {
                     </li>
                   </>
                 )}
+
+                {
+                  user?.tipo === "admin" ? (
+                    <li
+                      onClick={() => navigate("/admin")}
+                      className="flex items-center gap-2 text-gray-700 hover:text-green-500 cursor-pointer"
+                    >
+                      <ShieldUser  size={16} /> Area Admin
+                    </li>
+                  ) : (
+                    <></>
+                  )
+                }
 
                 <hr className="my-2" />
 

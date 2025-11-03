@@ -84,19 +84,19 @@ function Vaga() {
       </section>
 
       {/* 🧾 Seção de listagem de vagas */}
-      <section className="flex flex-col w-full md:px-20 md:py-10 gap-6">
+      <section className="flex flex-col w-full p-10 md:py-10 gap-6">
         {/* Botão de adicionar vaga - só para empresa */}
         {user?.tipo === "empresa" && (
           <button
             onClick={() => navigate("/criarVaga")}
-            className="self-start text-lg font-semibold text-white bg-gradient-to-tr from-green-400 to-green-100 p-4 rounded-xl transition-all duration-300 hover:-translate-y-0.5"
+            className="w-full md:w-100 self-start text-lg font-semibold text-white bg-gradient-to-tr from-green-400 to-green-100 p-4 rounded-xl transition-all duration-300 hover:-translate-y-0.5"
           >
             Adicionar vaga
           </button>
         )}
 
         <div className="flex w-full gap-6">
-          <div className="hidden lg:flex flex-col pt-1 gap-2 w-160 overflow-y-auto max-h-auto">
+          <div className="hidden lg:flex flex-col pt-1 gap-2 w-160 overflow-auto scrollbar-hide max-h-450">
             {vagasFiltradas.length > 0 ? (
               vagasFiltradas.map((vaga) => <Card key={vaga.id} vaga={vaga} />)
             ) : (

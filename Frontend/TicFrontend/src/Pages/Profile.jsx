@@ -10,8 +10,6 @@ export default function Profile() {
 
   const userLogado = JSON.parse(localStorage.getItem("user"))
 
-  const navigate = useNavigate()
-
   useEffect(() => {
     async function fetchUser() {
       try {
@@ -45,21 +43,23 @@ export default function Profile() {
         <main className="flex flex-col lg:flex-row max-w-7xl mx-auto p-6 gap-6">
           <div className="flex-1 bg-white rounded-2xl shadow p-6">
             <div className="flex items-start gap-4">
-              <img
-                src={user.company?.logo || ""}
-                alt="Profile"
-                className="w-20 h-20 rounded-full object-cover"
-              />
+              {user.typeUser == "candidato" ?
+                (
+                <img
+                  className="hidden"
+                /> 
+                ): (
+                    <img
+                    src={user.company?.logo || ""}
+                    alt="Profile"
+                    className="w-20 h-20 rounded-full object-cover"
+                  />
+                  )
+                }
               <div className="flex-1">
                 <h2 className="text-xl font-semibold">{user.nome}</h2>
                 <p className="text-gray-500">Designer de UI/UX</p>
                 <p className="text-gray-400 text-sm">Porto, Portugal</p>
-  
-                <div className="mt-4 flex items-center gap-2">
-                  <button className="border border-gray-300 rounded-full px-3 py-1 text-sm">
-                    Visualizar foto
-                  </button>
-                </div>
               </div>
             </div>
   

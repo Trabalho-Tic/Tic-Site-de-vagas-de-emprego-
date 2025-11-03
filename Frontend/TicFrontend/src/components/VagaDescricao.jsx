@@ -52,7 +52,6 @@ function VagaDescricao() {
 
     async function fetchValid() {
       try {
-        console.log(vaga.id + " " + user.id)
         const validCand = await useApi({
           endpoint: "/candidatura/validar",
           method: "POST",
@@ -89,6 +88,8 @@ function VagaDescricao() {
           })
         }
 
+        setJaCandidatado(true);
+
       } catch (error) {
         navigate("/curriculo")
         console.error(error)
@@ -102,7 +103,7 @@ function VagaDescricao() {
         <p>{empresa.nome}</p>
       </div>
 
-      <div className="flex justify-between items-center pt-4">
+      <div className="flex flex-col md:flex-row gap-10 md:gap-0 justify-between items-center pt-4">
         <div className="flex flex-col">
           <p className="text-2xl pb-3 font-bold max-w-150">{vaga.nome}</p>
           <p className="text-sm font-medium text-gray-600">
@@ -255,7 +256,7 @@ function VagaDescricao() {
       </section>
 
       {/* ------------------------- VISÃO GERAL ------------------------- */}
-      <section id="visaoGeral" className="flex justify-center gap-4 pt-10">
+      <section id="visaoGeral" className="flex flex-col md:flex-row justify-center gap-4 pt-10">
         <img src={imgGrande} alt="Imagem principal" />
         <div className="grid grid-cols-2 gap-4">
           <img src={imgPequena} alt="" />
