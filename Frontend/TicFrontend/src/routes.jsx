@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // Páginas principais
 import Login from "./Pages/Login";
 import Home from "./Pages/Home";
-import Vaga from "./Pages/Vaga";
+import Vagas from "./Pages/Vagas";
 import Company from "./Pages/Companies";
 import CriarVaga from "./Pages/CriarVaga";
 import CriarVagaBeneficio from "./Pages/CriarVagaBeneficio";
@@ -25,6 +25,8 @@ import AdminLayout from "./admin/Layout";
 import UsuariosPage from "./admin/pages/CandidatosPage";
 import VagasPage from "./admin/pages/VagasPage";
 import CrudEmpresasPage from "./admin/pages/CrudEmpresasPage"; // Importa a página do CRUD de Empresas
+import Vaga from "./Pages/Vaga";
+import UpdateVaga from "./Pages/UpdateVaga";
 
 const routes = createBrowserRouter([
   {
@@ -56,16 +58,20 @@ const routes = createBrowserRouter([
     element: <RegisterEmpresa />,
   },
   {
+    path: "/empresas",
+    element: <Company />,
+  },
+  {
     path: "/vagas",
-    element: <Vaga />,
+    element: <Vagas />,
   },
   {
     path: "/vagas/:id",
     element: <Vaga />,
   },
   {
-    path: "/empresas",
-    element: <Company />,
+    path: "/UpdateVaga/:id",
+    element: <UpdateVaga />,
   },
   {
     path: "/criarVaga",

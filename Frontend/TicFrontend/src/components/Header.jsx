@@ -105,7 +105,7 @@ function Header() {
                 </li>
 
                 {/* Somente candidatos */}
-                {user?.tipo === "candidato" || user?.tipo === "admin" && (
+                {(user?.tipo === "candidato" || user?.tipo === "admin") && (
                   <>
                     <li
                       onClick={() => navigate("/curriculo")}

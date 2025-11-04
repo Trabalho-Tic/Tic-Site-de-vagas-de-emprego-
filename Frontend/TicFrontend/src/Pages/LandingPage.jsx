@@ -88,8 +88,8 @@ function LandingPage() {
                     <h1 className="text-4xl text-center md:text-start md:text-6xl font-bold">Encontre sua proxima <span className="text-green-400">oportunidade</span></h1>
                     <p className="text-xl text-center md:text-start font-semibold text-gray-600">Conectamos talentos com as melhores empresas. Milhares de vagas atualizadas diariamente para impulsionar sua carreira.</p>
                     <div className="flex flex-col md:flex-row items-center gap-10">
-                        <Link className="flex gap-3 px-10 py-4 text-white rounded-2xl text-sm font-bold bg-gradient-to-r from-green-400 to-green-300 transition-all duration-300 hover:-translate-y-1"><Search className="w-5" />Buscar Vagas</Link>
-                        <Link className="flex gap-3 px-10 py-4 text-white rounded-2xl text-sm font-bold bg-gradient-to-r from-green-400 to-green-300 transition-all duration-300 hover:-translate-y-1"><Briefcase className="w-5"/>Para Empresas</Link>
+                        <Link to={"/home"} className="flex gap-3 px-10 py-4 text-white rounded-2xl text-sm font-bold bg-gradient-to-r from-green-400 to-green-300 transition-all duration-300 hover:-translate-y-1"><Search className="w-5" />Buscar Vagas</Link>
+                        <Link to={"/empresas"} className="flex gap-3 px-10 py-4 text-white rounded-2xl text-sm font-bold bg-gradient-to-r from-green-400 to-green-300 transition-all duration-300 hover:-translate-y-1"><Briefcase className="w-5"/>Para Empresas</Link>
                     </div>
                 </div>
                 <div>
