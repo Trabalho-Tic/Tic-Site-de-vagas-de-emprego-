@@ -179,17 +179,17 @@ export default function Companies() {
     setSelectedCompany(mockData[0]);
   }, []);
 
-  useEffect(() => {
-    async function fetchEmpresa() {
-      const response = await useApi({
-        endpoint: "/company",
-      })
+  // useEffect(() => {
+  //   async function fetchEmpresa() {
+  //     const response = await useApi({
+  //       endpoint: "/company",
+  //     })
 
-      setCompanies(response)
-    }
+  //     setCompanies(response)
+  //   }
 
-    fetchEmpresa()
-  }, [])
+  //   fetchEmpresa()
+  // }, [])
 
   return (
     <div className="bg-gray-50 min-h-screen flex flex-col text-gray-800">
