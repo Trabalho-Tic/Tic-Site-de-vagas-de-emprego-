@@ -108,7 +108,7 @@ function Header() {
                 {(user?.tipo === "candidato" || user?.tipo === "admin") && (
                   <>
                     <li
-                      onClick={() => navigate("/curriculo")}
+                      onClick={() => navigate("/meu-curriculo")}
                       className="flex items-center gap-2 text-gray-700 hover:text-green-500 cursor-pointer"
                     >
                       <FileText size={16} /> Meu Currículo

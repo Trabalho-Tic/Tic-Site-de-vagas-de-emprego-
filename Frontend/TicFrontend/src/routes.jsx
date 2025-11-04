@@ -17,6 +17,7 @@ import EmpresaSobre from "./Pages/EmpresaSobre";
 import Profile from "./Pages/Profile";
 import LandingPage from "./Pages/LandingPage";
 import Curriculo from "./Pages/Curriculo";
+import MeuCurriculo from "./Pages/MeuCurriculo";
 
 // Registro dividido
 import RegisterSelect from "./Pages/RegisterSelect";
@@ -126,6 +127,11 @@ const routes = createBrowserRouter([
     path: "/card-companies",
     element: <CardCompanies />,
   },
+  {
+    path: "/meu-curriculo",
+    element: <MeuCurriculo />,
+
+  }
 ]);
 
 function Router() {

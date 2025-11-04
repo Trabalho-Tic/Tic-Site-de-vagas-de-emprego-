@@ -13,7 +13,7 @@ const CandidatoCurriculo = sequelize.define("CandidatoCurriculo", {
   },
   curriculo: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   resumoProf: {
     type: DataTypes.TEXT,
