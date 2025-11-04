@@ -6,6 +6,7 @@ const CandidatoCurriculo = sequelize.define("CandidatoCurriculo", {
   id_user: {
     type: DataTypes.UUID,
     primaryKey: true,
+    unique: true, 
     references: {
       model: User,
       key: "id",
@@ -13,7 +14,7 @@ const CandidatoCurriculo = sequelize.define("CandidatoCurriculo", {
   },
   curriculo: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: true, // pode ser removido ou não enviado
   },
   resumoProf: {
     type: DataTypes.TEXT,
@@ -26,7 +27,7 @@ const CandidatoCurriculo = sequelize.define("CandidatoCurriculo", {
   formacao: {
     type: DataTypes.JSON,
     allowNull: true,
-  }, 
+  },
   cursos: {
     type: DataTypes.JSON,
     allowNull: true,
@@ -34,14 +35,22 @@ const CandidatoCurriculo = sequelize.define("CandidatoCurriculo", {
   habilidades: {
     type: DataTypes.JSON,
     allowNull: true,
-  }
+  },
 }, {
   tableName: "tb_candidatocurriculo",
   timestamps: true,
 });
 
-CandidatoCurriculo.belongsTo(User, { foreignKey: "id_user", as: "user", onDelete: "CASCADE" });
-User.hasOne(CandidatoCurriculo, { foreignKey: "id_user", as: "curriculos", onDelete: "CASCADE" });
+CandidatoCurriculo.belongsTo(User, {
+  foreignKey: "id_user",
+  as: "user",
+  onDelete: "CASCADE",
+});
 
+User.hasOne(CandidatoCurriculo, {
+  foreignKey: "id_user",
+  as: "curriculos",
+  onDelete: "CASCADE",
+});
 
 module.exports = CandidatoCurriculo;
