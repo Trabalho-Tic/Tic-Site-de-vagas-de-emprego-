@@ -1,16 +1,16 @@
 const Company = require("../models/Company");
 const User = require("../models/User");
+const Vaga = require("../models/Vaga");
 
 class CompanyController {
   // 📄 Listar todas as empresas com dados do usuário dono
   async index(req, res) {
     try {
       const companies = await Company.findAll({
-        include: {
-          model: User,
-          as: "user",
-          attributes: ["id", "nome", "email", "telefone"],
-        },
+        include: [
+          {model: User, as: "user", attributes: ["id", "nome", "email", "telefone"]},
+          {model: Vaga, as: "vagas", attributes: ["nome", "pais", "cidade", "modelo"]},
+        ]
       });
       return res.json(companies);
     } catch (error) {

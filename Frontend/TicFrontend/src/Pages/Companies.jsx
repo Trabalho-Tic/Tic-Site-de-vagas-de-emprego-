@@ -9,6 +9,7 @@ import {
   Image as ImageIcon,
   ArrowRight,
 } from "lucide-react";
+import useApi from "../api/Api"
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -21,12 +22,6 @@ export default function Companies() {
   const pessoasRef = useRef(null);
   const vidaRef = useRef(null);
   const navigate = useNavigate();
-
-  const scrollTo = (ref) => {
-    if (ref?.current) {
-      ref.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
 
   useEffect(() => {
     const mockData = [
@@ -183,6 +178,18 @@ export default function Companies() {
     setCompanies(mockData);
     setSelectedCompany(mockData[0]);
   }, []);
+
+  useEffect(() => {
+    async function fetchEmpresa() {
+      const response = await useApi({
+        endpoint: "/company",
+      })
+
+      setCompanies(response)
+    }
+
+    fetchEmpresa()
+  }, [])
 
   return (
     <div className="bg-gray-50 min-h-screen flex flex-col text-gray-800">

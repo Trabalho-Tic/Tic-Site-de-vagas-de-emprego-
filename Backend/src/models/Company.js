@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 const User = require("./User");
+const Vaga = require("./Vaga");
 
 const Company = sequelize.define("Company", {
   id: {
@@ -58,5 +59,14 @@ const Company = sequelize.define("Company", {
 
 Company.belongsTo(User, { foreignKey: "id_user", as: "user", onDelete: "CASCADE" });
 User.hasOne(Company, { foreignKey: "id_user", as: "company", onDelete: "CASCADE" });
+
+Company.associate = (models) => {
+  Company.hasMany(Vaga, {
+    foreignKey: "id_company",
+    as: "vagas",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  });
+};
 
 module.exports = Company;

@@ -1,9 +1,5 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./Pages/Login";
-import Home from "./Pages/Home";
-import Register from "./Pages/Register";
-import Vaga from "./Pages/Vaga";
 
 // Páginas principais
 import Login from "./Pages/Login";
@@ -49,8 +45,6 @@ const routes = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/register",
-    element: <Register />,
     path: "/curriculo",
     element: <Curriculo />,
   },
@@ -113,20 +107,6 @@ const routes = createBrowserRouter([
   {
     path: "/empresa-vagas/:id",
     element: <EmpresaVagas />,
-    path: "/criarVaga/processo/:id",
-    element: <CriarVagaProcesso />,
-  },
-  {
-    path: "/criarVaga/requisicao/:id",
-    element: <CriarVagaRequisicao />,
-  },
-  {
-    path: "/criarVaga/descricao/:id",
-    element: <CriarVagaDescricao />,
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
   },
   {
     path: "/admin",
@@ -145,8 +125,9 @@ const routes = createBrowserRouter([
     path: "/card-companies",
     element: <CardCompanies />,
   },
-      { path: "empresas", element: <CrudEmpresasPage /> }, // Rota para o CRUD de Empresas
-    ],
+  { 
+    path: "empresas", 
+    element: <CrudEmpresasPage /> 
   },
 ]);
 
