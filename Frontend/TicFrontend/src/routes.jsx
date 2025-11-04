@@ -1,5 +1,9 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Login from "./Pages/Login";
+import Home from "./Pages/Home";
+import Register from "./Pages/Register";
+import Vaga from "./Pages/Vaga";
 
 // Páginas principais
 import Login from "./Pages/Login";
@@ -11,6 +15,9 @@ import CriarVagaBeneficio from "./Pages/CriarVagaBeneficio";
 import CriarVagaProcesso from "./Pages/CriarVagaProcesso";
 import CriarVagaRequisicao from "./Pages/CriarVagaRequisicao";
 import CriarVagaDescricao from "./Pages/CriarVagaDescricao";
+import CardCompanies from "./components/CardCompanies";
+import EmpresaVagas from "./Pages/EmpresaVagas";
+import EmpresaSobre from "./Pages/EmpresaSobre";
 import Profile from "./Pages/Profile";
 import LandingPage from "./Pages/LandingPage";
 import Curriculo from "./Pages/Curriculo";
@@ -42,6 +49,8 @@ const routes = createBrowserRouter([
     element: <Home />,
   },
   {
+    path: "/register",
+    element: <Register />,
     path: "/curriculo",
     element: <Curriculo />,
   },
@@ -82,6 +91,28 @@ const routes = createBrowserRouter([
     element: <CriarVagaBeneficio />,
   },
   {
+    path: "/criarVaga/Processo/:id",
+    element: <CriarVagaProcesso />,
+  },
+  {
+    path: "/criarVaga/Requisicao/:id",
+    element: <CriarVagaRequisicao />,
+  },
+  {
+    path: "/criarVaga/Descricao/:id",
+    element: <CriarVagaDescricao />,
+  },
+  {
+    path: "/empresas",
+    element: <Company />,
+  },
+  {
+    path: "/empresa-sobre/:id",
+    element: <EmpresaSobre />,
+  },
+  {
+    path: "/empresa-vagas/:id",
+    element: <EmpresaVagas />,
     path: "/criarVaga/processo/:id",
     element: <CriarVagaProcesso />,
   },
@@ -104,6 +135,16 @@ const routes = createBrowserRouter([
       { index: true, element: <UsuariosPage /> },
       { path: "usuarios", element: <UsuariosPage /> },
       { path: "vagas", element: <VagasPage /> },
+    ],
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+  },
+  {
+    path: "/card-companies",
+    element: <CardCompanies />,
+  },
       { path: "empresas", element: <CrudEmpresasPage /> }, // Rota para o CRUD de Empresas
     ],
   },
