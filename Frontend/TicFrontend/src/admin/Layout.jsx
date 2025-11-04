@@ -1,9 +1,18 @@
 import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import "@fontsource/inter"; // Fonte moderna
 import "material-symbols";
 
 export default function AdminLayout() {
+
+  const navigate = useNavigate()
+  const user = JSON.parse(localStorage.getItem("user"))
+
+  if (user.typeUser !== "admin") {
+    navigate("/")
+  }
+
+
   return (
     <div className="flex h-screen bg-[#F8F9FA] font-[Inter] text-[#111827]">
       {/* Sidebar */}
@@ -13,6 +22,7 @@ export default function AdminLayout() {
         </div>
 
         <nav className="flex-1 p-4 space-y-2 text-sm font-medium">
+          {/* Usuários */}
           <NavLink
             to="/admin/usuarios"
             className={({ isActive }) =>
@@ -22,9 +32,10 @@ export default function AdminLayout() {
             }
           >
             <span className="material-symbols-outlined">group</span>
-            Usuários
+            Candidatos
           </NavLink>
 
+          {/* Vagas */}
           <NavLink
             to="/admin/vagas"
             className={({ isActive }) =>
@@ -36,8 +47,22 @@ export default function AdminLayout() {
             <span className="material-symbols-outlined">work</span>
             Vagas
           </NavLink>
+
+          {/* Empresas */}
+          <NavLink
+            to="/admin/empresas"
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 ${
+                isActive ? "bg-indigo-50 text-indigo-600 font-semibold" : ""
+              }`
+            }
+          >
+            <span className="material-symbols-outlined">business</span>
+            Empresas
+          </NavLink>
         </nav>
 
+        {/* Rodapé da sidebar */}
         <div className="p-4 border-t border-gray-200">
           <div className="flex items-center gap-3">
             <img
@@ -46,8 +71,8 @@ export default function AdminLayout() {
               className="w-10 h-10 rounded-full"
             />
             <div>
-              <p className="text-sm font-medium">Administrador</p>
-              <p className="text-xs text-gray-500">admin@empresa.com</p>
+              <p className="text-sm font-medium">{user.nome}</p>
+              <p className="text-xs text-gray-500">{user.email}</p>
             </div>
           </div>
         </div>

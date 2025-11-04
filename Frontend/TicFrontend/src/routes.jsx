@@ -4,20 +4,36 @@ import Login from "./Pages/Login";
 import Home from "./Pages/Home";
 import Register from "./Pages/Register";
 import Vaga from "./Pages/Vaga";
+
+// Páginas principais
+import Login from "./Pages/Login";
+import Home from "./Pages/Home";
+import Vagas from "./Pages/Vagas";
 import Company from "./Pages/Companies";
 import CriarVaga from "./Pages/CriarVaga";
 import CriarVagaBeneficio from "./Pages/CriarVagaBeneficio";
 import CriarVagaProcesso from "./Pages/CriarVagaProcesso";
-import Profile from "./Pages/Profile";
 import CriarVagaRequisicao from "./Pages/CriarVagaRequisicao";
 import CriarVagaDescricao from "./Pages/CriarVagaDescricao";
 import CardCompanies from "./components/CardCompanies";
 import EmpresaVagas from "./Pages/EmpresaVagas";
 import EmpresaSobre from "./Pages/EmpresaSobre";
-import AdminLayout from "./admin/Layout";
-import UsuariosPage from "./admin/pages/UsuariosPage";
-import VagasPage from "./admin/pages/VagasPage";
+import Profile from "./Pages/Profile";
 import LandingPage from "./Pages/LandingPage";
+import Curriculo from "./Pages/Curriculo";
+
+// Registro dividido
+import RegisterSelect from "./Pages/RegisterSelect";
+import RegisterCandidato from "./Pages/RegisterCandidato";
+import RegisterEmpresa from "./Pages/RegisterEmpresa";
+
+// Área administrativa
+import AdminLayout from "./admin/Layout";
+import UsuariosPage from "./admin/pages/CandidatosPage";
+import VagasPage from "./admin/pages/VagasPage";
+import CrudEmpresasPage from "./admin/pages/CrudEmpresasPage"; // Importa a página do CRUD de Empresas
+import Vaga from "./Pages/Vaga";
+import UpdateVaga from "./Pages/UpdateVaga";
 
 const routes = createBrowserRouter([
   {
@@ -35,10 +51,36 @@ const routes = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+    path: "/curriculo",
+    element: <Curriculo />,
+  },
+  {
+    path: "/register",
+    element: <RegisterSelect />,
+  },
+  {
+    path: "/register-candidato",
+    element: <RegisterCandidato />,
+  },
+  {
+    path: "/register-empresa",
+    element: <RegisterEmpresa />,
+  },
+  {
+    path: "/empresas",
+    element: <Company />,
+  },
+  {
+    path: "/vagas",
+    element: <Vagas />,
   },
   {
     path: "/vagas/:id",
     element: <Vaga />,
+  },
+  {
+    path: "/UpdateVaga/:id",
+    element: <UpdateVaga />,
   },
   {
     path: "/criarVaga",
@@ -71,6 +113,20 @@ const routes = createBrowserRouter([
   {
     path: "/empresa-vagas/:id",
     element: <EmpresaVagas />,
+    path: "/criarVaga/processo/:id",
+    element: <CriarVagaProcesso />,
+  },
+  {
+    path: "/criarVaga/requisicao/:id",
+    element: <CriarVagaRequisicao />,
+  },
+  {
+    path: "/criarVaga/descricao/:id",
+    element: <CriarVagaDescricao />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
   {
     path: "/admin",
@@ -88,6 +144,9 @@ const routes = createBrowserRouter([
   {
     path: "/card-companies",
     element: <CardCompanies />,
+  },
+      { path: "empresas", element: <CrudEmpresasPage /> }, // Rota para o CRUD de Empresas
+    ],
   },
 ]);
 

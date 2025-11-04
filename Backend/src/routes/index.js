@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-// Controllers já existentes…
+// ------------------ IMPORTS DE CONTROLLERS ------------------
 const AcessibilidadeController = require("../controllers/AcessibilidadeController");
 const BarreiraController = require("../controllers/BarreiraController");
 const BarreiraAcessibilidadeController = require("../controllers/BarreiraAcessibilidadeController");
@@ -9,107 +9,136 @@ const SubTipoBarreiraController = require("../controllers/SubTipoBarreiraControl
 const SubTipoDeficienciaController = require("../controllers/SubTipoDeficienciaController");
 const TipoDeficienciaController = require("../controllers/TipoDeficienciaController");
 const UserController = require("../controllers/UserController");
+const CompanyController = require("../controllers/CompanyController");
+const CandidatoController = require("../controllers/CandidatoController");
 const VagaController = require("../controllers/VagaController");
 const VagaDescricaoController = require('../controllers/VagaDescricaoController');
 const VagaBeneficioController = require('../controllers/VagaBeneficioController');
 const VagaProcessoController = require('../controllers/VagaProcessoController');
 const VagaRequisicaoController = require('../controllers/VagaRequisicaoController');
-const CompanyController = require('../controllers/CompanyController');
+const CandidaturaController = require('../controllers/CandidaturaController');
 
- //>>> ADIÇÕES (autenticação) <<<
-//  const AuthController = require("../controllers/AuthController");            // [ADD]
-//  const authMiddleware = require("../middlewares/authMiddleware");            // [ADD]
+// ------------------ MIDDLEWARES ------------------
+const upload = require("../middlewares/upload");
+const AuthController = require("../controllers/AuthController");
+const authMiddleware = require("../middlewares/authMiddleware");
+const CurriculoController = require('../controllers/CurriculoController');
 
-// ------------------ ROTAS PÚBLICAS ------------------
+// ====================================================
+// ROTAS PÚBLICAS
+// ====================================================
 
- //Auth (login)
- router.post('/auth/login', (req, res) => AuthController.login(req, res));  // [ADD]
+// Login
+router.post('/auth/login', (req, res) => AuthController.login(req, res));
 
- //User (registro)
- router.post('/user/create', (req, res) => UserController.create(req, res));
+// Registro de usuário base
+router.post('/user/create', (req, res) => UserController.create(req, res));
 
-// ------------------ ROTAS PROTEGIDAS ------------------
-// Ativa o middleware UMA VEZ; tudo abaixo exige JWT
-//  router.use(authMiddleware);                                                // [ADD]
+// Registro público de empresa (com upload)
+router.post("/company/create", upload.single("logo"), CompanyController.create);
 
-// Acessibilidade
+// Registro público de candidato
+router.post('/candidato/create', (req, res) => CandidatoController.create(req, res));
+
+// ====================================================
+// ROTAS PROTEGIDAS (JWT OBRIGATÓRIO)
+// ====================================================
+// router.use(authMiddleware);
+
+// ------------------ USUÁRIOS ------------------
+router.get('/user', UserController.index);
+router.get('/user/:id', UserController.show);
+router.put('/user/update/:id', UserController.update);
+router.delete('/user/delete/:id', UserController.delete);
+
+// ------------------ EMPRESAS ------------------
+router.get('/company', CompanyController.index);
+router.get('/company/:id', CompanyController.show);
+router.put('/company/update/:id', CompanyController.update);
+router.delete('/company/delete/:id', CompanyController.delete);
+
+// ------------------ CANDIDATOS ------------------
+router.get('/candidato', CandidatoController.index);
+router.get('/candidato/:id_user', CandidatoController.show);
+router.put('/candidato/update/:id_user', CandidatoController.update);
+router.delete('/candidato/delete/:id_user', CandidatoController.delete);
+
+// ------------------ ACESSIBILIDADE ------------------
 router.get('/Acessibilidade', AcessibilidadeController.index);
 router.get('/Acessibilidade/:id', AcessibilidadeController.show);
 router.post('/Acessibilidade/create', AcessibilidadeController.create);
 router.put('/Acessibilidade/update/:id', AcessibilidadeController.update);
 router.delete('/Acessibilidade/delete/:id', AcessibilidadeController.delete);
 
-// Barreira
+// ------------------ BARREIRA ------------------
 router.get('/Barreira', BarreiraController.index);
 router.get('/Barreira/:id', BarreiraController.show);
 router.post('/Barreira/create', BarreiraController.create);
 router.put('/Barreira/update/:id', BarreiraController.update);
 router.delete('/Barreira/delete/:id', BarreiraController.delete);
 
-// BarreiraAcessibilidade
+// ------------------ BARREIRA-ACESSIBILIDADE ------------------
 router.get('/BarreiraAcessibilidade', BarreiraAcessibilidadeController.index);
 router.get('/BarreiraAcessibilidade/:id', BarreiraAcessibilidadeController.show);
 router.post('/BarreiraAcessibilidade/create', BarreiraAcessibilidadeController.create);
 router.put('/BarreiraAcessibilidade/update/:id', BarreiraAcessibilidadeController.update);
 router.delete('/BarreiraAcessibilidade/delete/:id', BarreiraAcessibilidadeController.delete);
 
-// SubTipoBarreira
+// ------------------ SUBTIPO BARREIRA ------------------
 router.get('/SubTipoBarreira', SubTipoBarreiraController.index);
 router.get('/SubTipoBarreira/:id', SubTipoBarreiraController.show);
 router.post('/SubTipoBarreira/create', SubTipoBarreiraController.create);
 router.put('/SubTipoBarreira/update/:id', SubTipoBarreiraController.update);
 router.delete('/SubTipoBarreira/delete/:id', SubTipoBarreiraController.delete);
 
-// SubTipoDeficiencia
+// ------------------ SUBTIPO DEFICIÊNCIA ------------------
 router.get('/SubTipoDeficiencia', SubTipoDeficienciaController.index);
 router.get('/SubTipoDeficiencia/:id', SubTipoDeficienciaController.show);
 router.post('/SubTipoDeficiencia/create', SubTipoDeficienciaController.create);
 router.put('/SubTipoDeficiencia/update/:id', SubTipoDeficienciaController.update);
 router.delete('/SubTipoDeficiencia/delete/:id', SubTipoDeficienciaController.delete);
 
-// TipoDeficiencia
+// ------------------ TIPO DEFICIÊNCIA ------------------
 router.get('/TipoDeficiencia', TipoDeficienciaController.index);
 router.get('/TipoDeficiencia/:id', TipoDeficienciaController.show);
 router.post('/TipoDeficiencia/create', TipoDeficienciaController.create);
 router.put('/TipoDeficiencia/update/:id', TipoDeficienciaController.update);
 router.delete('/TipoDeficiencia/delete/:id', TipoDeficienciaController.delete);
 
-// Vaga
+// ------------------ VAGAS ------------------
 router.get('/Vaga', VagaController.index);
+router.get("/vaga/empresa/:idCompany", VagaController.vagasPorEmpresa);
 router.get('/Vaga/:id', VagaController.show);
 router.post('/Vaga/create', VagaController.create);
 router.put('/Vaga/update/:id', VagaController.update);
 router.delete('/Vaga/delete/:id', VagaController.delete);
 
-// Vaga Descrição 
+// ------------------ VAGA DESCRIÇÃO ------------------
 router.post("/vagadescricao/:id", VagaDescricaoController.create);
 router.put("/vagadescricao/:id", VagaDescricaoController.update);
 
-// Vaga Beneficios 
+// ------------------ VAGA BENEFÍCIO ------------------
 router.post("/vagabeneficio/:id", VagaBeneficioController.create);
 router.put("/vagabeneficio/:id", VagaBeneficioController.update);
 
-// Vaga Processo 
+// ------------------ VAGA PROCESSO ------------------
 router.post("/vagaprocesso/:id", VagaProcessoController.create);
 router.put("/vagaprocesso/:id", VagaProcessoController.update);
 
-// Vaga Requisição 
+// ------------------ VAGA REQUISIÇÃO ------------------
 router.post("/vagarequisicao/:id", VagaRequisicaoController.create);
 router.put("/vagarequisicao/:id", VagaRequisicaoController.update);
 
+// ------------------ CURRICULO  ------------------
+router.post('/criarCurriculo/:id', upload.single("curriculo"), CurriculoController.create);
+router.put('/updateCurriculo/:id', upload.single("curriculo"), CurriculoController.update);
+router.get('/buscarCurriculo/:id', CurriculoController.getByUserId);
 
-router.get('/user', UserController.index);
-router.get('/user/:id', UserController.show);
-router.post('/user/create', (req, res) => UserController.create(req, res));
-router.put('/user/update/:id', UserController.update);
-router.delete('/user/delete/:id', UserController.delete);
+// ------------------ CANDIDATURA ------------------
+router.post('/candidatura/create', CandidaturaController.create);
+router.post('/candidatura/validar', CandidaturaController.jaCandidatado);
 
-// Company
-router.post('/company/create', CompanyController.create);
-router.get('/company/:id', CompanyController.show);
-
-
-// ASSOCIAÇÕES
+// ------------------ ASSOCIAÇÕES ------------------
 router.post('/TipoDeficiencia/:id/SubTipoDeficiencia', TipoDeficienciaController.associarSubtipos);
 router.post('/Barreira/:id/SubTipoDeficiencia', BarreiraController.associarSubtipos);
 router.post('/Barreira/:id/Acessibilidade', BarreiraAcessibilidadeController.associarSubtipos);

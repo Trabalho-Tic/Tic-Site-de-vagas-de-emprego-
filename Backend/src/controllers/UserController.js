@@ -1,98 +1,114 @@
 const User = require('../models/User');
 const gerarHash = require("../utils/auth");
+const Company = require('../models/Company');
+const Candidato = require('../models/Candidato');
+const CandidatoCurriculo = require('../models/CandidatoCurriculo');
 
-// Helper para remover o campo password de qualquer retorno
+// Helper: remove o campo "password" das respostas
 function sanitizeUser(userInstance) {
-    const json = userInstance?.toJSON ? userInstance.toJSON() : userInstance;
-    const { password, ...safe } = json || {};
-    return safe;
+  const json = userInstance?.toJSON ? userInstance.toJSON() : userInstance;
+  const { password, ...safe } = json || {};
+  return safe;
 }
 
 class UserController {
-    async index(req, res) {
-        try {
-            const users = await User.findAll();
-            // remove password de todos
-            return res.json(users.map(sanitizeUser));
-        } catch (error) {
-            return res.status(500).json({ error: "Erro ao buscar usuários" });
-        }
+  // LISTAR TODOS OS USUÁRIOS
+  async index(req, res) {
+    try {
+      const users = await User.findAll({
+        include: [
+          { model: Company, as: 'company', attributes: ['id', 'nome', 'cnpj', 'cidade', 'category'] },
+          { model: Candidato, as: 'candidato', attributes: ['id_user', 'cpf', 'deficiencias'] },
+          { model: CandidatoCurriculo, as: 'curriculos', attributes: ['id_user', 'curriculo', 'resumoProf', 'experiencias', 'formacao', 'cursos', 'habilidades'] }
+        ],
+      });
+      return res.json(users.map(sanitizeUser));
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Erro ao buscar usuários" });
     }
+  }
 
-    async show(req, res) {
-        const { id } = req.params;
-        try {
-            const user = await User.findByPk(id);
-            if (!user) {
-                return res.status(404).json({ error: "Usuário não encontrado" });
-            }
-            return res.json(sanitizeUser(user));
-        } catch (error) {
-            return res.status(500).json({ error: "Erro ao buscar usuário" });
-        }
+  // MOSTRAR UM USUÁRIO ESPECÍFICO
+  async show(req, res) {
+    const { id } = req.params;
+    try {
+      const user = await User.findByPk(id, {
+        include: [
+          { model: Company, as: 'company', attributes: ['id',"logo", 'nome', 'cnpj', 'cidade', 'category'] },
+          { model: Candidato, as: 'candidato', attributes: ['id_user', 'cpf', 'deficiencias'] }
+        ],
+      });
+      if (!user) {
+        return res.status(404).json({ error: "Usuário não encontrado" });
+      }
+      return res.json(sanitizeUser(user));
+    } catch (error) {
+      return res.status(500).json({ error: "Erro ao buscar usuário" });
     }
+  }
 
-    async create(req, res) {
-        const { email, password, cpf } = req.body;  // Certifique-se de que o campo é 'cpf' no banco, e não 'CPF'
+  async showCurriculo(req, res) {
 
-        try {
-            // Verifica se já existe um usuário com o email fornecido
-            const existingEmail = await User.findOne({ where: { email } });
+  }
 
-            // Verifica se já existe um usuário com o CPF fornecido
-            const existingCPF = await User.findOne({ where: { cpf } });
+  // CRIAR USUÁRIO BASE
+  async create(req, res) {
+    const { email, password } = req.body;
 
-            // Se o email já existe, retorna um erro
-            if (existingEmail) {
-                return res.status(400).json({ error: "Já existe um usuário com esse email" });
-            } 
-            // Se o CPF já existe, retorna um erro
-            else if (existingCPF) {
-                return res.status(400).json({ error: "Já existe um usuário com esse CPF" });
-            }
+    try {
+      const existingEmail = await User.findOne({ where: { email } });
+      if (existingEmail) {
+        return res.status(400).json({ error: "Já existe um usuário com esse email" });
+      }
 
-            // Se não houverem erros, gera o hash da senha e cria o novo usuário
-            const hashPassword = await gerarHash(password);
-            req.body.password = hashPassword;
+      const hashPassword = await gerarHash(password);
+      req.body.password = hashPassword;
 
-            const newUser = await User.create(req.body);
-            
-            // Não retorna a senha no JSON de resposta
-            return res.status(201).json(sanitizeUser(newUser));
-        } catch (error) {
-            // Em caso de erro no processo de criação
-            return res.status(500).json({ error: "Erro ao criar usuário", details: error.message });
-        }
+      const newUser = await User.create(req.body);
+      return res.status(201).json(sanitizeUser(newUser));
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Erro ao criar usuário", details: error.message });
     }
+  }
 
-    async update(req, res) {
-        const { id } = req.params;
-        try {
-            const user = await User.findByPk(id);
-            if (!user) {
-                return res.status(404).json({ error: "Usuário não encontrado" });
-            }
-            await user.update(req.body);
-            // não retornar password
-            return res.json(sanitizeUser(user));
-        } catch (error) {
-            return res.status(500).json({ error: "Erro ao atualizar usuário" });
-        }
-    }
+  // ATUALIZAR USUÁRIO
+  async update(req, res) {
+    const { id } = req.params;
+    try {
+      const user = await User.findByPk(id);
+      if (!user) {
+        return res.status(404).json({ error: "Usuário não encontrado" });
+      }
 
-    async delete(req, res) {
-        const { id } = req.params;
-        try {
-            const user = await User.findByPk(id);
-            if (!user) {
-                return res.status(404).json({ error: "Usuário não encontrado" });
-            }
-            await user.destroy();
-            return res.status(204).send();
-        } catch (error) {
-            return res.status(500).json({ error: "Erro ao deletar usuário" });
-        }
+      await user.update(req.body);
+      return res.json(sanitizeUser(user));
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Erro ao atualizar usuário" });
     }
+  }
+
+  // DELETAR USUÁRIO E SEUS FILHOS (Candidato ou Empresa)
+  async delete(req, res) {
+    const { id } = req.params;
+    try {
+      const user = await User.findByPk(id);
+      if (!user) {
+        return res.status(404).json({ error: "Usuário não encontrado" });
+      }
+
+      await Company.destroy({ where: { id_user: id } });
+      await Candidato.destroy({ where: { id_user: id } });
+      await user.destroy();
+
+      return res.status(204).send();
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Erro ao deletar usuário" });
+    }
+  }
 }
 
 module.exports = new UserController();
