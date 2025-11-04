@@ -115,6 +115,7 @@ const routes = createBrowserRouter([
       { index: true, element: <UsuariosPage /> },
       { path: "usuarios", element: <UsuariosPage /> },
       { path: "vagas", element: <VagasPage /> },
+      {path: "empresas", element: <CrudEmpresasPage />},
     ],
   },
   {
@@ -124,10 +125,6 @@ const routes = createBrowserRouter([
   {
     path: "/card-companies",
     element: <CardCompanies />,
-  },
-  { 
-    path: "empresas", 
-    element: <CrudEmpresasPage /> 
   },
 ]);
 
