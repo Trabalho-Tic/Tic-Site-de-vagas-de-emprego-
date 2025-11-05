@@ -29,10 +29,10 @@ function MeuCurriculo() {
   const [habilidade, setHabilidade] = useState("");
 
   const [user, setUser] = useState({});
-  const [habilidades, setHabilidades] = useState([]);
-  const [cursos, setCursos] = useState([]);   // formacao
-  const [cursosB, setCursosB] = useState([]); // cursos/certificações
-  const [experiencias, setExperiencias] = useState([]);
+  const [habilidades, setHabilidades] = useState([]); // array de strings
+  const [cursos, setCursos] = useState([]);           // formacao (curso, instituicao, nivel, conclusao)
+  const [cursosB, setCursosB] = useState([]);         // cursos/certificações (cursoB, instituicaoB, nivelB, conclusaoB, descricao)
+  const [experiencias, setExperiencias] = useState([]); // (cargo, empresa, dataInicio, dataFim, atividade)
 
   const [existeCurriculo, setExisteCurriculo] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -41,57 +41,59 @@ function MeuCurriculo() {
   const inputRef = useRef(null);
   const navigate = useNavigate();
 
+  // =========================
+  // Carregar currículo do usuário
+  // =========================
   useEffect(() => {
-  async function fetchCurriculo() {
-    try {
-      const u = JSON.parse(localStorage.getItem("user"));
-      setUser(u);
+    async function fetchCurriculo() {
+      try {
+        const u = JSON.parse(localStorage.getItem("user"));
+        setUser(u);
 
-      // se for empresa, volta para /profile
-      if (u?.tipo === "empresa") {
-        navigate("/profile");
-        return;
-      }
-
-      const data = await useApi({
-        endpoint: `/buscarCurriculo/${u.id}`,
-      });
-
-      // Função auxiliar que garante que o valor será um array
-      const safeParse = (val) => {
-        try {
-          return Array.isArray(val)
-            ? val
-            : JSON.parse(val || "[]");
-        } catch {
-          return [];
+        // se for empresa, volta para /profile
+        if (u?.tipo === "empresa") {
+          navigate("/profile");
+          return;
         }
-      };
 
-      // se encontrar currículo, carrega os dados tratados
-      if (data && !data.error) {
-        setResumo(data.resumoProf || "");
-        setExperiencias(safeParse(data.experiencias));
-        setCursos(safeParse(data.formacao));
-        setCursosB(safeParse(data.cursos));
-        setHabilidades(safeParse(data.habilidades));
-        setArquivoAtual(data.curriculo || "");
-        setExisteCurriculo(true);
-      } else {
+        const data = await useApi({
+          endpoint: `/buscarCurriculo/${u.id}`,
+        });
+
+        // garante que campos array venham como array mesmo que backend envie string JSON
+        const safeParse = (val) => {
+          try {
+            return Array.isArray(val) ? val : JSON.parse(val || "[]");
+          } catch {
+            return [];
+          }
+        };
+
+        if (data && !data.error) {
+          setResumo(data.resumoProf || "");
+          setExperiencias(safeParse(data.experiencias));
+          setCursos(safeParse(data.formacao));
+          setCursosB(safeParse(data.cursos));
+          setHabilidades(safeParse(data.habilidades));
+          setArquivoAtual(data.curriculo || "");
+          setExisteCurriculo(true);
+        } else {
+          setExisteCurriculo(false);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar currículo:", error);
         setExisteCurriculo(false);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      // 404 ou erro → entra no modo criação
-      console.error("Erro ao buscar currículo:", error);
-      setExisteCurriculo(false);
-    } finally {
-      setLoading(false);
     }
-  }
 
-  fetchCurriculo();
-}, [navigate]);
+    fetchCurriculo();
+  }, [navigate]);
 
+  // =========================
+  // Opções de nível
+  // =========================
   const options = [
     "Ensino Fundamental",
     "Ensino Médio",
@@ -105,10 +107,15 @@ function MeuCurriculo() {
     "Pós Doutorado",
   ];
 
+  // =========================
+  // Upload
+  // =========================
   const handleFileChange = (e) => setFile(e.target.files[0]);
   const handleAreaClick = () => inputRef.current?.click();
 
-  // ====== EXPERIÊNCIAS ======
+  // =========================
+  // EXPERIÊNCIAS
+  // =========================
   const handleAddExperiencia = (event) => {
     event.preventDefault();
     const data = { cargo, empresa, dataInicio, dataFim, atividade };
@@ -124,7 +131,9 @@ function MeuCurriculo() {
     setExperiencias(experiencias.filter((_, index) => index !== i));
   };
 
-  // ====== FORMAÇÃO (cursos) ======
+  // =========================
+  // FORMAÇÃO (cursos)
+  // =========================
   const handleAddCurso = (event) => {
     event.preventDefault();
     const data = { curso, instituicao, nivel, conclusao };
@@ -139,7 +148,9 @@ function MeuCurriculo() {
     setCursos(cursos.filter((_, index) => index !== i));
   };
 
-  // ====== CURSOS E CERTIFICAÇÕES (cursosB) ======
+  // =========================
+  // CURSOS E CERTIFICAÇÕES (cursosB)
+  // =========================
   const handleAddCursoB = (event) => {
     event.preventDefault();
     const data = { cursoB, instituicaoB, nivelB, conclusaoB, descricao };
@@ -155,7 +166,9 @@ function MeuCurriculo() {
     setCursosB(cursosB.filter((_, index) => index !== i));
   };
 
-  // ====== HABILIDADES ======
+  // =========================
+  // HABILIDADES
+  // =========================
   const handleAddHabilidade = (event) => {
     event.preventDefault();
     if (!habilidade.trim()) return;
@@ -167,7 +180,29 @@ function MeuCurriculo() {
     setHabilidades(habilidades.filter((_, index) => index !== i));
   };
 
-  // ====== SALVAR TUDO (botão principal) ======
+  // =========================
+  // Remover currículo (arquivo) atual
+  // =========================
+  const handleRemoverArquivo = async () => {
+    if (!window.confirm("Tem certeza que deseja remover seu currículo atual?")) return;
+    try {
+      await useApi({
+        endpoint: `/updateCurriculo/${user.id}`,
+        method: "PUT",
+        body: { curriculo: "" }, // backend zera para null
+      });
+      setArquivoAtual("");
+      setFile(null);
+      alert("✅ Currículo removido com sucesso!");
+    } catch (error) {
+      console.error("Erro ao remover currículo:", error);
+      alert("❌ Erro ao remover currículo.");
+    }
+  };
+
+  // =========================
+  // SALVAR (criar ou atualizar)
+  // =========================
   const handleSalvar = async () => {
     try {
       if (!existeCurriculo) {
@@ -194,8 +229,8 @@ function MeuCurriculo() {
       }
 
       // ATUALIZAR
-      // se trocar arquivo, usa FormData; senão, JSON puro
       if (file) {
+        // se trocar o arquivo, usar FormData
         const formData = new FormData();
         formData.append("resumoProf", resumo);
         formData.append("experiencias", JSON.stringify(experiencias));
@@ -204,7 +239,7 @@ function MeuCurriculo() {
         formData.append("habilidades", JSON.stringify(habilidades));
         formData.append("curriculo", file);
 
-        const updated = await useApi({
+        await useApi({
           endpoint: `/updateCurriculo/${user.id}`,
           method: "PUT",
           body: formData,
@@ -214,6 +249,7 @@ function MeuCurriculo() {
         setArquivoAtual(file.name || arquivoAtual);
         alert("✅ Currículo atualizado com sucesso!");
       } else {
+        // sem trocar arquivo → envia JSON puro
         await useApi({
           endpoint: `/updateCurriculo/${user.id}`,
           method: "PUT",
@@ -241,6 +277,9 @@ function MeuCurriculo() {
     );
   }
 
+  // =========================
+  // UI
+  // =========================
   return (
     <>
       <Header />
@@ -270,6 +309,18 @@ function MeuCurriculo() {
                   <span className="text-xs text-gray-400 mt-1">
                     PDF, DOC, DOCX, PNG, JPG, JPEG
                   </span>
+                  {arquivoAtual && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation(); // evita abrir o seletor de arquivo ao clicar no botão
+                        handleRemoverArquivo();
+                      }}
+                      className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md text-sm hover:bg-red-600 transition"
+                    >
+                      Remover currículo atual
+                    </button>
+                  )}
                 </div>
               ) : (
                 <div className="flex bg-gray-200 flex-col items-center justify-center text-gray-500 w-full h-full py-10 rounded-xl transition-all duration-300 hover:bg-gray-100">
