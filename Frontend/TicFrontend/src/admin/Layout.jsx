@@ -8,11 +8,6 @@ export default function AdminLayout() {
   const navigate = useNavigate()
   const user = JSON.parse(localStorage.getItem("user"))
 
-  if (user.typeUser !== "admin") {
-    navigate("/")
-  }
-
-
   return (
     <div className="flex h-screen bg-[#F8F9FA] font-[Inter] text-[#111827]">
       {/* Sidebar */}
