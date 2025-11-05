@@ -11,15 +11,64 @@ const Candidato = sequelize.define("Candidato", {
       key: "id",
     },
   },
+
   cpf: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
   },
+
   deficiencias: {
     type: DataTypes.JSON,
     allowNull: true,
   },
+
+  // -------- NOVOS CAMPOS --------
+  cidade: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+
+  estado: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+
+  dataNascimento: {
+    type: DataTypes.DATEONLY,
+    allowNull: true,
+  },
+
+  genero: {
+    type: DataTypes.ENUM("masculino", "feminino", "outro", "prefiro_nao_dizer"),
+    allowNull: true,
+  },
+
+  linkedin: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+
+  github: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+
+  portfolio: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+
+  sobre: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+
+  foto: {
+    type: DataTypes.STRING, // nome do arquivo salvo pelo multer
+    allowNull: true,
+  },
+
 }, {
   tableName: "tb_candidato",
   timestamps: true,
@@ -29,7 +78,7 @@ const Candidato = sequelize.define("Candidato", {
 Candidato.belongsTo(User, { foreignKey: "id_user", as: "user", onDelete: "CASCADE" });
 User.hasOne(Candidato, { foreignKey: "id_user", as: "candidato", onDelete: "CASCADE" });
 
-// 🔗 Relação com candidaturas — dentro da função associate
+// 🔗 Relação com candidaturas
 Candidato.associate = (models) => {
   Candidato.hasMany(models.Candidatura, {
     foreignKey: "id_candidato",
