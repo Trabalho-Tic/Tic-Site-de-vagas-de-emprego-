@@ -71,7 +71,6 @@ function VagaDescricao() {
     return <p>Carregando vaga...</p>;
   }
 
-  // ✅ Renderização condicional do botão
   const podeCandidatar = user && user.tipo === "candidato";
 
   async function handleCandidatar() {

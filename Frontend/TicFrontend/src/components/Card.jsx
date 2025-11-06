@@ -29,7 +29,6 @@ function Card({ vaga }) {
             <p className="text-xl font-medium pb-2">{vaga.nome}</p>
             <p className="text-sm text-gray-500 pb-6">{vaga.cidade} - {vaga.pais} <span className="text-sm text-black font-medium">(On site)</span></p>
             <div onClick={(e) => e.stopPropagation()} className="flex gap-3">
-                <button onClick={() => navigate("/curriculo")} className="text-sm text-green-400 px-3 py-1 rounded-3xl border-1 border-green-400 transition-all duration-400 hover:bg-green-500 hover:text-black font-medium">Enviar Candidatura</button>
                 <button onClick={() => navigate(`/vagas/${vaga.id}`)} className="bg-green-200 text-sm text-green-400 px-3 py-1 rounded-3xl transition-all duration-400 hover:bg-green-500 hover:text-black font-medium">View More</button>
             </div>
         </div>
