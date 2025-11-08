@@ -54,9 +54,9 @@ class CandidaturaController {
   // 🙋‍♂️ Listar candidaturas de um candidato (para ele ver onde se inscreveu)
   async listarPorCandidato(req, res) {
     try {
-      const { id_candidato } = req.params;
+      const { id } = req.params;
       const candidaturas = await Candidatura.findAll({
-        where: { id_candidato },
+        where: { id_candidato: id },
         include: [
           {
             model: Vaga,

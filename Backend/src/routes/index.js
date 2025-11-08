@@ -142,6 +142,7 @@ router.put("/updateCurriculo/:id", createUploader("curriculos").single("curricul
 router.get("/buscarCurriculo/:id", CurriculoController.getByUserId);
 
 // ------------------ CANDIDATURA ------------------
+router.get("/listarPorCandidato/:id", CandidaturaController.listarPorCandidato);
 router.post("/candidatura/create", CandidaturaController.create);
 router.post("/candidatura/validar", CandidaturaController.jaCandidatado);
 

@@ -114,7 +114,7 @@ function Header() {
                       <FileText size={16} /> Meu Currículo
                     </li>
                     <li
-                      onClick={() => navigate("/candidaturas")}
+                      onClick={() => navigate(`/candidaturas/${user.id}`)}
                       className="flex items-center gap-2 text-gray-700 hover:text-green-500 cursor-pointer"
                     >
                       <Heart size={16} /> Minhas Candidaturas

@@ -114,12 +114,12 @@ function VagaDescricao() {
         {podeCandidatar ? (
           jaCandidatado ? (
             <button
-              onClick={() => handleCandidatar()}
-              disabled
-              className="flex text-lg rounded-4xl items-center px-6 h-12 gap-2 font-semibold bg-gray-300 text-gray-600 cursor-not-allowed"
+              onClick={() => handleRemoverCandidatura()}
+              className="group flex text-lg rounded-4xl items-center px-6 h-12 gap-2 font-semibold bg-gray-300 text-gray-600 hover:"
             >
               <Zap size={20} />
-              Ja candidatou
+              <span className="group-hover:hidden">Ja Candidatou</span>
+              <span className="hidden group-hover:inline">Remover Candidatura</span>
             </button>
           ) : (
           <button
@@ -131,14 +131,7 @@ function VagaDescricao() {
           </button>
           )
         ) : (
-          <button
-            disabled
-            title="Disponível apenas para candidatos logados"
-            className="flex text-lg rounded-4xl items-center px-6 h-12 gap-2 font-semibold bg-gray-300 text-gray-600 cursor-not-allowed"
-          >
-            <Zap size={20} />
-            Candidatar-se
-          </button>
+          <></>
         )}
       </div>
 

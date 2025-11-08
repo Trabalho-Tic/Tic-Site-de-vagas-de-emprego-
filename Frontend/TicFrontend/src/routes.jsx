@@ -6,6 +6,7 @@ import Login from "./Pages/Login";
 import Home from "./Pages/Home";
 import Vagas from "./Pages/Vagas";
 import Company from "./Pages/Companies";
+import Candidaturas from "./Pages/Candidaturas";
 import CriarVaga from "./Pages/CriarVaga";
 import CriarVagaBeneficio from "./Pages/CriarVagaBeneficio";
 import CriarVagaProcesso from "./Pages/CriarVagaProcesso";
@@ -108,6 +109,10 @@ const routes = createBrowserRouter([
   {
     path: "/empresa-vagas/:id",
     element: <EmpresaVagas />,
+  },
+  {
+    path: "/candidaturas/:id",
+    element: <Candidaturas />,
   },
   {
     path: "/admin",
