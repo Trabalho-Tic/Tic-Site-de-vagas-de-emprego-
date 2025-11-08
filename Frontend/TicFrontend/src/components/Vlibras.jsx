@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import "../Styles/home.css"
 
 export default function VLibras() {
   useEffect(() => {
