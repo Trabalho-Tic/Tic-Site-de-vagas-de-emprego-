@@ -36,7 +36,9 @@ function Header() {
 
   return (
     <header className="flex justify-center sm:flex-row sm:justify-between items-center sm:px-10 lg:px-30 bg-gradient-to-t from-white to-gray-200 h-15 relative">
-      <img className="h-7 hidden sm:flex" src={logo} alt="Logo Jobior" />
+      <button onClick={() => navigate("/")}>
+        <img className="h-7 hidden sm:flex" src={logo} alt="Logo Jobior" />
+      </button>
 
       <nav className="flex py-5 sm:py-0 sm:gap-15">
         <NavLink
