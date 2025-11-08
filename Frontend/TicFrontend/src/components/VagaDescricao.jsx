@@ -95,6 +95,21 @@ function VagaDescricao() {
       }
   }
 
+  async function handleRemoverCandidatura() {
+      try {
+          await useApi({
+              endpoint: "/candidatura/deletar",
+              method: "POST",
+              body: { id_candidato: user.id, id_vaga: vaga.id}
+          })
+
+          setJaCandidatado()
+      } catch(error) {
+          console.error(error)
+      }
+  }
+
+
   return (
     <>
       <div className="flex items-center gap-2">
@@ -115,7 +130,7 @@ function VagaDescricao() {
           jaCandidatado ? (
             <button
               onClick={() => handleRemoverCandidatura()}
-              className="group flex text-lg rounded-4xl items-center px-6 h-12 gap-2 font-semibold bg-gray-300 text-gray-600 hover:"
+              className="group flex justify-center text-lg rounded-4xl items-center px-6 h-12 w-64 gap-2 font-semibold bg-gray-300 transition-all duration-300 text-gray-600 hover:bg-red-500 hover:text-white hover:-translate-y-0.5"
             >
               <Zap size={20} />
               <span className="group-hover:hidden">Ja Candidatou</span>

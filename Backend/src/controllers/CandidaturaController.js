@@ -90,8 +90,12 @@ class CandidaturaController {
   // ❌ Deletar candidatura (cancelar inscrição)
   async delete(req, res) {
     try {
-      const { id } = req.params;
-      const candidatura = await Candidatura.findByPk(id);
+      const { id_vaga, id_candidato } = req.body;
+
+      const candidatura = await Candidatura.findOne({
+        where: { id_candidato, id_vaga },
+      });
+
       if (!candidatura)
         return res.status(404).json({ error: "Candidatura não encontrada." });
 

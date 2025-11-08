@@ -145,6 +145,7 @@ router.get("/buscarCurriculo/:id", CurriculoController.getByUserId);
 router.get("/listarPorCandidato/:id", CandidaturaController.listarPorCandidato);
 router.post("/candidatura/create", CandidaturaController.create);
 router.post("/candidatura/validar", CandidaturaController.jaCandidatado);
+router.post("/candidatura/deletar", CandidaturaController.delete);
 
 // ------------------ ASSOCIAÇÕES ------------------
 router.post("/TipoDeficiencia/:id/SubTipoDeficiencia", TipoDeficienciaController.associarSubtipos);
