@@ -449,7 +449,7 @@ export default function ProfilePage() {
                         </div>
                       )}
                     </div>
-                  ))}
+                                         ))}
                 </div>
               </Section>
 
@@ -594,7 +594,7 @@ export default function ProfilePage() {
                     )}
                     <div className="flex flex-wrap">
                       {habilidades.map((h, idx) => (
-                        <Chip key={`${h}-${idx}`}>{h}</Chip>
+                        <Chip key={`${h}-${idx}`} onRemove={() => removeHab(idx)}>{h}</Chip>
                       ))}
                     </div>
                   </div>
@@ -675,7 +675,6 @@ export default function ProfilePage() {
         </div>
       </div>
 
-
       {/* MODAL: editar dados do usuário */}
       <Modal
         open={openUserModal}
@@ -710,3 +709,4 @@ export default function ProfilePage() {
     </>
   );
 }
+
