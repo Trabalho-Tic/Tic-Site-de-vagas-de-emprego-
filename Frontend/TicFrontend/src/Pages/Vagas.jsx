@@ -84,12 +84,12 @@ function Vaga() {
       </section>
 
       {/* 🧾 Seção de listagem de vagas */}
-      <section className="flex flex-col w-full p-10 md:py-10 gap-6">
+      <section className="flex flex-col items-center w-full p-10 md:py-10 gap-6">
         {/* Botão de adicionar vaga - só para empresa */}
         {user?.tipo === "empresa" && (
           <button
             onClick={() => navigate("/criarVaga")}
-            className="w-full md:w-100 self-start text-lg font-semibold text-white bg-gradient-to-tr from-green-400 to-green-100 p-4 rounded-xl transition-all duration-300 hover:-translate-y-0.5"
+            className="w-full md:w-100 text-lg font-semibold text-white bg-gradient-to-tr from-green-400 to-green-100 p-4 rounded-xl transition-all duration-300 hover:-translate-y-0.5"
           >
             Adicionar vaga
           </button>

@@ -116,7 +116,7 @@ const routes = createBrowserRouter([
     element: <Candidaturas />,
   },
   {
-    path: "/candidaturasVaga",
+    path: "/candidaturasVaga/:id",
     element: <CandidaturasVaga />,
   },
   {
@@ -140,8 +140,7 @@ const routes = createBrowserRouter([
   {
     path: "/meu-curriculo",
     element: <MeuCurriculo />,
-
-  }
+  },
 ]);
 
 function Router() {

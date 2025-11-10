@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useApi from "../api/Api";
 import Card from "../components/Card";
 import Header from "../components/Header";
@@ -7,56 +7,22 @@ import Footer from "../components/Footer";
 
 function CandidaturasVaga() {
 
-    const [candidaturas, setCandidaturas] = useState([])
-    const [vagas, setVagas] = useState([])
+    const [candidatos, setCandidatos] = useState([])
 
-    const user = JSON.parse(localStorage.getItem("user"))
+    const navigate = useNavigate()
 
-    console.log(user)
-
-    useEffect(() => {
-        async function fetchVagas() {
-        try {
-            if (!user) return;
-
-            if (user.tipo === "empresa") {
-                // Buscar empresa vinculada ao usuário
-                const empresas = await useApi({ 
-                    endpoint: "/company" 
-                });
-                const minhaEmpresa = empresas.find((c) => c.id_user === user.id);
-
-                if (minhaEmpresa) {
-                    // Buscar vagas só da empresa logada
-                    const vagasEmpresa = await useApi({
-                        endpoint: `/vaga/empresa/${minhaEmpresa.id}`,
-                    });
-
-                    console.log(vagasEmpresa)
-                    setVagas(vagasEmpresa);
-                }
-
-            } else {
-            // Se for candidato → todas as vagas
-                const todas = await useApi({ endpoint: "/vaga" });
-                setVagas(todas);
-            }
-        } catch (error) {
-            console.error("Erro ao buscar vagas:", error);
-        }
-        }
-
-        fetchVagas();
-    }, []);
+    const { id } = useParams()
 
     useEffect(() => {
         async function fetchCandidatutras() {
             try {
                 const response = await useApi({
-                    endpoint: `/listarPorCandidato/${id}`
+                    endpoint: `/listarPorVaga/${id}`
                 })
 
-                setCandidaturas(response)
+                console.log(response)
+
+                setCandidatos(response)
             } catch(error) {
                 console.error(error)
             }
@@ -69,14 +35,47 @@ function CandidaturasVaga() {
         <>
             <Header />
 
-            <section className="flex flex-col items-center justify-center p-15">
-                <h2 className="text-3xl text-center font-semibold px-1 pb-6">Minhas Vagas abertas</h2>
-                {vagas?.length === 0 ? (
-                    <p>Nenhuma vaga encontrada.</p>
+            <section className="flex flex-col items-center justify-center px-6 py-16 w-full">
+                <h2 className="text-3xl font-bold text-center mb-10 text-gray-800 w-full">
+                Minhas Vagas Abertas
+                </h2>
+
+                {candidatos?.length === 0 ? (
+                    <p className="text-gray-500 text-lg">Nenhum candidato encontrada.</p>
                 ) : (
-                    <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-                        {vagas?.map((vaga) => (
-                            <Card vaga={vaga} rota={false} />
+                    <ul className="flex flex-col gap-6 w-full max-w-6xl">
+                        {candidatos?.map((candidato) => (
+                        <li
+                            className="w-full bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between"
+                        >
+                            {/* Esquerda: informações da vaga */}
+                            <div className="flex items-center gap-4 w-full sm:w-auto">
+                                <img
+                                    src={candidato.candidato.user.foto}
+                                    alt="Foto"
+                                    className="w-12 h-12 object-contain"
+                                />
+                                <div className="flex flex-col">
+                                    <h3 className="text-lg font-semibold text-gray-900">
+                                    {candidato.candidato.user.nome || "Título da Vaga"}
+                                    </h3>
+                                    <p className="text-gray-600">
+                                    {candidato.candidato.user.telefone}
+                                    </p>
+                                    <p className="text-sm text-gray-500">
+                                    {candidato.candidato.cidade + " - " + candidato.candidato.estado}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-3 mt-4 sm:mt-0 sm:ml-4">
+                                <button 
+                                    onClick={() => navigate(`/viewCurriculo/${candidato.candidato.user.id}`)} 
+                                    className="px-5 py-2.5 bg-emerald-100 text-emerald-700 font-medium rounded-full hover:bg-emerald-200 transition-all">
+                                    Ver Curriculo
+                                </button>
+                            </div>
+                        </li>
                         ))}
                     </ul>
                 )}

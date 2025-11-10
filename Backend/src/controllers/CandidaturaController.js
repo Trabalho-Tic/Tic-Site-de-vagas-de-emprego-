@@ -32,9 +32,9 @@ class CandidaturaController {
   // 📋 Listar candidaturas de uma vaga (empresa visualiza)
   async listarPorVaga(req, res) {
     try {
-      const { id_vaga } = req.params;
+      const { id } = req.params;
       const candidaturas = await Candidatura.findAll({
-        where: { id_vaga },
+        where: { id_vaga: id },
         include: [
           {
             model: Candidato,
