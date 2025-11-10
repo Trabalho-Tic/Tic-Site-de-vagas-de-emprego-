@@ -258,7 +258,7 @@ export default function ProfilePage() {
       };
 
       await useApi({
-        endpoint: `/user/update/${user.id}`,
+        endpoint: `/candidato/update/${user.id}`,
         method: "PUT",
         body: payload,
       });

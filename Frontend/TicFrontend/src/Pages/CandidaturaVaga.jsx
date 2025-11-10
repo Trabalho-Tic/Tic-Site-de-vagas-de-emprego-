@@ -57,13 +57,13 @@ function CandidaturasVaga() {
                                 />
                                 <div className="flex flex-col">
                                     <h3 className="text-lg font-semibold text-gray-900">
-                                    {candidato.candidato.user.nome || "Título da Vaga"}
+                                        {candidato.candidato.user.nome || "Título da Vaga"}
                                     </h3>
                                     <p className="text-gray-600">
-                                    {candidato.candidato.user.telefone}
+                                        {candidato.candidato.user.telefone} - {candidato.candidato.user.email}
                                     </p>
                                     <p className="text-sm text-gray-500">
-                                    {candidato.candidato.cidade + " - " + candidato.candidato.estado}
+                                        {candidato.candidato.cidade + " - " + candidato.candidato.estado}
                                     </p>
                                 </div>
                             </div>

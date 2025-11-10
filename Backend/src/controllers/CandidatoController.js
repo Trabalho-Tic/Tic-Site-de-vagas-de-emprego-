@@ -63,10 +63,10 @@ class CandidatoController {
   // ATUALIZAR DADOS DO CANDIDATO
   // =========================================================
   async update(req, res) {
-    const { id_user } = req.params;
+    const { id } = req.params;
 
     try {
-      const candidato = await Candidato.findOne({ where: { id_user } });
+      const candidato = await Candidato.findOne({ where: { id_user: id } });
 
       if (!candidato) {
         return res.status(404).json({ error: "Candidato não encontrado" });

@@ -59,6 +59,7 @@ router.delete("/company/delete/:id", CompanyController.delete);
 
 // ------------------ CANDIDATOS ------------------
 router.get("/candidato", CandidatoController.index);
+router.put("/candidato/update/:id", CandidatoController.update);
 router.get("/candidato/:id_user", CandidatoController.show);
 
 // ✅ atualização com upload de foto de perfil
