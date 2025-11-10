@@ -33,6 +33,7 @@ import CrudEmpresasPage from "./admin/pages/CrudEmpresasPage"; // Importa a pág
 import Vaga from "./Pages/Vaga";
 import UpdateVaga from "./Pages/UpdateVaga";
 import CandidaturasVaga from "./Pages/CandidaturaVaga";
+import PageNotFound from "./Pages/PageNotFound";
 
 const routes = createBrowserRouter([
   {
@@ -141,6 +142,10 @@ const routes = createBrowserRouter([
     path: "/meu-curriculo",
     element: <MeuCurriculo />,
   },
+  {
+    path: "*",
+    element: <PageNotFound />,
+  }
 ]);
 
 function Router() {
