@@ -32,6 +32,7 @@ import VagasPage from "./admin/pages/VagasPage";
 import CrudEmpresasPage from "./admin/pages/CrudEmpresasPage"; // Importa a página do CRUD de Empresas
 import Vaga from "./Pages/Vaga";
 import UpdateVaga from "./Pages/UpdateVaga";
+import CandidaturasVaga from "./Pages/CandidaturaVaga";
 
 const routes = createBrowserRouter([
   {
@@ -113,6 +114,10 @@ const routes = createBrowserRouter([
   {
     path: "/candidaturas/:id",
     element: <Candidaturas />,
+  },
+  {
+    path: "/candidaturasVaga",
+    element: <CandidaturasVaga />,
   },
   {
     path: "/admin",

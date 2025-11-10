@@ -80,26 +80,25 @@ class VagaController {
         }
     }
 
-    // Buscar vagas de uma empresa específica
     async vagasPorEmpresa(req, res) {
-    try {
-        const { idCompany } = req.params;
+        try {
+            const { idCompany } = req.params;
 
-        const vagas = await Vaga.findAll({
-        where: { id_company: idCompany },
-        include: [
-            { model: VagaProcesso, as: 'processo' },
-            { model: VagaDescricao, as: 'descricao' },
-            { model: VagaRequisicao, as: 'requisicao' },
-            { model: VagaBeneficio, as: 'beneficio' },
-        ],
-        });
+            const vagas = await Vaga.findAll({
+                where: { id_company: idCompany },
+                include: [
+                    { model: VagaProcesso, as: 'processo' },
+                    { model: VagaDescricao, as: 'descricao' },
+                    { model: VagaRequisicao, as: 'requisicao' },
+                    { model: VagaBeneficio, as: 'beneficio' },
+                ],
+            });
 
-        return res.json(vagas);
-    } catch (error) {
-        console.error("Erro em vagasPorEmpresa:", error);
-        return res.status(500).json({ error: "Erro ao buscar vagas da empresa" });
-    }
+            return res.json(vagas);
+        } catch (error) {
+            console.error("Erro em vagasPorEmpresa:", error);
+            return res.status(500).json({ error: "Erro ao buscar vagas da empresa" });
+        }
     }
 }
 

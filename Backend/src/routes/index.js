@@ -143,6 +143,7 @@ router.get("/buscarCurriculo/:id", CurriculoController.getByUserId);
 
 // ------------------ CANDIDATURA ------------------
 router.get("/listarPorCandidato/:id", CandidaturaController.listarPorCandidato);
+router.get("/listarPorVaga/:id", CandidaturaController.listarPorVaga);
 router.post("/candidatura/create", CandidaturaController.create);
 router.post("/candidatura/validar", CandidaturaController.jaCandidatado);
 router.post("/candidatura/deletar", CandidaturaController.delete);
