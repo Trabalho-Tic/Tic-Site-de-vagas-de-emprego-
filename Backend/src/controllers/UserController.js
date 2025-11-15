@@ -54,7 +54,7 @@ class UserController {
 
   // CRIAR USUÁRIO BASE
   async create(req, res) {
-    const { email, password } = req.body;
+    const { nome, email, password } = req.body;
 
     try {
       const existingEmail = await User.findOne({ where: { email } });
@@ -66,6 +66,13 @@ class UserController {
       req.body.password = hashPassword;
 
       const newUser = await User.create(req.body);
+
+      await fetch("https://fernandomoreti.app.n8n.cloud/webhook/42f89381-e31e-49fd-9ae5-5628c852eabe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nome, email })
+      });
+
       return res.status(201).json(sanitizeUser(newUser));
     } catch (error) {
       console.error(error);
