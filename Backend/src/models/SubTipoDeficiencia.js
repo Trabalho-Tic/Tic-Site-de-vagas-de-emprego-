@@ -10,16 +10,6 @@ const SubtipoDeficiencia = sequelize.define('SubtipoDeficiencia', {
     nome: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    id_tipodeficiencia: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        references: {
-            model: "tb_tipodeficiencia",
-            key: "id"
-        },
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE"
     }
 }, {
     tableName: "tb_subtipodeficiencia",
