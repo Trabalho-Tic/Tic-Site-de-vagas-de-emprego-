@@ -110,7 +110,7 @@ class CandidatoController {
         req.body.foto = req.file.filename;
       }
 
-      // Atualiza subtipos (TB PIVOT)
+      // Atualiza subtipos
       if (subtipos && Array.isArray(subtipos)) {
         await candidato.setSubtipos(subtipos);
       }
