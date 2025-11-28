@@ -114,6 +114,14 @@ function Vinculo() {
         setUpdate(prev => prev + 1)
     }
 
+    async function linkTipoComSubtipo(e) {
+        e.preventDefault()
+
+        await useApi({
+            endpoint: ""
+        })
+    }
+
     return (
         <>
             <div className="flex flex-col mb-8">
@@ -176,7 +184,7 @@ function Vinculo() {
                             <p>Adicione um Tipo de Deficiência:</p>
                             <div className="flex gap-5">
                                 <input type="text" value={tipoDeficiencia} onChange={(e) => setTipoDeficiencia(e.target.value)} className="w-full bg-gray-100 border-none rounded-md pl-10 pr-4 py-2 focus:ring-2 focus:ring-indigo-500" />
-                                <button onClick={(event) => handleTipoDeficiencia(event)} className="bg-indigo-600 text-white px-8 py-4 rounded-md flex items-center gap-2 hover:bg-indigo-500">Criar</button>
+                                <button onClick={(event) => handleTipoDeficiencia(event)} className="bg-indigo-600 text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Criar</button>
                             </div>
                         </div>
                     </div>
@@ -201,7 +209,7 @@ function Vinculo() {
                             <p>Adicione um Sub Tipo de Deficiência:</p>
                             <div className="flex gap-5">
                                 <input type="text" value={subTipoDeficiencia} onChange={(e) => setSubTipoDeficiencia(e.target.value)} className="w-full bg-gray-100 border-none rounded-md pl-10 pr-4 py-2 focus:ring-2 focus:ring-indigo-500" />
-                                <button onClick={(event) => handleSubtipoDeficiencia(event)} className="bg-indigo-600 text-white px-8 py-4 rounded-md flex items-center gap-2 hover:bg-indigo-500">Criar</button>
+                                <button onClick={(event) => handleSubtipoDeficiencia(event)} className="bg-indigo-600 text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Criar</button>
                             </div>
                         </div>
                     </div>
@@ -212,12 +220,14 @@ function Vinculo() {
                                 <div className="flex gap-2 items-center">
                                     <Checkbox 
                                         label={subDeficiencia.nome}
-                                        onChange={() => setTipoDeficienciaSelecionada(subDeficiencia.nome)}
+                                        onChange={() => setSubTipoDeficienciaSelecionada(subDeficiencia.nome)}
                                     />
                                 </div>
                             ))
                         }
                     </div>
+
+                    <button className="bg-indigo-600 w-full text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular</button>
                 </>
             )}
             
@@ -230,7 +240,7 @@ function Vinculo() {
                             <p>Adicione um Sub Tipo de Deficiência:</p>
                             <div className="flex gap-5">
                                 <input type="text" value={subTipoDeficiencia} onChange={(e) => setSubTipoDeficiencia(e.target.value)} className="w-full bg-gray-100 border-none rounded-md pl-10 pr-4 py-2 focus:ring-2 focus:ring-indigo-500" />
-                                <button className="bg-indigo-600 text-white px-8 py-4 rounded-md flex items-center gap-2 hover:bg-indigo-500">Criar</button>
+                                <button onClick={(event) => handleSubtipoDeficiencia(event)} className="bg-indigo-600 text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Criar</button>
                             </div>
                         </div>
                     </div>
@@ -255,7 +265,7 @@ function Vinculo() {
                             <p>Adicione uma  Barreira:</p>
                             <div className="flex gap-5">
                                 <input type="text" value={barreira} onChange={(e) => setBarreira(e.target.value)} className="w-full bg-gray-100 border-none rounded-md pl-10 pr-4 py-2 focus:ring-2 focus:ring-indigo-500" />
-                                <button onClick={(event) => handleBarreira(event)} className="bg-indigo-600 text-white px-8 py-4 rounded-md flex items-center gap-2 hover:bg-indigo-500">Criar</button>
+                                <button onClick={(event) => handleBarreira(event)} className="bg-indigo-600 text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Criar</button>
                             </div>
                         </div>
                     </div>
@@ -272,6 +282,8 @@ function Vinculo() {
                             ))
                         }
                     </div>
+
+                    <button className="bg-indigo-600 w-full text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular</button>
                 </>
             )}
 
@@ -284,7 +296,7 @@ function Vinculo() {
                             <p>Adicione uma Barreira:</p>
                             <div className="flex gap-5">
                                 <input type="text" value={barreira} onChange={(e) => setBarreira(e.target.value)} className="w-full bg-gray-100 border-none rounded-md pl-10 pr-4 py-2 focus:ring-2 focus:ring-indigo-500" />
-                                <button onClick={(event) => handleBarreira(event)} className="bg-indigo-600 text-white px-8 py-4 rounded-md flex items-center gap-2 hover:bg-indigo-500">Criar</button>
+                                <button onClick={(event) => handleBarreira(event)} className="bg-indigo-600 text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Criar</button>
                             </div>
                         </div>
                     </div>
@@ -309,7 +321,37 @@ function Vinculo() {
                             <p>Adicione uma  Acessibilidade:</p>
                             <div className="flex gap-5">
                                 <input type="text" value={acessibilidade} onChange={(e) => setAcessibilidade(e.target.value)} className="w-full bg-gray-100 border-none rounded-md pl-10 pr-4 py-2 focus:ring-2 focus:ring-indigo-500" />
-                                <button onClick={(event) => handleAcessibilidade(event)} className="bg-indigo-600 text-white px-8 py-4 rounded-md flex items-center gap-2 hover:bg-indigo-500">Criar</button>
+                                <button onClick={(event) => handleAcessibilidade(event)} className="bg-indigo-600 text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Criar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-5 bg-white p-6 rounded-lg shadow-sm mb-8 border border-gray-200">
+                        {
+                            acessibilidades?.map((acessibilidade) => (
+                                <div className="flex gap-2 items-center">
+                                    <Checkbox 
+                                        label={acessibilidade.descricao}
+                                        onChange={() => setAcessibilidadeSelecionada(acessibilidade.descricao)}
+                                    />
+                                </div>
+                            ))
+                        }
+                    </div>
+
+                    <button className="bg-indigo-600 w-full text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular</button>
+                </>
+            )}
+            
+            {aba === "acessibilidade" && (
+                <>
+                    <div className="bg-white p-6 rounded-lg shadow-sm mb-8 border border-gray-200">
+                        <h2 className="text-xl font-semibold mb-3">Acesibilidade</h2>
+                        <div className="flex flex-col gap-2">
+                            <p>Adicione uma  Acessibilidade:</p>
+                            <div className="flex gap-5">
+                                <input type="text" value={acessibilidade} onChange={(e) => setAcessibilidade(e.target.value)} className="w-full bg-gray-100 border-none rounded-md pl-10 pr-4 py-2 focus:ring-2 focus:ring-indigo-500" />
+                                <button onClick={(event) => handleAcessibilidade(event)} className="bg-indigo-600 text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Criar</button>
                             </div>
                         </div>
                     </div>
