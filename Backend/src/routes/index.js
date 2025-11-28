@@ -9,6 +9,7 @@ const SubTipoBarreiraController = require("../controllers/SubTipoBarreiraControl
 const SubTipoDeficienciaController = require("../controllers/SubTipoDeficienciaController");
 const TipoDeficienciaController = require("../controllers/TipoDeficienciaController");
 const UserController = require("../controllers/UserController");
+const SubTipoDeficienciaTipoDeficienciasController = require("../controllers/SubTipoDeficienciaTipoDeficienciaController");
 const CompanyController = require("../controllers/CompanyController");
 const CandidatoController = require("../controllers/CandidatoController");
 const VagaController = require("../controllers/VagaController");
@@ -150,7 +151,7 @@ router.post("/candidatura/validar", CandidaturaController.jaCandidatado);
 router.post("/candidatura/deletar", CandidaturaController.delete);
 
 // ------------------ ASSOCIAÇÕES ------------------
-router.post("/TipoDeficiencia/:id/SubTipoDeficiencia", TipoDeficienciaController.associarSubtipos);
+router.post("/TipoDeficiencia/:id/SubTipoDeficiencia", SubTipoDeficienciaTipoDeficienciasController.create);
 router.post("/Barreira/:id/SubTipoDeficiencia", BarreiraController.associarSubtipos);
 router.post("/Barreira/:id/Acessibilidade", BarreiraAcessibilidadeController.associarSubtipos);
 
