@@ -28,9 +28,11 @@ const SubtipoDeficiencia = sequelize.define('SubtipoDeficiencia', {
 
 SubtipoDeficiencia.associate = (models) => {
 
-    SubtipoDeficiencia.belongsTo(models.TipoDeficiencia, {
-        foreignKey: "id_tipodeficiencia",
-        as: "tipoDeficiencia"
+    SubtipoDeficiencia.belongsToMany(models.TipoDeficiencia, {
+        through: "tb_subtipodeficienciatipodeficiencia",
+        foreignKey: "id_subtipo",
+        otherKey: "id_tipodeficiencia",
+        as: "tipos"
     });
 
     SubtipoDeficiencia.belongsToMany(models.Barreira, {
