@@ -46,6 +46,13 @@ SubTipoBarreiras.associate = (models) => {
         as: 'barreira',
         onDelete: 'CASCADE'
     });
+
+    SubTipoBarreiras.belongsToMany(models.Acessibilidade, {
+        through: "tb_subtipobarreira_acessibilidade",
+        foreignKey: "id_subtipobarreira",
+        otherKey: "id_acessibilidade",
+        as: "acessibilidades"
+    });
 };
 
 module.exports = SubTipoBarreiras
