@@ -32,9 +32,6 @@ function CriarVagaRequisicao() {
                 
                 const dataD = await responseD.json()
                 const dataA = await responseA.json()
-                
-                console.log(dataA)
-                console.log(dataD)
 
                 setDeficiencias(dataD)
                 setAcessibilidades(dataA)

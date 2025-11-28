@@ -55,6 +55,19 @@ export default function AdminLayout() {
             <span className="material-symbols-outlined">business</span>
             Empresas
           </NavLink>
+          
+          
+          <NavLink
+            to="/admin/vinculo"
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 ${
+                isActive ? "bg-indigo-50 text-indigo-600 font-semibold" : ""
+              }`
+            }
+          >
+            <span className="material-symbols-outlined">link</span>
+            Vinculo
+          </NavLink>
         </nav>
 
         {/* Rodapé da sidebar */}

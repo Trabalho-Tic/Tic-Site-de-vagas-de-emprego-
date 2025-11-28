@@ -29,7 +29,9 @@ import RegisterEmpresa from "./Pages/RegisterEmpresa";
 import AdminLayout from "./admin/Layout";
 import UsuariosPage from "./admin/pages/CandidatosPage";
 import VagasPage from "./admin/pages/VagasPage";
-import CrudEmpresasPage from "./admin/pages/CrudEmpresasPage"; // Importa a página do CRUD de Empresas
+import CrudEmpresasPage from "./admin/pages/CrudEmpresasPage";
+import Vinculo from "./admin/pages/VinculoPage";
+
 import Vaga from "./Pages/Vaga";
 import UpdateVaga from "./Pages/UpdateVaga";
 import CandidaturasVaga from "./Pages/CandidaturaVaga";
@@ -121,16 +123,6 @@ const routes = createBrowserRouter([
     element: <CandidaturasVaga />,
   },
   {
-    path: "/admin",
-    element: <AdminLayout />,
-    children: [
-      { index: true, element: <UsuariosPage /> },
-      { path: "usuarios", element: <UsuariosPage /> },
-      { path: "vagas", element: <VagasPage /> },
-      {path: "empresas", element: <CrudEmpresasPage />},
-    ],
-  },
-  {
     path: "/profile",
     element: <Profile />,
   },
@@ -141,6 +133,17 @@ const routes = createBrowserRouter([
   {
     path: "/meu-curriculo",
     element: <MeuCurriculo />,
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      { index: true, element: <UsuariosPage /> },
+      { path: "usuarios", element: <UsuariosPage /> },
+      { path: "vagas", element: <VagasPage /> },
+      {path: "empresas", element: <CrudEmpresasPage />},
+      {path: "vinculo", element: <Vinculo />},
+    ],
   },
   {
     path: "*",
