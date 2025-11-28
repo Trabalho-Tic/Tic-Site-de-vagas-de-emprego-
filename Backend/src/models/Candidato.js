@@ -79,13 +79,14 @@ Candidato.associate = (models) => {
     foreignKey: "id_candidato",
     as: "candidaturas",
   });
-};
 
-Candidato.belongsToMany(models.SubtipoDeficiencia, {
+  Candidato.belongsToMany(models.SubtipoDeficiencia, {
     through: "tb_candidato_subtipodeficiencia",
     foreignKey: "id_candidato",
     otherKey: "id_subtipodeficiencia",
     as: "subtipos"
   });
+};
+
 
 module.exports = Candidato;
