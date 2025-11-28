@@ -103,5 +103,6 @@ class TipoDeficienciaController {
 
 }
 
+
 module.exports = new TipoDeficienciaController()
  
