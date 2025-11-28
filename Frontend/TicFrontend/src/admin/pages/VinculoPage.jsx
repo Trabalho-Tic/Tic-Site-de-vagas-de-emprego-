@@ -10,8 +10,10 @@ function Vinculo() {
     const [barreiras, setBarreiras] = useState([])
     const [acessibilidades, setAcessibilidades] = useState([])
 
+    const [update, setUpdate] = useState(0)
+
     useEffect(() => {
-        async function fetchTipoDeficiencia() {
+        async function fetchAll() {
             try {
                 const tipodeficiencia = await useApi({
                     endpoint: "/tipoDeficiencia"
@@ -50,8 +52,8 @@ function Vinculo() {
             }
         }
 
-        fetchTipoDeficiencia()
-    }, [])
+        fetchAll()
+    }, [update])
 
     async function handleBarreira(e) {
         e.preventDefault()
@@ -59,9 +61,12 @@ function Vinculo() {
         await useApi({
             endpoint: "/barreira/create",
             method: "POST",
-            body: {barreira}
+            body: {descricao: barreira}
         })
+
+        setBarreira("")    
         
+        setUpdate(prev => prev + 1)
     }
 
     return (
