@@ -60,6 +60,14 @@ Vaga.associate = (models) => {
     as: "requisicao",
   });
 
+  Vaga.belongsToMany(models.Acessibilidade, {
+    through: "tb_vaga_acessibilidade",
+    foreignKey: "id_vaga",
+    otherKey: "id_acessibilidade",
+    as: "acessibilidades"
+  });
+
+
   Vaga.belongsTo(models.Company, {
     foreignKey: "id_company",
     as: "empresa",
