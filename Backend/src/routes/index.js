@@ -10,6 +10,7 @@ const SubTipoDeficienciaController = require("../controllers/SubTipoDeficienciaC
 const TipoDeficienciaController = require("../controllers/TipoDeficienciaController");
 const UserController = require("../controllers/UserController");
 const SubTipoDeficienciaTipoDeficienciasController = require("../controllers/SubTipoDeficienciaTipoDeficienciaController");
+const SubTipoDeficienciaTipoDeficienciasController = require("../controllers/SubTipoDeficienciaTipoDeficienciaController");
 const CompanyController = require("../controllers/CompanyController");
 const CandidatoController = require("../controllers/CandidatoController");
 const VagaController = require("../controllers/VagaController");
@@ -114,6 +115,50 @@ router.post("/TipoDeficiencia/create", TipoDeficienciaController.create);
 router.put("/TipoDeficiencia/update/:id", TipoDeficienciaController.update);
 router.delete("/TipoDeficiencia/delete/:id", TipoDeficienciaController.delete);
 
+
+// ====================================================
+// BARRERAS
+// ====================================================
+router.get("/Barreira", BarreiraController.index);
+router.get("/Barreira/:id", BarreiraController.show);
+router.post("/Barreira/create", BarreiraController.create);
+router.put("/Barreira/update/:id", BarreiraController.update);
+router.delete("/Barreira/delete/:id", BarreiraController.delete);
+
+
+// ====================================================
+// SUBTIPO BARREIRA
+// ====================================================
+router.get("/SubTipoBarreira", SubTipoBarreiraController.index);
+router.get("/SubTipoBarreira/:id", SubTipoBarreiraController.show);
+router.post("/SubTipoBarreira/create/:id", SubTipoBarreiraController.create);
+router.put("/SubTipoBarreira/update/:id", SubTipoBarreiraController.update);
+router.delete("/SubTipoBarreira/delete/:id", SubTipoBarreiraController.delete);
+
+
+// ====================================================
+// ACESSIBILIDADES
+// ====================================================
+router.get("/Acessibilidade", AcessibilidadeController.index);
+router.get("/Acessibilidade/:id", AcessibilidadeController.show);
+router.post("/Acessibilidade/create", AcessibilidadeController.create);
+router.put("/Acessibilidade/update/:id", AcessibilidadeController.update);
+router.delete("/Acessibilidade/delete/:id", AcessibilidadeController.delete);
+
+
+// ====================================================
+// BARRERAS x ACESSIBILIDADES
+// ====================================================
+router.get("/BarreiraAcessibilidade", BarreiraAcessibilidadeController.index);
+router.get("/BarreiraAcessibilidade/:id", BarreiraAcessibilidadeController.show);
+router.post("/BarreiraAcessibilidade/create", BarreiraAcessibilidadeController.create);
+router.put("/BarreiraAcessibilidade/update/:id", BarreiraAcessibilidadeController.update);
+router.delete("/BarreiraAcessibilidade/delete/:id", BarreiraAcessibilidadeController.delete);
+
+
+// ====================================================
+// VAGAS
+// ====================================================
 // ------------------ VAGAS ------------------
 router.get("/Vaga", VagaController.index);
 router.get("/vaga/empresa/:idCompany", VagaController.vagasPorEmpresa);

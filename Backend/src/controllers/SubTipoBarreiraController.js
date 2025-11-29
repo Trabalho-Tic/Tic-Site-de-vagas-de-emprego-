@@ -1,4 +1,5 @@
 const SubTipoBarreira = require('../models/SubTipoBarreiras');
+const SubtipoDeficiencia = require('../models/SubTipoDeficiencia');
 
 class SubTipoBarreiraController {
 
@@ -25,11 +26,26 @@ class SubTipoBarreiraController {
     }
 
     async create(request, response) {
+        const { id } = request.params;
+        const { subtiposIds } = request.body
+        
         try {
-            const subTipoBarreira = await SubTipoBarreira.create(request.body)
-            return response.json(subTipoBarreira)
-        } catch (error) {
-            return response.status(500).json({ error: "Erro ao criar SubTipoBarreira"})
+            const subTipo = await SubtipoDeficiencia.findByPk(id);
+
+            if (!subTipo) return response.status(404).json({ error: "TipoDeficiencia não encontrado" });
+
+            const registros = subtiposIds.map(subId => ({
+                id_subtipodeficiencia: id,
+                id_barreira: subId
+            }));
+
+            await SubTipoBarreira.bulkCreate(registros, { ignoreDuplicates: true });
+
+            return response.json({ message: "Criado com sucesso!", registrosCriados: registros });
+
+        } catch (err) {
+            console.error("ERRO:", err);
+            return response.status(500).json({ error: "Erro ao criar vínculo N:N" });
         }
     }
     

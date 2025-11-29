@@ -1,141 +1,175 @@
 const { sequelize, 
-    TipoDeficiencia, 
-    SubtipoDeficiencia, 
-    Barreira, 
-    Acessibilidade, 
-    SubTipoBarreiras, 
-    BarreiraAcessibilidades 
+  TipoDeficiencia, 
+  SubtipoDeficiencia, 
+  Barreira, 
+  Acessibilidade, 
+  SubTipoBarreiras, 
+  BarreiraAcessibilidades,
+  SubTipoDeficienciaTipoDeficiencias
 } = require('../models');
 
 async function seedDatabase() {
   try {
-    console.log('🚀 Iniciando população do banco de dados...');
-
+    console.log('🚀 Iniciando população do banco...');
     await sequelize.sync({ force: true });
-    console.log('🧹 Tabelas recriadas com sucesso.');
+    console.log('🧹 Banco resetado.');
 
-    // ===== TIPOS DE DEFICIÊNCIA =====
+    // ===== 20+ SUBTIPOS (sem FK agora) =====
+    const subtipos = await SubtipoDeficiencia.bulkCreate([
+      { nome: 'Cegueira' },
+      { nome: 'Baixa Visão' },
+      { nome: 'Daltonismo' },
+      { nome: 'Sensibilidade à luz' },
+      { nome: 'Surdez Total' },
+      { nome: 'Perda Auditiva Leve' },
+      { nome: 'Perda Auditiva Moderada' },
+      { nome: 'Dificuldade de equilíbrio auditivo' },
+      { nome: 'Amputação' },
+      { nome: 'Paraplegia' },
+      { nome: 'Tetraplegia' },
+      { nome: 'Mobilidade reduzida' },
+      { nome: 'Coordenação motora reduzida' },
+      { nome: 'Síndrome de Down' },
+      { nome: 'Autismo Leve' },
+      { nome: 'Autismo Moderado' },
+      { nome: 'Asperger Leve' },
+      { nome: 'Dislexia Grau 1' },
+      { nome: 'Déficit de atenção leve' },
+      { nome: 'Sensibilidade sonora extrema' },
+      { nome: 'Dificuldade de memorização' },
+      { nome: 'Dificuldade de leitura' },
+      { nome: 'Dificuldade de escrita' },
+      { nome: 'Dificuldade de raciocínio lógico' }
+    ]);
+    console.log('✅ Subtipos inseridos.');
+
+    // ===== 20+ TIPOS DE DEFICIÊNCIA =====
     const tipos = await TipoDeficiencia.bulkCreate([
       { nome: 'Deficiência Visual' },
       { nome: 'Deficiência Auditiva' },
       { nome: 'Deficiência Física' },
       { nome: 'Deficiência Intelectual' },
       { nome: 'Deficiência Múltipla' },
-      { nome: 'Transtornos de Aprendizagem' },
-      { nome: 'Deficiência Psíquica' },
       { nome: 'Deficiência Motora' },
       { nome: 'Deficiência Neurológica' },
       { nome: 'Deficiência Sensorial' },
-      { nome: 'Deficiência Cognitiva' },
-      { nome: 'Deficiência Auditiva Profunda' },
-      { nome: 'Deficiência Visual Total' },
-      { nome: 'Deficiência Física Parcial' },
-      { nome: 'Deficiência Combinada' },
-      { nome: 'Síndrome de Asperger' },
+      { nome: 'Deficiência Psíquica' },
+      { nome: 'TEA - Transtorno do Espectro Autista' },
       { nome: 'Dislexia' },
+      { nome: 'TDAH' },
+      { nome: 'Síndrome de Down' },
       { nome: 'Paralisia Cerebral' },
-      { nome: 'Deficiência Auditiva Leve' },
-      { nome: 'Deficiência Visual Parcial' }
+      { nome: 'Surdez Profunda' },
+      { nome: 'Cegueira Total' },
+      { nome: 'Baixa Audição' },
+      { nome: 'Paralisia parcial de membros' },
+      { nome: 'Transtornos emocionais' },
+      { nome: 'Deficiência Cognitiva' }
     ]);
-    console.log('✅ Tipos de Deficiência inseridos.');
+    console.log('✅ Tipos de deficiência inseridos.');
 
-    // ===== SUBTIPOS =====
-    const subtipos = await SubtipoDeficiencia.bulkCreate([
-      { nome: 'Cegueira', id_tipodeficiencia: tipos[0].id },
-      { nome: 'Baixa Visão', id_tipodeficiencia: tipos[0].id },
-      { nome: 'Surdez', id_tipodeficiencia: tipos[1].id },
-      { nome: 'Deficiência Auditiva Parcial', id_tipodeficiencia: tipos[1].id },
-      { nome: 'Paraplegia', id_tipodeficiencia: tipos[2].id },
-      { nome: 'Tetraplegia', id_tipodeficiencia: tipos[2].id },
-      { nome: 'Síndrome de Down', id_tipodeficiencia: tipos[3].id },
-      { nome: 'Autismo', id_tipodeficiencia: tipos[3].id },
-      { nome: 'Dislexia', id_tipodeficiencia: tipos[5].id },
-      { nome: 'Transtorno de Atenção', id_tipodeficiencia: tipos[5].id },
-      { nome: 'Paralisia Cerebral', id_tipodeficiencia: tipos[7].id },
-      { nome: 'Espasticidade', id_tipodeficiencia: tipos[7].id },
-      { nome: 'Síndrome de Asperger', id_tipodeficiencia: tipos[15].id },
-      { nome: 'Deficiência Cognitiva Leve', id_tipodeficiencia: tipos[10].id },
-      { nome: 'Deficiência Auditiva Profunda', id_tipodeficiencia: tipos[11].id },
-      { nome: 'Deficiência Visual Total', id_tipodeficiencia: tipos[12].id },
-      { nome: 'Deficiência Física Parcial', id_tipodeficiencia: tipos[13].id },
-      { nome: 'Deficiência Combinada', id_tipodeficiencia: tipos[14].id },
-      { nome: 'Deficiência Neurológica', id_tipodeficiencia: tipos[8].id },
-      { nome: 'Deficiência Sensorial Parcial', id_tipodeficiencia: tipos[9].id }
-    ]);
-    console.log('✅ Subtipos de Deficiência inseridos.');
-
-    // ===== BARREIRAS =====
+    // ===== 20+ BARREIRAS =====
     const barreiras = await Barreira.bulkCreate([
       { descricao: 'Falta de rampas de acesso' },
-      { descricao: 'Ausência de sinalização tátil' },
-      { descricao: 'Falta de intérprete de Libras' },
-      { descricao: 'Escadas sem corrimão' },
-      { descricao: 'Falta de material em braile' },
-      { descricao: 'Banheiros inacessíveis' },
+      { descricao: 'Ausência de piso tátil' },
+      { descricao: 'Elevador inoperante' },
+      { descricao: 'Atendimento sem intérprete de Libras' },
       { descricao: 'Portas estreitas' },
-      { descricao: 'Corredores apertados' },
-      { descricao: 'Falta de transporte adaptado' },
-      { descricao: 'Sinalização inadequada' },
+      { descricao: 'Corredores sem espaço para locomoção' },
+      { descricao: 'Banheiros não adaptados' },
+      { descricao: 'Plataforma digital sem acessibilidade' },
+      { descricao: 'Sistema sem leitor de tela' },
+      { descricao: 'Conteúdo sem linguagem simplificada' },
+      { descricao: 'Vídeos sem legenda' },
+      { descricao: 'Ausência de audiodescrição' },
       { descricao: 'Falta de apoio pedagógico' },
-      { descricao: 'Falta de equipamentos adaptados' },
-      { descricao: 'Barreiras cognitivas' },
-      { descricao: 'Falta de tecnologia assistiva' },
+      { descricao: 'Ambientes barulhentos' },
+      { descricao: 'Iluminação excessiva' },
+      { descricao: 'Falta de sinalização visual clara' },
+      { descricao: 'Não há alerta luminoso' },
+      { descricao: 'Não há alerta sonoro' },
+      { descricao: 'Falta de softwares assistivos' },
+      { descricao: 'Vagas PCD insuficientes' },
+      { descricao: 'Ausência de mobiliário adaptado' },
+      { descricao: 'Falta de tecnologia inclusiva' },
       { descricao: 'Desnível no piso' },
-      { descricao: 'Falta de cadeiras de rodas' },
-      { descricao: 'Falta de suporte emocional' },
-      { descricao: 'Falta de audiodescrição' },
-      { descricao: 'Falta de alerta sonoro' },
-      { descricao: 'Falta de legendas em vídeos' }
+      { descricao: 'Falta de comunicação acessível' }
     ]);
     console.log('✅ Barreiras inseridas.');
 
-    // ===== ACESSIBILIDADES =====
+    // ===== 20+ ACESSIBILIDADES =====
     const acessibilidades = await Acessibilidade.bulkCreate([
-      { descricao: 'Rampa de acesso' },
-      { descricao: 'Elevador adaptado' },
-      { descricao: 'Sinalização tátil' },
-      { descricao: 'Intérprete de Libras' },
-      { descricao: 'Material em braile' },
-      { descricao: 'Software leitor de tela' },
-      { descricao: 'Banheiro acessível' },
-      { descricao: 'Portas automáticas' },
-      { descricao: 'Corredores ampliados' },
-      { descricao: 'Transporte adaptado' },
-      { descricao: 'Apoio pedagógico' },
-      { descricao: 'Equipamentos adaptados' },
-      { descricao: 'Tecnologia assistiva' },
+      { descricao: 'Rampas adequadas' },
+      { descricao: 'Piso tátil instalado' },
+      { descricao: 'Elevador funcionando' },
+      { descricao: 'Intérprete de Libras no atendimento' },
+      { descricao: 'Portas automáticas ou largas' },
+      { descricao: 'Corredores com espaço adequado' },
+      { descricao: 'Banheiros adaptados' },
+      { descricao: 'Sistema com leitor de tela' },
+      { descricao: 'Conteúdo com linguagem simples' },
+      { descricao: 'Legendas em vídeos' },
+      { descricao: 'Audiodescrição disponível' },
+      { descricao: 'Alerta luminoso' },
       { descricao: 'Alerta sonoro' },
-      { descricao: 'Audiodescrição' },
-      { descricao: 'Legendagem de vídeos' },
-      { descricao: 'Piso nivelado' },
-      { descricao: 'Cadeira de rodas disponível' },
-      { descricao: 'Suporte emocional' },
-      { descricao: 'Plataformas digitais acessíveis' }
+      { descricao: 'Apoio pedagógico especializado' },
+      { descricao: 'Softwares assistivos' },
+      { descricao: 'Mobiliário adaptado' },
+      { descricao: 'Mídias acessíveis' },
+      { descricao: 'Treinamento no atendimento' },
+      { descricao: 'Tecnologia assistiva disponível' },
+      { descricao: 'Comunicação visual clara' },
+      { descricao: 'Plataforma digital acessível' },
+      { descricao: 'Conteúdo organizado e explicativo' },
+      { descricao: 'Mapas e placas acessíveis' },
+      { descricao: 'Suporte especializado' },
+      { descricao: 'Equipamentos PCD disponíveis' }
     ]);
     console.log('✅ Acessibilidades inseridas.');
 
-    // ===== RELAÇÃO SUBTIPO ↔ BARREIRA =====
-    const subTipoBarreirasData = [];
+    // ===== 20+ RELAÇÕES SUBTIPO ↔ TIPO =====
+    const relSubTipoTipo = [];
     for (let i = 0; i < subtipos.length; i++) {
-      const barreiraIndex = i % barreiras.length; // Distribui as barreiras de forma circular
-      subTipoBarreirasData.push({ id_subtipodeficiencia: subtipos[i].id, id_barreira: barreiras[barreiraIndex].id });
+      for (let j = 0; j < tipos.length; j++) {
+        if (relSubTipoTipo.length >= 24) break; // já garante 20+
+        relSubTipoTipo.push({
+          id_tipodeficiencia: tipos[j].id,
+          id_subtipodeficiencia: subtipos[i].id
+        });
+      }
+      if (relSubTipoTipo.length >= 24) break;
     }
-    await SubTipoBarreiras.bulkCreate(subTipoBarreirasData);
-    console.log('✅ Relações Subtipo ↔ Barreira inseridas.');
+    await SubTipoDeficienciaTipoDeficiencias.bulkCreate(relSubTipoTipo);
+    console.log('🔗 Relação Subtipo ↔ Tipo inserida.');
 
-    // ===== RELAÇÃO BARREIRA ↔ ACESSIBILIDADE =====
-    const barreiraAcessibilidadeData = [];
-    for (let i = 0; i < barreiras.length; i++) {
-      const acessibilidadeIndex = i % acessibilidades.length;
-      barreiraAcessibilidadeData.push({ id_barreira: barreiras[i].id, id_acessibilidade: acessibilidades[acessibilidadeIndex].id });
+    // ===== 20+ RELAÇÕES SUBTIPO ↔ BARREIRA =====
+    const relSubBarreira = [];
+    for (let i = 0; i < 24; i++) {
+      relSubBarreira.push({
+        id_subtipodeficiencia: subtipos[i % subtipos.length].id,
+        id_barreira: barreiras[i % barreiras.length].id
+      });
     }
-    await BarreiraAcessibilidades.bulkCreate(barreiraAcessibilidadeData);
-    console.log('✅ Relações Barreira ↔ Acessibilidade inseridas.');
+    await SubTipoBarreiras.bulkCreate(relSubBarreira);
+    console.log('🔗 Relação Subtipo ↔ Barreira inserida.');
+
+    // ===== 20+ RELAÇÕES BARREIRA ↔ ACESSIBILIDADE =====
+    const relBarreiraAcess = [];
+    for (let i = 0; i < 24; i++) {
+      relBarreiraAcess.push({
+        id_barreira: barreiras[i % barreiras.length].id,
+        id_acessibilidade: acessibilidades[i % acessibilidades.length].id
+      });
+    }
+    await BarreiraAcessibilidades.bulkCreate(relBarreiraAcess);
+    console.log('🔗 Relação Barreira ↔ Acessibilidade inserida.');
 
     console.log('🎉 Banco populado com sucesso!');
     await sequelize.close();
-  } catch (error) {
-    console.error('❌ Erro ao popular o banco:', error);
+
+  } catch (err) {
+    console.error('❌ Erro no seed:', err);
+    await sequelize.close();
   }
 }
 

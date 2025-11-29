@@ -80,27 +80,6 @@ class TipoDeficienciaController {
         }
     }
 
-    async associarSubtipos(request, response) {
-        const { id } = request.params;         // ID do TipoDeficiencia
-        const { subtiposIds } = request.body;      // Array de IDs dos SubtipoDeficiencia
-
-        try {
-            const tipo = await TipoDeficiencia.findByPk(id);
-            if (!tipo) return response.status(404).json({ error: 'TipoDeficiencia não encontrado' });
-
-            // Atualiza cada subtipo selecionado para associar ao tipo
-            await SubtipoDeficiencia.update(
-                { id_tipodeficiencia: id },
-                { where: { id: subtiposIds } }
-            );
-
-            return response.json({ message: 'Subtipos associados com sucesso!' });
-        } catch (error) {
-            console.error(error);
-            return response.status(500).json({ error: 'Erro ao associar subtipos' });
-        }
-    }
-
 }
 
 
