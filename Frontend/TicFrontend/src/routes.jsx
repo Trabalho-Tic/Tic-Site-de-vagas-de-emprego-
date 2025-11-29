@@ -37,6 +37,7 @@ import UpdateVaga from "./Pages/UpdateVaga";
 import CandidaturasVaga from "./Pages/CandidaturaVaga";
 import PageNotFound from "./Pages/PageNotFound";
 
+
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -148,7 +149,8 @@ const routes = createBrowserRouter([
   {
     path: "*",
     element: <PageNotFound />,
-  }
+  },
+  
 ]);
 
 function Router() {

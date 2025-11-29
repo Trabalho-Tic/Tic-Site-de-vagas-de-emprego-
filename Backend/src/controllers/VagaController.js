@@ -103,4 +103,3 @@ class VagaController {
 }
 
 module.exports = new VagaController()
- 

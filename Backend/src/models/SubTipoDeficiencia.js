@@ -32,6 +32,20 @@ SubtipoDeficiencia.associate = (models) => {
       as: 'barreiras'
     });
 
+    // RELAÇÃO COM CANDIDATO
+    SubtipoDeficiencia.belongsToMany(models.Candidato, {
+        through: "tb_candidato_subtipodeficiencia",
+        foreignKey: "id_subtipodeficiencia",
+        otherKey: "id_candidato",
+        as: "candidatos"
+    });
+
+    // 🔥 RELAÇÃO FALTANTE — OBRIGATÓRIA PARA OPÇÃO B
+    SubtipoDeficiencia.hasMany(models.SubTipoBarreiras, {
+        foreignKey: "id_subtipodeficiencia",
+        as: "subtipoBarreiras"
+    });
+
 };
 
 module.exports = SubtipoDeficiencia;

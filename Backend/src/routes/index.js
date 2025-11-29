@@ -10,6 +10,7 @@ const SubTipoDeficienciaController = require("../controllers/SubTipoDeficienciaC
 const TipoDeficienciaController = require("../controllers/TipoDeficienciaController");
 const UserController = require("../controllers/UserController");
 const SubTipoDeficienciaTipoDeficienciasController = require("../controllers/SubTipoDeficienciaTipoDeficienciaController");
+const SubTipoDeficienciaTipoDeficienciasController = require("../controllers/SubTipoDeficienciaTipoDeficienciaController");
 const CompanyController = require("../controllers/CompanyController");
 const CandidatoController = require("../controllers/CandidatoController");
 const VagaController = require("../controllers/VagaController");
@@ -154,5 +155,12 @@ router.post("/candidatura/deletar", CandidaturaController.delete);
 router.post("/TipoDeficiencia/:id/SubTipoDeficiencia", SubTipoDeficienciaTipoDeficienciasController.create);
 router.post("/Barreira/:id/SubTipoDeficiencia", BarreiraController.associarSubtipos);
 router.post("/Barreira/:id/Acessibilidade", BarreiraAcessibilidadeController.associarSubtipos);
+
+// ====================================================
+// MATCHING ⚡ NOVAS ROTAS IMPORTANTES
+// ====================================================
+router.get("/vagas/recomendadas/:idCandidato", MatchingController.vagasRecomendadas);
+router.get("/vagas/todas/:idCandidato", MatchingController.todasAsVagas);
+
 
 module.exports = router;

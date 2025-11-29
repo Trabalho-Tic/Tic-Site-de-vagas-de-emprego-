@@ -18,11 +18,6 @@ const Candidato = sequelize.define("Candidato", {
     unique: true,
   },
 
-  deficiencias: {
-    type: DataTypes.JSON,
-    allowNull: true,
-  },
-
   // -------- NOVOS CAMPOS --------
   cidade: {
     type: DataTypes.STRING,
@@ -84,6 +79,14 @@ Candidato.associate = (models) => {
     foreignKey: "id_candidato",
     as: "candidaturas",
   });
+
+  Candidato.belongsToMany(models.SubtipoDeficiencia, {
+    through: "tb_candidato_subtipodeficiencia",
+    foreignKey: "id_candidato",
+    otherKey: "id_subtipodeficiencia",
+    as: "subtipos"
+  });
 };
+
 
 module.exports = Candidato;
