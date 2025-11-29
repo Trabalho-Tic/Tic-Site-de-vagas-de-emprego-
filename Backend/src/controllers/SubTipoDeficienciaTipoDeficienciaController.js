@@ -6,8 +6,6 @@ class SubTipoDeficienciaTipoDeficienciasController {
     const { id } = request.params;
     const { subtiposIds } = request.body;
 
-    console.log("RECEBIDO:", { id, subtiposIds });
-
     if (!Array.isArray(subtiposIds)) {
       return response.status(400).json({ error: "subtiposIds deve ser um array de UUIDs!" });
     }
