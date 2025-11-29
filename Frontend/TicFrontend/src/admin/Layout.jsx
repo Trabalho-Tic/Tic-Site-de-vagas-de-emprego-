@@ -70,6 +70,16 @@ export default function AdminLayout() {
           </NavLink>
         </nav>
 
+        <nav className="flex p-4 text-sm font-medium">
+          <NavLink
+              to="/"
+              className={`flex w-full items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100`}
+            >
+              <span className="material-symbols-outlined">Subdirectory_Arrow_Left</span>
+              Voltar Home
+          </NavLink>
+        </nav>
+
         {/* Rodapé da sidebar */}
         <div className="p-4 border-t border-gray-200">
           <div className="flex items-center gap-3">

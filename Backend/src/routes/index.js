@@ -10,7 +10,6 @@ const SubTipoDeficienciaController = require("../controllers/SubTipoDeficienciaC
 const TipoDeficienciaController = require("../controllers/TipoDeficienciaController");
 const UserController = require("../controllers/UserController");
 const SubTipoDeficienciaTipoDeficienciasController = require("../controllers/SubTipoDeficienciaTipoDeficienciaController");
-const SubTipoDeficienciaTipoDeficienciasController = require("../controllers/SubTipoDeficienciaTipoDeficienciaController");
 const CompanyController = require("../controllers/CompanyController");
 const CandidatoController = require("../controllers/CandidatoController");
 const VagaController = require("../controllers/VagaController");
@@ -25,6 +24,7 @@ const AuthController = require("../controllers/AuthController");
 // ------------------ MIDDLEWARES ------------------
 const createUploader = require("../middlewares/upload"); // ✅ versão parametrizável
 const authMiddleware = require("../middlewares/authMiddleware");
+const MatchingController = require("../controllers/MatchingController");
 
 // ====================================================
 // ROTAS PÚBLICAS
