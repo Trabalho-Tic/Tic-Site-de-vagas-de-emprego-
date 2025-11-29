@@ -26,9 +26,26 @@ class BarreiraAcessibilidadeController {
     }
 
     async create(request, response) {
+        const { id } = request.params;
+        const { subtiposIds } = request.body;
+
         try {
-            const barreiraAcessibilidade = await BarreiraAcessibilidade.create(request.body)
+
+            const barreira = await Barreira.findByPk(id);
+
+            if (!barreira) {
+                return response.status(404).json({ error: "Barreira não encontrada" });
+            }
+
+            const registros = subtiposIds.map(subId => ({
+                id_barreira: id,
+                id_acessibilidade: subId
+            }));
+
+            const barreiraAcessibilidade = await BarreiraAcessibilidade.bulkCreate(registros)
+            
             return response.json(barreiraAcessibilidade)
+
         } catch (error) {
             return response.status(500).json({ error: "Erro ao criar BarreiraAcessibilidade"})
         }

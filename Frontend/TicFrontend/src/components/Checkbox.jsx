@@ -15,7 +15,7 @@ export default function Checkbox({ label, checked, onChange }) {
                     checked:hover:bg-blue-600
                     "                
                 checked={checked}
-                onChange={onChange}
+                onChange={(e) => onChange(e.target.checked)}
             />
             <span className="text-sm font-medium text-gray-800">{label}</span>
         </label>

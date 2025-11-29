@@ -9,6 +9,7 @@ const SubTipoBarreiraController = require("../controllers/SubTipoBarreiraControl
 const SubTipoDeficienciaController = require("../controllers/SubTipoDeficienciaController");
 const TipoDeficienciaController = require("../controllers/TipoDeficienciaController");
 const UserController = require("../controllers/UserController");
+const SubTipoDeficienciaTipoDeficienciasController = require("../controllers/SubTipoDeficienciaTipoDeficienciaController");
 const CompanyController = require("../controllers/CompanyController");
 const CandidatoController = require("../controllers/CandidatoController");
 const VagaController = require("../controllers/VagaController");
@@ -114,7 +115,7 @@ router.delete("/Barreira/delete/:id", BarreiraController.delete);
 // ====================================================
 router.get("/SubTipoBarreira", SubTipoBarreiraController.index);
 router.get("/SubTipoBarreira/:id", SubTipoBarreiraController.show);
-router.post("/SubTipoBarreira/create", SubTipoBarreiraController.create);
+router.post("/SubTipoBarreira/create/:id", SubTipoBarreiraController.create);
 router.put("/SubTipoBarreira/update/:id", SubTipoBarreiraController.update);
 router.delete("/SubTipoBarreira/delete/:id", SubTipoBarreiraController.delete);
 
@@ -184,10 +185,8 @@ router.post("/candidatura/validar", CandidaturaController.jaCandidatado);
 router.post("/candidatura/deletar", CandidaturaController.delete);
 
 
-// ====================================================
-// ASSOCIATIONS EXISTENTES
-// ====================================================
-router.post("/TipoDeficiencia/:id/SubTipoDeficiencia", TipoDeficienciaController.associarSubtipos);
+// ------------------ ASSOCIAÇÕES ------------------
+router.post("/TipoDeficiencia/:id/SubTipoDeficiencia", SubTipoDeficienciaTipoDeficienciasController.create);
 router.post("/Barreira/:id/SubTipoDeficiencia", BarreiraController.associarSubtipos);
 router.post("/Barreira/:id/Acessibilidade", BarreiraAcessibilidadeController.associarSubtipos);
 

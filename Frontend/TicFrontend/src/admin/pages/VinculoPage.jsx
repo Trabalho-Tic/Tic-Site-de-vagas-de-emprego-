@@ -11,14 +11,17 @@ function Vinculo() {
     const [subTipoDeficiencia, setSubTipoDeficiencia] = useState("")
     const [subTipoDeficiencias, setSubTipoDeficiencias] = useState([])
     const [subTipoDeficienciaSelecionada, setSubTipoDeficienciaSelecionada] = useState("")
+    const [subTipoDeficienciaSelecionadas, setSubTipoDeficienciaSelecionadas] = useState([])
 
     const [barreira, setBarreira] = useState("")
     const [barreiras, setBarreiras] = useState([])
     const [barreiraSelecionada, setBarreiraSelecionada] = useState("")
+    const [barreiraSelecionadas, setBarreiraSelecionadas] = useState([])
 
     const [acessibilidade, setAcessibilidade] = useState("")
     const [acessibilidades, setAcessibilidades] = useState([])
     const [acessibilidadeSelecionada, setAcessibilidadeSelecionada] = useState("")
+    const [acessibilidadeSelecionadas, setAcessibilidadeSelecionadas] = useState([])
 
     const [update, setUpdate] = useState(0)
     const [aba, setAba] = useState("tipo")
@@ -118,8 +121,42 @@ function Vinculo() {
         e.preventDefault()
 
         await useApi({
-            endpoint: ""
+            endpoint: `/TipoDeficiencia/${tipoDeficienciasSelecionada}/SubTipoDeficiencia`,
+            method: "POST",
+            body: { subtiposIds: subTipoDeficienciaSelecionadas}
         })
+
+        setTipoDeficienciaSelecionada("")
+        setSubTipoDeficienciaSelecionadas([])
+    }
+    
+    async function linkSubComBarreira(e) {
+        e.preventDefault()
+
+        await useApi({
+            endpoint: `/SubTipoBarreira/create/${subTipoDeficienciaSelecionada}`,
+            method: "POST",
+            body: { subtiposIds: barreiraSelecionadas}
+        })
+
+        setSubTipoDeficienciaSelecionada("")
+        setBarreiraSelecionadas([])
+    }
+    
+    async function linkBarreiraComAcessibilidade(e) {
+        e.preventDefault()
+
+        console.log(barreiraSelecionada)
+        console.log(acessibilidadeSelecionadas)
+
+        await useApi({
+            endpoint: `/BarreiraAcessibilidade/create/${barreiraSelecionada}`,
+            method: "POST",
+            body: { subtiposIds: acessibilidadeSelecionadas}
+        })
+
+        setBarreiraSelecionada("")
+        setAcessibilidadeSelecionadas([])
     }
 
     return (
@@ -195,8 +232,8 @@ function Vinculo() {
                                 <div className="flex gap-2 items-center">
                                     <Checkbox 
                                         label={deficiencia.nome}
-                                        checked={tipoDeficienciasSelecionada === deficiencia.nome}
-                                        onChange={() => setTipoDeficienciaSelecionada(deficiencia.nome)}
+                                        checked={tipoDeficienciasSelecionada === deficiencia.id}
+                                        onChange={() => setTipoDeficienciaSelecionada(deficiencia.id)}
                                     />
                                 </div>
                             ))
@@ -220,14 +257,20 @@ function Vinculo() {
                                 <div className="flex gap-2 items-center">
                                     <Checkbox 
                                         label={subDeficiencia.nome}
-                                        onChange={() => setSubTipoDeficienciaSelecionada(subDeficiencia.nome)}
+                                        checked={subTipoDeficienciaSelecionadas.includes(subDeficiencia.id)}
+                                        onChange={(checked) => setSubTipoDeficienciaSelecionadas(prev => {
+                                            if (checked) {
+                                                return [...prev, subDeficiencia.id];
+                                            }
+                                                return prev.filter(item => item !== subDeficiencia.id);
+                                        })}
                                     />
                                 </div>
                             ))
                         }
                     </div>
 
-                    <button className="bg-indigo-600 w-full text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular</button>
+                    <button onClick={(event) => linkTipoComSubtipo(event)} className="bg-indigo-600 w-full text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular</button>
                 </>
             )}
             
@@ -251,8 +294,8 @@ function Vinculo() {
                                 <div className="flex gap-2 items-center">
                                     <Checkbox 
                                         label={subDeficiencia.nome}
-                                        checked={subTipoDeficienciaSelecionada === subDeficiencia.nome}
-                                        onChange={() => setSubTipoDeficienciaSelecionada(subDeficiencia.nome)}
+                                        checked={subTipoDeficienciaSelecionada === subDeficiencia.id}
+                                        onChange={() => setSubTipoDeficienciaSelecionada(subDeficiencia.id)}
                                     />
                                 </div>
                             ))
@@ -276,14 +319,20 @@ function Vinculo() {
                                 <div className="flex gap-2 items-center">
                                     <Checkbox 
                                         label={barreira.descricao}
-                                        onChange={() => setTipoDeficienciaSelecionada(barreira.nome)}
+                                        checked={barreiraSelecionadas.includes(barreira.id)}
+                                        onChange={(checked) => setBarreiraSelecionadas(prev => {
+                                            if (checked) {
+                                                return [...prev, barreira.id];
+                                            }
+                                                return prev.filter(item => item !== barreira.id);
+                                        })}
                                     />
                                 </div>
                             ))
                         }
                     </div>
 
-                    <button className="bg-indigo-600 w-full text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular</button>
+                    <button onClick={(event) => linkSubComBarreira(event)} className="bg-indigo-600 w-full text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular</button>
                 </>
             )}
 
@@ -307,8 +356,8 @@ function Vinculo() {
                                 <div className="flex gap-2 items-center">
                                     <Checkbox 
                                         label={barreira.descricao}
-                                        checked={barreiraSelecionada === barreira.descricao}
-                                        onChange={() => setBarreiraSelecionada(barreira.descricao)}
+                                        checked={barreiraSelecionada === barreira.id}
+                                        onChange={() => setBarreiraSelecionada(barreira.id)}
                                     />
                                 </div>
                             ))
@@ -332,14 +381,20 @@ function Vinculo() {
                                 <div className="flex gap-2 items-center">
                                     <Checkbox 
                                         label={acessibilidade.descricao}
-                                        onChange={() => setAcessibilidadeSelecionada(acessibilidade.descricao)}
+                                        checked={acessibilidadeSelecionadas.includes(acessibilidade.id)}
+                                        onChange={(checked) => setAcessibilidadeSelecionadas(prev => {
+                                            if (checked) {
+                                                return [...prev, acessibilidade.id];
+                                            }
+                                                return prev.filter(item => item !== acessibilidade.id);
+                                        })}
                                     />
                                 </div>
                             ))
                         }
                     </div>
 
-                    <button className="bg-indigo-600 w-full text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular</button>
+                    <button onClick={(event) => linkBarreiraComAcessibilidade(event)} className="bg-indigo-600 w-full text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular</button>
                 </>
             )}
             
@@ -362,7 +417,12 @@ function Vinculo() {
                                 <div className="flex gap-2 items-center">
                                     <Checkbox 
                                         label={acessibilidade.descricao}
-                                        onChange={() => setAcessibilidadeSelecionada(acessibilidade.descricao)}
+                                        onChange={(checked) => setAcessibilidadeSelecionadas(prev => {
+                                            if (checked) {
+                                                return [...prev, acessibilidade.id];
+                                            }
+                                                return prev.filter(item => item !== acessibilidade.id);
+                                        })}
                                     />
                                 </div>
                             ))
