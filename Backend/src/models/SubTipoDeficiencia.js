@@ -10,15 +10,6 @@ const SubtipoDeficiencia = sequelize.define('SubtipoDeficiencia', {
     nome: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    id_tipodeficiencia: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        references: {
-            model: "tb_tipodeficiencia",
-            key: "id"
-        },
-        onDelete: "CASCADE"
     }
 }, {
     tableName: "tb_subtipodeficiencia",
@@ -27,16 +18,18 @@ const SubtipoDeficiencia = sequelize.define('SubtipoDeficiencia', {
 
 SubtipoDeficiencia.associate = (models) => {
 
-    SubtipoDeficiencia.belongsTo(models.TipoDeficiencia, {
-        foreignKey: "id_tipodeficiencia",
-        as: "tipo"
+    SubtipoDeficiencia.belongsToMany(models.TipoDeficiencia, {
+        through: "tb_subtipodeficienciatipodeficiencia",
+        foreignKey: "id_subtipo",
+        otherKey: "id_tipodeficiencia",
+        as: "tipos"
     });
 
     SubtipoDeficiencia.belongsToMany(models.Barreira, {
-        through: "tb_subtipobarreira",
-        foreignKey: 'id_subtipodeficiencia',
-        otherKey: 'id_barreira',
-        as: 'barreiras'
+      through: "tb_subtipobarreira",
+      foreignKey: 'id_subtipodeficiencia',
+      otherKey: 'id_barreira',
+      as: 'barreiras'
     });
 
     // RELAÇÃO COM CANDIDATO
@@ -51,7 +44,8 @@ SubtipoDeficiencia.associate = (models) => {
     SubtipoDeficiencia.hasMany(models.SubTipoBarreiras, {
         foreignKey: "id_subtipodeficiencia",
         as: "subtipoBarreiras"
-    });
+    });
+
 };
 
 module.exports = SubtipoDeficiencia;
