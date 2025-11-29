@@ -6,10 +6,6 @@ class SubTipoDeficienciaTipoDeficienciasController {
     const { id } = request.params;
     const { subtiposIds } = request.body;
 
-    if (!Array.isArray(subtiposIds)) {
-      return response.status(400).json({ error: "subtiposIds deve ser um array de UUIDs!" });
-    }
-
     try {
       const tipo = await TipoDeficiencia.findByPk(id);
       if (!tipo) return response.status(404).json({ error: "TipoDeficiencia não encontrado" });

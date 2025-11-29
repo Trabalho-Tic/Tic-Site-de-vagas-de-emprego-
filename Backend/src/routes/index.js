@@ -96,7 +96,7 @@ router.delete("/BarreiraAcessibilidade/delete/:id", BarreiraAcessibilidadeContro
 // ------------------ SUBTIPO BARREIRA ------------------
 router.get("/SubTipoBarreira", SubTipoBarreiraController.index);
 router.get("/SubTipoBarreira/:id", SubTipoBarreiraController.show);
-router.post("/SubTipoBarreira/create", SubTipoBarreiraController.create);
+router.post("/SubTipoBarreira/create/:id", SubTipoBarreiraController.create);
 router.put("/SubTipoBarreira/update/:id", SubTipoBarreiraController.update);
 router.delete("/SubTipoBarreira/delete/:id", SubTipoBarreiraController.delete);
 

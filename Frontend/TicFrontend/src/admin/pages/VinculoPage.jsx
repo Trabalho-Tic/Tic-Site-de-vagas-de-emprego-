@@ -16,6 +16,7 @@ function Vinculo() {
     const [barreira, setBarreira] = useState("")
     const [barreiras, setBarreiras] = useState([])
     const [barreiraSelecionada, setBarreiraSelecionada] = useState("")
+    const [barreiraSelecionadas, setBarreiraSelecionadas] = useState([])
 
     const [acessibilidade, setAcessibilidade] = useState("")
     const [acessibilidades, setAcessibilidades] = useState([])
@@ -123,16 +124,22 @@ function Vinculo() {
             method: "POST",
             body: { subtiposIds: subTipoDeficienciaSelecionadas}
         })
+
+        setTipoDeficienciaSelecionada("")
+        setSubTipoDeficienciaSelecionadas([])
     }
     
     async function linkSubComBarreira(e) {
         e.preventDefault()
 
         await useApi({
-            endpoint: `/TipoDeficiencia/${tipoDeficienciasSelecionada}/SubTipoDeficiencia`,
+            endpoint: `/SubTipoBarreira/create/${subTipoDeficienciaSelecionada}`,
             method: "POST",
-            body: { subtiposIds: subTipoDeficienciaSelecionadas}
+            body: { subtiposIds: barreiraSelecionadas}
         })
+
+        setSubTipoDeficienciaSelecionada("")
+        setBarreiraSelecionadas([])
     }
 
     return (
@@ -233,6 +240,7 @@ function Vinculo() {
                                 <div className="flex gap-2 items-center">
                                     <Checkbox 
                                         label={subDeficiencia.nome}
+                                        checked={subTipoDeficienciaSelecionadas.includes(subDeficiencia.id)}
                                         onChange={(checked) => setSubTipoDeficienciaSelecionadas(prev => {
                                             if (checked) {
                                                 return [...prev, subDeficiencia.id];
@@ -269,8 +277,8 @@ function Vinculo() {
                                 <div className="flex gap-2 items-center">
                                     <Checkbox 
                                         label={subDeficiencia.nome}
-                                        checked={subTipoDeficienciaSelecionada === subDeficiencia.nome}
-                                        onChange={() => setSubTipoDeficienciaSelecionada(subDeficiencia.nome)}
+                                        checked={subTipoDeficienciaSelecionada === subDeficiencia.id}
+                                        onChange={() => setSubTipoDeficienciaSelecionada(subDeficiencia.id)}
                                     />
                                 </div>
                             ))
@@ -294,14 +302,20 @@ function Vinculo() {
                                 <div className="flex gap-2 items-center">
                                     <Checkbox 
                                         label={barreira.descricao}
-                                        onChange={() => setTipoDeficienciaSelecionada(barreira.nome)}
+                                        checked={barreiraSelecionadas.includes(barreira.id)}
+                                        onChange={(checked) => setBarreiraSelecionadas(prev => {
+                                            if (checked) {
+                                                return [...prev, barreira.id];
+                                            }
+                                                return prev.filter(item => item !== barreira.id);
+                                        })}
                                     />
                                 </div>
                             ))
                         }
                     </div>
 
-                    <button className="bg-indigo-600 w-full text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular</button>
+                    <button onClick={(event) => linkSubComBarreira(event)} className="bg-indigo-600 w-full text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular</button>
                 </>
             )}
 
