@@ -35,7 +35,7 @@ function Header() {
   }
 
   return (
-    <header className="flex justify-center sm:flex-row sm:justify-between items-center sm:px-10 lg:px-30 bg-gradient-to-t from-white to-gray-200 h-15 relative">
+    <header className="flex justify-center sm:flex-row sm:justify-between items-center sm:px-10 lg:px-30 bg-white border-b-2 border-gray-200 h-15 relative">
       <button onClick={() => navigate("/")}>
         <img className="h-7 hidden sm:flex" src={logo} alt="Logo Jobior" />
       </button>
@@ -45,8 +45,8 @@ function Header() {
           to={"/home"}
           className={({ isActive }) =>
             isActive
-              ? "text-lg bg-green-300 rounded-xl py-2 px-3 font-medium transition-all duration-400"
-              : "text-lg font-medium py-2 px-3 transition-all duration-400 hover:text-gray-600"
+              ? "text-lg bg-emerald-500 text-white rounded-4xl py-2 px-5 font-semibold transition-all duration-400 hover:bg-emerald-400"
+              : "text-lg font-medium rounded-4xl py-2 px-5 transition-all duration-400 hover:bg-emerald-200 hover:text-white"
           }
         >
           Home
@@ -56,8 +56,8 @@ function Header() {
           to={"/vagas"}
           className={({ isActive }) =>
             isActive
-              ? "text-lg bg-green-300 rounded-xl py-2 px-3 font-medium transition-all duration-400"
-              : "text-lg font-medium py-2 px-3 transition-all duration-400 hover:text-gray-600"
+              ? "text-lg bg-emerald-500 text-white rounded-4xl py-2 px-5 font-semibold transition-all duration-400 hover:bg-emerald-400"
+              : "text-lg font-medium rounded-4xl py-2 px-5 transition-all duration-400 hover:bg-emerald-200 hover:text-white"
           }
         >
           Vagas
@@ -67,8 +67,8 @@ function Header() {
           to={"/empresas"}
           className={({ isActive }) =>
             isActive
-              ? "text-lg bg-green-300 rounded-xl py-2 px-3 font-medium transition-all duration-400"
-              : "text-lg font-medium py-2 px-3 transition-all duration-400 hover:text-gray-600"
+              ? "text-lg bg-emerald-500 text-white rounded-4xl py-2 px-5 font-semibold transition-all duration-400 hover:bg-emerald-400"
+              : "text-lg font-medium rounded-4xl py-2 px-5 transition-all duration-400 hover:bg-emerald-200 hover:text-white"
           }
         >
           Empresas
@@ -82,18 +82,18 @@ function Header() {
           onMouseLeave={() => setMenuAberto(false)}
         >
           {/* Ícone + nome */}
-          <div className="flex items-center gap-2 border border-black rounded-3xl px-3 py-1 bg-white hover:bg-gray-100 transition-all duration-300">
+          <div className="flex items-center gap-2 border border-gray-200 shadow-sm rounded-3xl px-3 py-1 bg-white hover:bg-gray-100 transition-all duration-300">
             <img
               src={profile}
               alt="Perfil"
-              className="w-8 h-8 rounded-full border border-gray-300"
+              className="w-6 h-6 rounded-full"
             />
             <p className="hidden md:flex text-black font-medium">{user?.nome}</p>
           </div>
 
           {/* Dropdown */}
           {menuAberto && (
-            <div className="absolute right-0 top-11 bg-white shadow-lg rounded-xl p-4 w-56 border border-gray-200 animate-fade-in z-50">
+            <div className="absolute right-0 top-9 bg-white shadow-lg rounded-xl p-4 w-56 border border-gray-200 animate-fade-in z-50">
               <p className="font-semibold text-gray-800 mb-2">{user?.nome}</p>
               <p className="text-xs text-gray-500 mb-3 truncate">{user?.email}</p>
               <hr className="mb-3" />
