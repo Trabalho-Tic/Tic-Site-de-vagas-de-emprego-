@@ -89,7 +89,7 @@ router.delete("/Barreira/delete/:id", BarreiraController.delete);
 // ------------------ BARREIRA-ACESSIBILIDADE ------------------
 router.get("/BarreiraAcessibilidade", BarreiraAcessibilidadeController.index);
 router.get("/BarreiraAcessibilidade/:id", BarreiraAcessibilidadeController.show);
-router.post("/BarreiraAcessibilidade/create", BarreiraAcessibilidadeController.create);
+router.post("/BarreiraAcessibilidade/create/:id", BarreiraAcessibilidadeController.create);
 router.put("/BarreiraAcessibilidade/update/:id", BarreiraAcessibilidadeController.update);
 router.delete("/BarreiraAcessibilidade/delete/:id", BarreiraAcessibilidadeController.delete);
 

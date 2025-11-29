@@ -21,6 +21,7 @@ function Vinculo() {
     const [acessibilidade, setAcessibilidade] = useState("")
     const [acessibilidades, setAcessibilidades] = useState([])
     const [acessibilidadeSelecionada, setAcessibilidadeSelecionada] = useState("")
+    const [acessibilidadeSelecionadas, setAcessibilidadeSelecionadas] = useState([])
 
     const [update, setUpdate] = useState(0)
     const [aba, setAba] = useState("tipo")
@@ -140,6 +141,22 @@ function Vinculo() {
 
         setSubTipoDeficienciaSelecionada("")
         setBarreiraSelecionadas([])
+    }
+    
+    async function linkBarreiraComAcessibilidade(e) {
+        e.preventDefault()
+
+        console.log(barreiraSelecionada)
+        console.log(acessibilidadeSelecionadas)
+
+        await useApi({
+            endpoint: `/BarreiraAcessibilidade/create/${barreiraSelecionada}`,
+            method: "POST",
+            body: { subtiposIds: acessibilidadeSelecionadas}
+        })
+
+        setBarreiraSelecionada("")
+        setAcessibilidadeSelecionadas([])
     }
 
     return (
@@ -339,8 +356,8 @@ function Vinculo() {
                                 <div className="flex gap-2 items-center">
                                     <Checkbox 
                                         label={barreira.descricao}
-                                        checked={barreiraSelecionada === barreira.descricao}
-                                        onChange={() => setBarreiraSelecionada(barreira.descricao)}
+                                        checked={barreiraSelecionada === barreira.id}
+                                        onChange={() => setBarreiraSelecionada(barreira.id)}
                                     />
                                 </div>
                             ))
@@ -364,14 +381,20 @@ function Vinculo() {
                                 <div className="flex gap-2 items-center">
                                     <Checkbox 
                                         label={acessibilidade.descricao}
-                                        onChange={() => setAcessibilidadeSelecionada(acessibilidade.descricao)}
+                                        checked={acessibilidadeSelecionadas.includes(acessibilidade.id)}
+                                        onChange={(checked) => setAcessibilidadeSelecionadas(prev => {
+                                            if (checked) {
+                                                return [...prev, acessibilidade.id];
+                                            }
+                                                return prev.filter(item => item !== acessibilidade.id);
+                                        })}
                                     />
                                 </div>
                             ))
                         }
                     </div>
 
-                    <button className="bg-indigo-600 w-full text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular</button>
+                    <button onClick={(event) => linkBarreiraComAcessibilidade(event)} className="bg-indigo-600 w-full text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular</button>
                 </>
             )}
             
@@ -394,7 +417,12 @@ function Vinculo() {
                                 <div className="flex gap-2 items-center">
                                     <Checkbox 
                                         label={acessibilidade.descricao}
-                                        onChange={() => setAcessibilidadeSelecionada(acessibilidade.descricao)}
+                                        onChange={(checked) => setAcessibilidadeSelecionadas(prev => {
+                                            if (checked) {
+                                                return [...prev, acessibilidade.id];
+                                            }
+                                                return prev.filter(item => item !== acessibilidade.id);
+                                        })}
                                     />
                                 </div>
                             ))
