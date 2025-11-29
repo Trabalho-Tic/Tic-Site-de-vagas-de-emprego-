@@ -104,6 +104,37 @@ class CandidatoController {
       return res.status(500).json({ error: "Erro ao deletar candidato" });
     }
   }
+
+  // =========================================================
+// SALVAR SUBTIPOS DO CANDIDATO
+// =========================================================
+async salvarSubtipos(req, res) {
+  const { id_user } = req.params;
+  const { subtipos } = req.body; // array de UUIDs
+
+  try {
+    const candidato = await Candidato.findOne({
+      where: { id_user }
+    });
+
+    if (!candidato) {
+      return res.status(404).json({ error: "Candidato não encontrado" });
+    }
+
+    // Vincula N:N automaticamente
+    await candidato.setSubtipos(subtipos);
+
+    return res.json({ success: true });
+
+  } catch (error) {
+    console.error("Erro ao salvar subtipos:", error);
+    return res.status(500).json({ error: "Erro ao salvar subtipos" });
+  }
 }
+
+
+}
+
+
 
 module.exports = new CandidatoController();

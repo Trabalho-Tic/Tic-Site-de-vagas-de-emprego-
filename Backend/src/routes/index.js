@@ -41,6 +41,10 @@ router.post("/company/create", createUploader("logos").single("logo"), CompanyCo
 
 // Registro público de candidato
 router.post("/candidato/create", (req, res) => CandidatoController.create(req, res));
+router.post(
+  "/candidato/:id_user/subtipos",
+  (req, res) => CandidatoController.salvarSubtipos(req, res)
+);
 
 // ====================================================
 // ROTAS PROTEGIDAS (JWT OBRIGATÓRIO)

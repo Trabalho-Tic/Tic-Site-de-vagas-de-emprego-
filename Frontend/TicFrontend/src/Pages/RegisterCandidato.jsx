@@ -74,7 +74,9 @@ function RegisterCandidato() {
       },
     });
 
-    if (response?.id_user) navigate("/login");
+    if (response?.id_user) {
+    navigate(`/selecionar-tipo/${response.id_user}`);
+    }
     else setErrors({ general: "Erro ao registrar candidato. Tente novamente." });
   } catch (err) {
     console.error(err);
