@@ -25,7 +25,6 @@ export default function SelecionarSubtipos() {
         console.error("Erro ao carregar subtipos:", error);
       }
     }
-
     fetchSubtipos();
   }, [idTipo]);
 
@@ -45,7 +44,6 @@ export default function SelecionarSubtipos() {
         body: { subtipos: selecionados }
       });
 
-      // Redirecionamento FINAL → LOGIN
       navigate("/login");
 
     } catch (error) {
@@ -55,39 +53,41 @@ export default function SelecionarSubtipos() {
 
   return (
     <section className="min-h-screen flex items-center justify-center px-4">
-      <div className="w-full max-w-3xl text-center space-y-8">
+      <div className="w-full max-w-3xl text-center space-y-10">
 
-        <div className="space-y-3">
-          <h1 className="text-3xl font-bold">Agora selecione os subtipos</h1>
-          <p className="text-gray-600">
-            Essas informações ajudam a personalizar suas vagas.
-          </p>
+        <div>
+          <h1 className="text-3xl font-bold">Selecione os subtipos</h1>
+          <p className="text-gray-600">Escolha apenas os que se aplicam a você.</p>
         </div>
 
         <div className="space-y-4">
-          {subtipos.map((sub) => (
-            <button
-              key={sub.id}
-              onClick={() => toggleSubtipo(sub.id)}
-              className={`
-                w-full flex items-center justify-between p-5 rounded-xl border transition-all
-                ${
-                  selecionados.includes(sub.id)
-                    ? "border-green-500 bg-green-50 font-semibold"
-                    : "border-gray-300 bg-white hover:border-green-400"
-                }
-              `}
-            >
-              <span>{sub.nome}</span>
 
-              <input
-                type="checkbox"
-                checked={selecionados.includes(sub.id)}
-                readOnly
-                className="h-5 w-5 accent-green-500"
-              />
-            </button>
-          ))}
+          {subtipos.map((sub) => {
+            const ativo = selecionados.includes(sub.id);
+
+            return (
+              <div
+                key={sub.id}
+                className={`
+                  p-5 rounded-xl border flex justify-between items-center
+                  transition-all cursor-pointer
+                  ${ativo ? "border-green-500 bg-green-50" : "border-gray-300 bg-white hover:border-green-400"}
+                `}
+                onClick={() => toggleSubtipo(sub.id)}
+              >
+                <span className="text-lg">{sub.nome}</span>
+
+                {/* Checkbox isolado e controlado pelo React */}
+                <input
+                  type="checkbox"
+                  checked={ativo}
+                  readOnly
+                  className="h-5 w-5 accent-green-500 cursor-pointer"
+                />
+              </div>
+            );
+          })}
+
         </div>
 
         <button

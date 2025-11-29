@@ -11,7 +11,7 @@ class TipoDeficienciaController {
                 include: {
                     model: SubtipoDeficiencia,
                     as: 'subtipos',
-                    attributes: ['nome'],
+                    attributes: ['id', 'nome'],
                     include: {
                         model: Barreira,
                         as: 'barreiras',
