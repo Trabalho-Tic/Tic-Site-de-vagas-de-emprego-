@@ -1,5 +1,6 @@
 const Candidato = require('../models/Candidato');
 const User = require('../models/User');
+const SubtipoDeficiencia = require('../models/SubTipoDeficiencia');
 
 class CandidatoController {
   // =========================================================
@@ -21,23 +22,36 @@ class CandidatoController {
   // BUSCAR UM CANDIDATO ESPECÍFICO
   // =========================================================
   async show(req, res) {
-    const { id_user } = req.params;
-    try {
-      const candidato = await Candidato.findOne({
-        where: { id_user },
-        include: { model: User, as: 'user', attributes: ['id', 'nome', 'email', 'telefone'] },
-      });
+  const { id_user } = req.params;
 
-      if (!candidato) {
-        return res.status(404).json({ error: "Candidato não encontrado" });
-      }
+  try {
+    const candidato = await Candidato.findOne({
+      where: { id_user },
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: ["id", "nome", "email", "telefone"]
+        },
+        {
+          model: SubtipoDeficiencia,
+          as: "subtipos",
+          attributes: ["id", "nome"]
+        }
+      ]
+    });
 
-      return res.json(candidato);
-    } catch (error) {
-      console.error("Erro ao buscar candidato:", error);
-      return res.status(500).json({ error: "Erro ao buscar candidato" });
+    if (!candidato) {
+      return res.status(404).json({ error: "Candidato não encontrado" });
     }
+
+    return res.json(candidato);
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Erro ao buscar candidato" });
   }
+}
 
   // =========================================================
   // CRIAR NOVO CANDIDATO
