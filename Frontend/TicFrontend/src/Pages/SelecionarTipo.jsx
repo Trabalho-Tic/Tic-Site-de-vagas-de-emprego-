@@ -1,4 +1,3 @@
-// src/pages/SelecionarTipo.jsx
 import React, { useEffect, useState } from "react";
 import useApi from "../api/Api";
 import { useNavigate, useParams } from "react-router-dom";
@@ -21,41 +20,95 @@ export default function SelecionarTipo() {
     fetchTipos();
   }, []);
 
+  // ➕ Opção adicional manual (não existe no backend)
+  const tiposExtras = [
+    { id: "nenhuma", nome: "Nenhuma deficiência" }
+  ];
+
   const handleNext = () => {
     if (!selecionado) return;
+
+    // 👉 Caso “não possuo deficiência”
+    if (selecionado === "nenhuma") {
+      navigate("/login");
+      return;
+    }
+
+    // 👉 Caso tipo real → manda para subtipos
     navigate(`/selecionar-subtipos/${id_user}?tipo=${selecionado}`);
   };
 
   return (
-    <section className="flex flex-col items-center py-16 min-h-screen">
-      <h1 className="text-3xl font-bold mb-3">Qual tipo de deficiência você possui?</h1>
-      <p className="text-gray-600 mb-10">Escolha o tipo que melhor representa você.</p>
+    <section className="min-h-screen flex items-center justify-center px-4">
+      <div className="w-full max-w-3xl text-center space-y-8">
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-3xl">
-        {tipos.map((tipo) => (
+        {/* Título + descrição */}
+        <div className="space-y-4">
+          <h1 className="text-3xl font-bold text-gray-900">
+            Queremos personalizar sua experiência
+          </h1>
+          <p className="text-gray-600 max-w-xl mx-auto">
+            Para recomendar vagas perfeitas para o seu perfil, precisamos entender
+            qual tipo de deficiência representa você.
+          </p>
+        </div>
+
+        {/* Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+
+          {/* Tipos vindos do backend */}
+          {tipos.map((tipo) => (
+            <button
+              key={tipo.id}
+              onClick={() => setSelecionado(tipo.id)}
+              className={`
+                p-5 rounded-xl border text-center transition-all
+                ${
+                  selecionado === tipo.id
+                    ? "border-green-500 bg-green-50 text-green-700 shadow-sm"
+                    : "border-gray-300 bg-white hover:border-green-400"
+                }
+              `}
+            >
+              <span className="font-medium">{tipo.nome}</span>
+            </button>
+          ))}
+
+          {/* ➕ Botão da opção “Nenhuma deficiência” */}
+          {tiposExtras.map((tipo) => (
+            <button
+              key={tipo.id}
+              onClick={() => setSelecionado(tipo.id)}
+              className={`
+                p-5 rounded-xl border text-center transition-all
+                ${
+                  selecionado === tipo.id
+                    ? "border-green-500 bg-green-50 text-green-700 shadow-sm"
+                    : "border-gray-300 bg-white hover:border-green-400"
+                }
+              `}
+            >
+              <span className="font-medium">{tipo.nome}</span>
+            </button>
+          ))}
+
+        </div>
+
+        {/* Botão */}
+        <div>
           <button
-            key={tipo.id}
-            onClick={() => setSelecionado(tipo.id)}
-            className={`
-              flex flex-col items-center p-6 rounded-xl border transition-all
-              ${selecionado === tipo.id
-                ? "border-green-500 bg-green-50"
-                : "border-gray-300 bg-white hover:border-green-400"}
-            `}
+            onClick={handleNext}
+            disabled={!selecionado}
+            className="px-10 py-3 rounded-lg bg-green-400 text-black font-semibold disabled:opacity-40 hover:opacity-90 transition"
           >
-            {/* Titulo */}
-            <span className="font-medium text-lg">{tipo.nome}</span>
+            Próximo
           </button>
-        ))}
-      </div>
+        </div>
 
-      <button
-        onClick={handleNext}
-        disabled={!selecionado}
-        className="mt-10 px-10 py-3 bg-green-400 rounded-lg text-black font-medium disabled:opacity-50"
-      >
-        Próximo
-      </button>
+        <p className="text-xs mt-2 text-gray-500">
+          Essas informações são usadas apenas para personalizar suas vagas.
+        </p>
+      </div>
     </section>
   );
 }
