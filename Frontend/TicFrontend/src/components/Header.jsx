@@ -120,7 +120,7 @@ function Header() {
                 {
                   user?.tipo == "empresa" ? (
                     <li
-                      onClick={() => navigate(`/candidaturasVaga`)}
+                      onClick={() => navigate(`/vagas`)}
                       className="flex items-center gap-2 text-gray-700 hover:text-green-500 cursor-pointer"
                     >
                       <Heart size={16} />Candidaturas para Vagas

@@ -13,8 +13,6 @@ import CriarVagaProcesso from "./Pages/CriarVagaProcesso";
 import CriarVagaRequisicao from "./Pages/CriarVagaRequisicao";
 import CriarVagaDescricao from "./Pages/CriarVagaDescricao";
 import CardCompanies from "./components/CardCompanies";
-import EmpresaVagas from "./Pages/EmpresaVagas";
-import EmpresaSobre from "./Pages/EmpresaSobre";
 import Profile from "./Pages/Profile";
 import LandingPage from "./Pages/LandingPage";
 import Curriculo from "./Pages/Curriculo";
@@ -122,14 +120,6 @@ const routes = createBrowserRouter([
   {
     path: "/empresas",
     element: <Company />,
-  },
-  {
-    path: "/empresa-sobre/:id",
-    element: <EmpresaSobre />,
-  },
-  {
-    path: "/empresa-vagas/:id",
-    element: <EmpresaVagas />,
   },
   {
     path: "/candidaturas/:id",

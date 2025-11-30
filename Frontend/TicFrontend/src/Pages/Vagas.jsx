@@ -64,7 +64,7 @@ function Vaga() {
   );
 
   return (
-    <div className="flex flex-col justify-between h-screen">
+    <>
       <Header />
 
       {/* 🔎 Seção de busca */}
@@ -106,7 +106,7 @@ function Vaga() {
       </section>
 
       <Footer />
-    </div>
+    </>
   );
 }
 
