@@ -156,6 +156,7 @@ router.post("/candidatura/validar", CandidaturaController.jaCandidatado);
 router.post("/candidatura/deletar", CandidaturaController.delete);
 
 // ------------------ ASSOCIAÇÕES ------------------
+router.get("/TipoDeficiencia/:id/SubTipoDeficiencia", SubTipoDeficienciaTipoDeficienciasController.index);
 router.post("/TipoDeficiencia/:id/SubTipoDeficiencia", SubTipoDeficienciaTipoDeficienciasController.create);
 router.post("/Barreira/:id/SubTipoDeficiencia", BarreiraController.associarSubtipos);
 router.post("/Barreira/:id/Acessibilidade", BarreiraAcessibilidadeController.associarSubtipos);

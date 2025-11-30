@@ -27,7 +27,7 @@ function Candidaturas() {
     }, [])
 
     return (
-        <>
+        <div className="flex flex-col justify-between h-screen">
             <Header />
 
             <section className="flex flex-col items-center justify-center p-15">
@@ -44,7 +44,7 @@ function Candidaturas() {
             </section>
 
             <Footer />
-        </>
+        </div>
     )
 }
 

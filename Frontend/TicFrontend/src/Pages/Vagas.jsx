@@ -64,12 +64,12 @@ function Vaga() {
   );
 
   return (
-    <>
+    <div className="flex flex-col justify-between h-screen">
       <Header />
 
       {/* 🔎 Seção de busca */}
       <section className="flex flex-col items-center gap-10 py-10 border-b border-gray-300">
-        <p className="text-4xl font-semibold">Procure por um Job</p>
+        <p className="text-4xl font-semibold">Procure por um Vaga</p>
 
         <div className="flex flex-col md:flex-row items-center gap-5 lg:w-[50rem]">
           <Input
@@ -77,9 +77,6 @@ function Vaga() {
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
           />
-          <button className="flex items-center justify-center w-15 bg-gradient-to-t from-gray-50 to-gray-500 p-5 rounded-4xl transition-all duration-300 shadow-xl hover:-translate-y-1">
-            <Search size={20} />
-          </button>
         </div>
       </section>
 
@@ -100,7 +97,7 @@ function Vaga() {
             {vagasFiltradas.length > 0 ? (
               vagasFiltradas.map((vaga) => <Card key={vaga.id} vaga={vaga} />)
             ) : (
-              <p className="text-gray-500 text-sm italic mt-5">
+              <p className="text-gray-500 text-3xl italic mt-5">
                 Nenhuma vaga encontrada.
               </p>
             )}
@@ -109,7 +106,7 @@ function Vaga() {
       </section>
 
       <Footer />
-    </>
+    </div>
   );
 }
 

@@ -145,10 +145,7 @@ function Vinculo() {
     
     async function linkBarreiraComAcessibilidade(e) {
         e.preventDefault()
-
-        console.log(barreiraSelecionada)
-        console.log(acessibilidadeSelecionadas)
-
+        
         await useApi({
             endpoint: `/BarreiraAcessibilidade/create/${barreiraSelecionada}`,
             method: "POST",

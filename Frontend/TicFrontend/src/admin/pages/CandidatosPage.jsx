@@ -80,6 +80,10 @@ export default function CandidatosPage() {
         endpoint: `/candidato/delete/${c.id_user}`,
         method: "DELETE",
       });
+      await useApi({
+        endpoint: `/user/delete/${c.id_user}`,
+        method: "DELETE",
+      });
       carregarCandidatos();
       setMensagem("✅ Candidato excluído com sucesso.");
     } catch (err) {
