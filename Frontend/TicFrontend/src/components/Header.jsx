@@ -73,6 +73,17 @@ function Header() {
         >
           Empresas
         </NavLink>
+        
+        <NavLink
+          to={"/about"}
+          className={({ isActive }) =>
+            isActive
+              ? "text-lg bg-emerald-500 text-white rounded-4xl py-2 px-5 font-semibold transition-all duration-400 hover:bg-emerald-400"
+              : "text-lg font-medium rounded-4xl py-2 px-5 transition-all duration-400 hover:bg-emerald-200 hover:text-white"
+          }
+        >
+          Sobre nós
+        </NavLink>
       </nav>
 
       {token ? (

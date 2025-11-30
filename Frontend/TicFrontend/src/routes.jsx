@@ -39,6 +39,7 @@ import PageNotFound from "./Pages/PageNotFound";
 
 import SelecionarTipo from "./Pages/SelecionarTipo";
 import SelecionarSubtipos from "./Pages/SelecionarSubtipos";
+import About from "./Pages/About";
 
 
 const routes = createBrowserRouter([
@@ -66,8 +67,14 @@ const routes = createBrowserRouter([
     path: "/register-candidato",
     element: <RegisterCandidato />,
   },
-  { path: "/selecionar-tipo/:id_user", element: <SelecionarTipo /> },
-  { path: "/selecionar-subtipos/:id_user", element: <SelecionarSubtipos /> },
+  { 
+    path: "/selecionar-tipo/:id_user", 
+    element: <SelecionarTipo /> 
+  },
+  { 
+    path: "/selecionar-subtipos/:id_user", 
+    element: <SelecionarSubtipos /> 
+  },
   {
     path: "/register-empresa",
     element: <RegisterEmpresa />,
@@ -75,6 +82,10 @@ const routes = createBrowserRouter([
   {
     path: "/empresas",
     element: <Company />,
+  },
+  {
+    path: "/about",
+    element: <About />,
   },
   {
     path: "/vagas",
@@ -147,8 +158,8 @@ const routes = createBrowserRouter([
       { index: true, element: <UsuariosPage /> },
       { path: "usuarios", element: <UsuariosPage /> },
       { path: "vagas", element: <VagasPage /> },
-      {path: "empresas", element: <CrudEmpresasPage />},
-      {path: "vinculo", element: <Vinculo />},
+      { path: "empresas", element: <CrudEmpresasPage /> },
+      { path: "vinculo", element: <Vinculo /> },
     ],
   },
 
