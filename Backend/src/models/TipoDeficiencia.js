@@ -1,5 +1,5 @@
-const { DataTypes } = require("sequelize")
-const sequelize = require('../config/database')
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/database");
 
 const TipoDeficiencia = sequelize.define('TipoDeficiencia', {
     id: {
@@ -14,13 +14,18 @@ const TipoDeficiencia = sequelize.define('TipoDeficiencia', {
 }, {
     tableName: 'tb_tipodeficiencia',
     timestamps: true
-})
+});
 
 TipoDeficiencia.associate = (models) => {
-    TipoDeficiencia.hasMany(models.SubtipoDeficiencia, {
+
+    // 🔥 CORREÇÃO IMPORTANTE — N:N
+    TipoDeficiencia.belongsToMany(models.SubtipoDeficiencia, {
+        through: "tb_subtipodeficienciatipodeficiencias",
         foreignKey: "id_tipodeficiencia",
+        otherKey: "id_subtipodeficiencia",
         as: "subtipos"
     });
+
 };
 
-module.exports = TipoDeficiencia
+module.exports = TipoDeficiencia;

@@ -7,17 +7,27 @@ const SubTipoDeficienciaTipoDeficiencias = sequelize.define(
     id_tipodeficiencia: {
       type: DataTypes.UUID,
       allowNull: false,
-      primaryKey: true // ← parte da PK composta ✅
+      primaryKey: true,
     },
     id_subtipodeficiencia: {
       type: DataTypes.UUID,
       allowNull: false,
-      primaryKey: true // ← parte da PK composta ✅
+      primaryKey: true,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW
     }
   },
   {
     tableName: "tb_subtipodeficienciatipodeficiencias",
-    timestamps: false // ← DESATIVA pq a tabela não tem ID e não precisa ✅
+    timestamps: true
   }
 );
 

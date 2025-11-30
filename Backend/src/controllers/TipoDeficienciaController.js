@@ -15,20 +15,23 @@ class TipoDeficienciaController {
                     include: {
                         model: Barreira,
                         as: 'barreiras',
-                        attributes: ['descricao'],
+                        attributes: ['id', 'descricao'],
                         include: {
                             model: Acessibilidade,
-                            attributes: ['descricao'],
-                            as: 'acessibilidades'
+                            as: 'acessibilidades',
+                            attributes: ['id', 'descricao']
                         }
                     }
                 }
             });
+
             return response.json(tipoDeficiencias);
+
         } catch (error) {
             return response.status(500).json({ error: "Erro ao buscar TipoDeficiencias" })
         }
     }
+
 
     async show(request, response) {
         const { id } = request.params
