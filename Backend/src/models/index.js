@@ -8,11 +8,11 @@ const db = {};
 fs.readdirSync(__dirname)
   .filter(file => file !== 'index.js' && file.endsWith('.js'))
   .forEach(file => {
-    const model = require(path.join(__dirname, file)); // já é o model definido
+    const model = require(path.join(__dirname, file));
     db[model.name] = model;
   });
 
-// ⚡ Depois que todos os models foram carregados, executa associate()
+// ⚡ Associar corretamente
 Object.values(db).forEach(model => {
   if (model.associate) {
     model.associate(db);

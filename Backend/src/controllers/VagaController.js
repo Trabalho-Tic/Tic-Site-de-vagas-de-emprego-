@@ -3,83 +3,162 @@ const VagaDescricao = require('../models/VagaDescricao');
 const VagaBeneficio = require('../models/VagaBeneficio');
 const VagaProcesso = require('../models/VagaProcesso');
 const VagaRequisicao = require('../models/VagaRequisicao');
+const Acessibilidade = require('../models/Acessibilidade');
 
 class VagaController {
 
-    async index(request, response) {
+    // ============================================================
+    // LISTAR TODAS AS VAGAS
+    // ============================================================
+    async index(req, res) {
         try {
             const vagas = await Vaga.findAll({
                 include: [
-                    { model: VagaProcesso, as: 'processo', attributes: ['processoSeletivo', 'entrevistador', 'time'] },
-                    { model: VagaDescricao, as: 'descricao', attributes: ['descricao'] },
-                    { model: VagaRequisicao, as: 'requisicao', attributes: ['atuacao', 'conhecimentos', 'destaque'] },
-                    { model: VagaBeneficio, as: 'beneficio', attributes: ['salario', 'beneficios'] },
+                    {
+                        model: VagaProcesso,
+                        as: 'processo',
+                        attributes: ['processoSeletivo', 'entrevistador', 'time']
+                    },
+                    {
+                        model: VagaDescricao,
+                        as: 'descricao',
+                        attributes: ['descricao']
+                    },
+                    {
+                        model: VagaRequisicao,
+                        as: 'requisicao',
+                        // ❗❗ TIRADO "acessibilidade" pq NÃO existe no model
+                        attributes: ['atuacao', 'conhecimentos', 'destaque']
+                    },
+                    {
+                        model: VagaBeneficio,
+                        as: 'beneficio',
+                        attributes: ['salario', 'beneficios']
+                    },
+                    {
+                        model: Acessibilidade,
+                        as: 'acessibilidades',
+                        through: { attributes: [] }
+                    }
                 ]
             });
-            return response.json(vagas);
+
+            return res.json(vagas);
         } catch (error) {
-            return response.status(500).json({ error: "Erro ao buscar Vagas" })
+            console.error("Erro em VagaController.index:", error);
+            return res.status(500).json({ error: "Erro ao buscar vagas" });
         }
     }
 
-    async show(request, response) {
-        const { id } = request.params
+    // ============================================================
+    // BUSCAR UMA VAGA POR ID
+    // ============================================================
+    async show(req, res) {
+        const { id } = req.params;
+
         try {
             const vaga = await Vaga.findByPk(id, {
                 include: [
-                    { model: VagaProcesso, as: 'processo', attributes: ['processoSeletivo', 'entrevistador', 'time'] },
-                    { model: VagaDescricao, as: 'descricao', attributes: ['descricao'] },
-                    { model: VagaRequisicao, as: 'requisicao', attributes: ['atuacao', 'conhecimentos', 'destaque'] },
-                    { model: VagaBeneficio, as: 'beneficio', attributes: ['salario', 'beneficios'] },
+                    {
+                        model: VagaProcesso,
+                        as: 'processo',
+                        attributes: ['processoSeletivo', 'entrevistador', 'time']
+                    },
+                    {
+                        model: VagaDescricao,
+                        as: 'descricao',
+                        attributes: ['descricao']
+                    },
+                    {
+                        model: VagaRequisicao,
+                        as: 'requisicao',
+                        // ❗❗ TIRADO "acessibilidade" pq NÃO existe no model
+                        attributes: ['atuacao', 'conhecimentos', 'destaque']
+                    },
+                    {
+                        model: VagaBeneficio,
+                        as: 'beneficio',
+                        attributes: ['salario', 'beneficios']
+                    },
+                    {
+                        model: Acessibilidade,
+                        as: 'acessibilidades',
+                        through: { attributes: [] }
+                    }
                 ]
-            })
+            });
+
             if (!vaga) {
-                return response.status(404).json({ error: "Vaga não encontrado" })
+                return res.status(404).json({ error: "Vaga não encontrada" });
             }
-            return response.json(vaga)
+
+            return res.json(vaga);
         } catch (error) {
-            return response.status(500).json({ error: "Erro ao buscar por Vaga"})
+            console.error("Erro em VagaController.show:", error);
+            return res.status(500).json({ error: "Erro ao buscar vaga" });
         }
     }
 
-    async create(request, response) {
-        console.log(request.body)
+    // ============================================================
+    // CRIAR VAGA
+    // ============================================================
+    async create(req, res) {
         try {
-            const vaga = await Vaga.create(request.body)
-            return response.json(vaga)
+            const vaga = await Vaga.create(req.body);
+            return res.json(vaga);
         } catch (error) {
-            return response.status(500).json({ error: "Erro ao criar Vaga"})
+            console.error("Erro em VagaController.create:", error);
+            return res.status(500).json({ error: "Erro ao criar vaga" });
         }
     }
-    
-    async update(request, response) {
-        const { id } = request.params
-        try {
-            const vaga = await Vaga.findByPk(id)
-            if (!vaga) {
-                return response.status(404).json({ error: "Vaga não encontrado"})
-            }
-            await vaga.update(request.body)
-            return response.json(vaga)
-        } catch (error) {
-            return response.status(500).json({ error: "Erro ao atualizar Vaga"})
-        }
-    }
-    
-    async delete(request, response) {
-        const { id } = request.params
+
+    // ============================================================
+    // ATUALIZAR VAGA
+    // ============================================================
+    async update(req, res) {
+        const { id } = req.params;
+
         try {
             const vaga = await Vaga.findByPk(id);
+
             if (!vaga) {
-                return response.status(404).json({ error: 'Vaga não encontrado.' });
+                return res.status(404).json({ error: "Vaga não encontrada" });
             }
-            await vaga.destroy();
-            return response.status(204).send();
+
+            await vaga.update(req.body);
+
+            return res.json(vaga);
         } catch (error) {
-            return res.status(500).json({ error: 'Erro ao deletar Vaga.' });
+            console.error("Erro em VagaController.update:", error);
+            return res.status(500).json({ error: "Erro ao atualizar vaga" });
         }
     }
 
+    // ============================================================
+    // DELETAR VAGA
+    // ============================================================
+    async delete(req, res) {
+        const { id } = req.params;
+
+        try {
+            const vaga = await Vaga.findByPk(id);
+
+            if (!vaga) {
+                return res.status(404).json({ error: "Vaga não encontrada" });
+            }
+
+            await vaga.destroy();
+
+            return res.status(204).send();
+        } catch (error) {
+            console.error("Erro em VagaController.delete:", error);
+            return res.status(500).json({ error: "Erro ao deletar vaga" });
+        }
+    }
+
+    // ============================================================
+    // BUSCAR TODAS AS VAGAS DE UMA EMPRESA
+    // ============================================================
     async vagasPorEmpresa(req, res) {
         try {
             const { idCompany } = req.params;
@@ -89,12 +168,26 @@ class VagaController {
                 include: [
                     { model: VagaProcesso, as: 'processo' },
                     { model: VagaDescricao, as: 'descricao' },
-                    { model: VagaRequisicao, as: 'requisicao' },
-                    { model: VagaBeneficio, as: 'beneficio' },
-                ],
+                    {
+                        model: VagaRequisicao,
+                        as: 'requisicao',
+                        attributes: ['atuacao', 'conhecimentos', 'destaque']
+                    },
+                    {
+                        model: VagaBeneficio,
+                        as: 'beneficio',
+                        attributes: ['salario', 'beneficios']
+                    },
+                    {
+                        model: Acessibilidade,
+                        as: 'acessibilidades',
+                        through: { attributes: [] }
+                    }
+                ]
             });
 
             return res.json(vagas);
+
         } catch (error) {
             console.error("Erro em vagasPorEmpresa:", error);
             return res.status(500).json({ error: "Erro ao buscar vagas da empresa" });
@@ -102,4 +195,4 @@ class VagaController {
     }
 }
 
-module.exports = new VagaController()
+module.exports = new VagaController();

@@ -7,26 +7,22 @@ const VagaRequisicao = sequelize.define("VagaRequisicao", {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
+
   atuacao: {
     type: DataTypes.STRING,
     allowNull: false,
   },
+
   conhecimentos: {
     type: DataTypes.JSON,
     allowNull: false,
   },
+
   destaque: {
     type: DataTypes.JSON,
     allowNull: false,
   },
-  deficiencia: {
-    type: DataTypes.JSON,
-    allowNull: false,
-  },
-  acessibilidade: {
-    type: DataTypes.JSON,
-    allowNull: false,
-  },
+
   id_vaga: {
     type: DataTypes.UUID,
     allowNull: false,

@@ -7,11 +7,6 @@ import Home from "./Pages/Home";
 import Vagas from "./Pages/Vagas";
 import Company from "./Pages/Companies";
 import Candidaturas from "./Pages/Candidaturas";
-import CriarVaga from "./Pages/CriarVaga";
-import CriarVagaBeneficio from "./Pages/CriarVagaBeneficio";
-import CriarVagaProcesso from "./Pages/CriarVagaProcesso";
-import CriarVagaRequisicao from "./Pages/CriarVagaRequisicao";
-import CriarVagaDescricao from "./Pages/CriarVagaDescricao";
 import CardCompanies from "./components/CardCompanies";
 import Profile from "./Pages/Profile";
 import LandingPage from "./Pages/LandingPage";
@@ -39,6 +34,11 @@ import SelecionarTipo from "./Pages/SelecionarTipo";
 import SelecionarSubtipos from "./Pages/SelecionarSubtipos";
 import About from "./Pages/About";
 
+// NOVO FLUXO DE CRIAÇÃO DE VAGA
+import CriarVagaInformacoes from "./Pages/CriarVagaInformacoes";
+import CriarVagaRequisitos from "./Pages/CriarVagaRequisitos";
+import CriarVagaAcessibilidade from "./Pages/CriarVagaAcessibilidade";
+import CriarVagaResumo from "./Pages/CriarVagaResumo";
 
 const routes = createBrowserRouter([
   {
@@ -65,13 +65,13 @@ const routes = createBrowserRouter([
     path: "/register-candidato",
     element: <RegisterCandidato />,
   },
-  { 
-    path: "/selecionar-tipo/:id_user", 
-    element: <SelecionarTipo /> 
+  {
+    path: "/selecionar-tipo/:id_user",
+    element: <SelecionarTipo />,
   },
-  { 
-    path: "/selecionar-subtipos/:id_user", 
-    element: <SelecionarSubtipos /> 
+  {
+    path: "/selecionar-subtipos/:id_user",
+    element: <SelecionarSubtipos />,
   },
   {
     path: "/register-empresa",
@@ -96,30 +96,6 @@ const routes = createBrowserRouter([
   {
     path: "/UpdateVaga/:id",
     element: <UpdateVaga />,
-  },
-  {
-    path: "/criarVaga",
-    element: <CriarVaga />,
-  },
-  {
-    path: "/criarVaga/beneficio/:id",
-    element: <CriarVagaBeneficio />,
-  },
-  {
-    path: "/criarVaga/Processo/:id",
-    element: <CriarVagaProcesso />,
-  },
-  {
-    path: "/criarVaga/Requisicao/:id",
-    element: <CriarVagaRequisicao />,
-  },
-  {
-    path: "/criarVaga/Descricao/:id",
-    element: <CriarVagaDescricao />,
-  },
-  {
-    path: "/empresas",
-    element: <Company />,
   },
   {
     path: "/candidaturas/:id",
@@ -153,13 +129,21 @@ const routes = createBrowserRouter([
     ],
   },
 
-
+  // NOVO FLUXO DE CRIAÇÃO DE VAGA
+  {
+    path: "/criarVaga",
+    children: [
+      { index: true, element: <CriarVagaInformacoes /> },
+      { path: "requisitos/:id", element: <CriarVagaRequisitos /> },
+      { path: "acessibilidade/:id", element: <CriarVagaAcessibilidade /> },
+      { path: "resumo/:id", element: <CriarVagaResumo /> },
+    ],
+  },
 
   {
     path: "*",
     element: <PageNotFound />,
   },
-  
 ]);
 
 function Router() {
