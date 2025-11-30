@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const VagaAcessibilidadeController = require("../controllers/VagaAcessibilidadeController");
 
 // ------------------ IMPORTS DE CONTROLLERS ------------------
 const AcessibilidadeController = require("../controllers/AcessibilidadeController");
@@ -161,11 +162,14 @@ router.post("/TipoDeficiencia/:id/SubTipoDeficiencia", SubTipoDeficienciaTipoDef
 router.post("/Barreira/:id/SubTipoDeficiencia", BarreiraController.associarSubtipos);
 router.post("/Barreira/:id/Acessibilidade", BarreiraAcessibilidadeController.associarSubtipos);
 
-// ====================================================
-// MATCHING ⚡ NOVAS ROTAS IMPORTANTES
-// ====================================================
+
+// MATCHING 
 router.get("/vagas/recomendadas/:idCandidato", MatchingController.vagasRecomendadas);
 router.get("/vagas/todas/:idCandidato", MatchingController.todasAsVagas);
-
+//acessibilidade da vaga
+router.post(
+  "/vagaAcessibilidade/:id",
+  (req, res) => VagaAcessibilidadeController.create(req, res)
+);
 
 module.exports = router;
