@@ -37,6 +37,9 @@ import UpdateVaga from "./Pages/UpdateVaga";
 import CandidaturasVaga from "./Pages/CandidaturaVaga";
 import PageNotFound from "./Pages/PageNotFound";
 
+import SelecionarTipo from "./Pages/SelecionarTipo";
+import SelecionarSubtipos from "./Pages/SelecionarSubtipos";
+
 
 const routes = createBrowserRouter([
   {
@@ -63,6 +66,8 @@ const routes = createBrowserRouter([
     path: "/register-candidato",
     element: <RegisterCandidato />,
   },
+  { path: "/selecionar-tipo/:id_user", element: <SelecionarTipo /> },
+  { path: "/selecionar-subtipos/:id_user", element: <SelecionarSubtipos /> },
   {
     path: "/register-empresa",
     element: <RegisterEmpresa />,
@@ -146,6 +151,9 @@ const routes = createBrowserRouter([
       {path: "vinculo", element: <Vinculo />},
     ],
   },
+
+
+
   {
     path: "*",
     element: <PageNotFound />,
