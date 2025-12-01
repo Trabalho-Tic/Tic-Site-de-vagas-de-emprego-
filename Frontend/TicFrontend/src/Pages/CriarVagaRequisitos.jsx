@@ -19,6 +19,7 @@ export default function CriarVagaRequisitos() {
   const [beneficios, setBeneficios] = useState([]);
 
   const [processoTexto, setProcessoTexto] = useState("");
+  const [time, setTime] = useState("");
 
   const [loading, setLoading] = useState(false);
 
@@ -91,7 +92,7 @@ export default function CriarVagaRequisitos() {
         body: {
           processoSeletivo: processoTexto,
           entrevistador: "",
-          time: "",
+          time: time,
         },
       });
 
@@ -250,6 +251,15 @@ Ex: Desenvolver APIs, integrar serviços, participar de code reviews..."
             onChange={(e) => setProcessoTexto(e.target.value)}
             className="w-full mt-3 border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-purple-500"
           />
+          <label className="font-medium text-gray-800">Quem será seu time?</label>
+          <div className="flex gap-2 mt-2">
+            <input
+              placeholder="Ex: BI, Excel, RH..."
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              className="flex-1 border border-gray-300 rounded-lg px-4 h-[48px]"
+            />
+          </div>
         </div>
 
         {/* BOTÃO */}

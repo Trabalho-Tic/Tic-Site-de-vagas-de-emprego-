@@ -145,7 +145,7 @@ export default function Companies() {
                 <h3 className="text-lg font-semibold text-gray-800 mb-6">Vagas</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {selectedCompany.vagas.map((vaga, i) => (
-                    <div key={i} className="border rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300">
+                    <Link to={`/vagas/${vaga.id}`} className="border rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300">
                       <div className="flex justify-between items-start mb-3">
                         <div>
                           <h4 className="font-semibold text-sm text-gray-800">{vaga.nome}</h4>
@@ -160,7 +160,7 @@ export default function Companies() {
                             Muitas candidaturas
                           </span>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </section>

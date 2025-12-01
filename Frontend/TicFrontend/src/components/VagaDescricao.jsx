@@ -33,6 +33,8 @@ function VagaDescricao() {
         const result = await useApi({ endpoint: `/vaga/${id}` });
         setVaga(result);
 
+        console.log(result)
+
         if (result?.id_company) {
           const response = await useApi({ endpoint: `/company/${result.id_company}` });
           setEmpresa(response);

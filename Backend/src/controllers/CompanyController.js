@@ -9,7 +9,7 @@ class CompanyController {
       const companies = await Company.findAll({
         include: [
           {model: User, as: "user", attributes: ["id", "nome", "email", "telefone"]},
-          {model: Vaga, as: "vagas", attributes: ["nome", "pais", "cidade", "modelo"]},
+          {model: Vaga, as: "vagas", attributes: ["id", "nome", "pais", "cidade", "modelo"]},
         ]
       });
       return res.json(companies);
