@@ -21,11 +21,13 @@ const VagaRequisicaoController = require("../controllers/VagaRequisicaoControlle
 const CandidaturaController = require("../controllers/CandidaturaController");
 const CurriculoController = require("../controllers/CurriculoController");
 const AuthController = require("../controllers/AuthController");
+const MatchController = require("../controllers/MatchController");
+const FilterController = require("../controllers/FilterController");
 
 // ------------------ MIDDLEWARES ------------------
 const createUploader = require("../middlewares/upload"); // ✅ versão parametrizável
 const authMiddleware = require("../middlewares/authMiddleware");
-const MatchingController = require("../controllers/MatchingController");
+
 
 // ====================================================
 // ROTAS PÚBLICAS
@@ -164,12 +166,12 @@ router.post("/Barreira/:id/Acessibilidade", BarreiraAcessibilidadeController.ass
 
 
 // MATCHING 
-router.get("/vagas/recomendadas/:idCandidato", MatchingController.vagasRecomendadas);
-router.get("/vagas/todas/:idCandidato", MatchingController.todasAsVagas);
+router.get("/vagas/recomendadas/:candidatoId", MatchController.recomendadas);
 //acessibilidade da vaga
 router.post(
   "/vagaAcessibilidade/:id",
   (req, res) => VagaAcessibilidadeController.create(req, res)
 );
+router.get("/vagas/filtrar", FilterController.filtrar);
 
 module.exports = router;
