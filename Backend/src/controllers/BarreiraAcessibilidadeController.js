@@ -36,7 +36,7 @@ class BarreiraAcessibilidadeController {
             if (!barreira) {
                 return response.status(404).json({ error: "Barreira não encontrada" });
             }
-
+   
             const registros = subtiposIds.map(subId => ({
                 id_barreira: id,
                 id_acessibilidade: subId

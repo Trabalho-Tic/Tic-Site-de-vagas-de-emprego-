@@ -4,8 +4,8 @@ export default function Modal({ open, title, children, onClose }) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+    <div className="absolute inset-0 z-50 flex items-center justify-center overflow-auto bg-black/40">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-md mt-100 p-6">
         <div className="flex justify-between items-center mb-4 border-b pb-2">
           <h3 className="text-lg font-semibold">{title}</h3>
           <button

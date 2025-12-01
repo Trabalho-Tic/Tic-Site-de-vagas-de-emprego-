@@ -22,7 +22,7 @@ function Card({ vaga }) {
     }, []);
     
     return (
-        <div onClick={() => navigate(`/vagas/${vaga.id}`)} className="flex flex-col justify-between h-auto w-full md:w-90 lg:w-100 border-1 border-gray-400 p-4 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-300 hover:-translate-y-1">
+        <div onClick={() => navigate(`/vagas/${vaga.id}`)} className="flex cursor-pointer flex-col justify-between h-auto w-full md:w-90 lg:w-100 border-1 border-gray-400 p-4 rounded-xl shadow-lg transition-all duration-300 hover:shadow-green-300 hover:-translate-y-1">
             <div className="flex items-center gap-2 pb-4">
                 <img className="h-10 w-10 rounded-4xl" src={empresa.logo} alt="" />
                 <p className="text-sm text-gray-400">{empresa.nome}</p>

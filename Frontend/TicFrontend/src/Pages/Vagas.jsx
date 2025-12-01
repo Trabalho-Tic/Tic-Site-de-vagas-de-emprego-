@@ -64,6 +64,8 @@ function Vaga() {
             const recomendadas = await useApi({
               endpoint: `/vagas/recomendadas/${user.id}`,
             });
+
+            console.log("AQUI: " + recomendadas)
             setVagas(recomendadas || []);
           } else {
             // 🔁 Todas as vagas, sem ordenação de match
@@ -152,8 +154,7 @@ function Vaga() {
             </div>
             <p className="text-xs text-gray-500 max-w-md text-center">
               <strong>Vagas compatíveis</strong> são aquelas ordenadas de acordo
-              com o seu perfil de acessibilidade: usamos seus subtipos de deficiência,
-              barreiras e acessibilidades para calcular uma porcentagem de match.
+              com o seu perfil de acessibilidade
             </p>
           </div>
         )}
@@ -171,11 +172,11 @@ function Vaga() {
           </button>
         )}
 
-        <div className="flex w-full justify-center">
+        <div className="flex justify-center">
           {carregando ? (
             <p className="text-gray-500 text-lg">Carregando vagas...</p>
           ) : (
-            <div className="grid grid-cols-3 pt-1 gap-2 overflow-auto scrollbar-hide max-h-450 w-full max-w-6xl">
+            <div className="grid grid-cols-3 pt-1 gap-5 overflow-auto scrollbar-hide max-h-450 w-full">
               {vagasFiltradas.length > 0 ? (
                 vagasFiltradas.map(({ vaga, match }) => (
                   <div
@@ -184,7 +185,7 @@ function Vaga() {
                   >
                     {/* badge de compatibilidade no topo direito, se existir */}
                     {match && (
-                      <div className="absolute top-2 right-2">
+                      <div className="absolute top-4 right-10">
                         <span className="bg-green-50 border border-green-200 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">
                           {match.porcentagem ?? 0}% compatível
                         </span>
@@ -195,7 +196,7 @@ function Vaga() {
 
                     {/* chips de acessibilidade (simples) */}
                     {vaga.acessibilidades?.length > 0 && (
-                      <div className="flex flex-wrap gap-1 px-2 pb-2">
+                      <div className="flex flex-wrap gap-1 pb-2">
                         {vaga.acessibilidades.slice(0, 3).map((acc) => (
                           <span
                             key={acc.id}

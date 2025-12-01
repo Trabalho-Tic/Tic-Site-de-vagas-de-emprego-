@@ -26,7 +26,7 @@ Barreira.associate = (models) => {
     });
     
     Barreira.belongsToMany(models.Acessibilidade, {
-    through: "tb_barreiraacessibilidades",
+    through: "tb_barreiraacessibilidade",
     foreignKey: "id_barreira",
     otherKey: "id_acessibilidade",
     as: "acessibilidades"

@@ -26,6 +26,9 @@ function Vinculo() {
     const [update, setUpdate] = useState(0)
     const [aba, setAba] = useState("tipo")
 
+    const [popup, setPopup] = useState({ visible: false, message: "" });
+
+
     useEffect(() => {
         async function fetchAll() {
             try {
@@ -128,6 +131,8 @@ function Vinculo() {
 
         setTipoDeficienciaSelecionada("")
         setSubTipoDeficienciaSelecionadas([])
+
+        showPopup("Vínculo criado com sucesso!");
     }
     
     async function linkSubComBarreira(e) {
@@ -141,6 +146,8 @@ function Vinculo() {
 
         setSubTipoDeficienciaSelecionada("")
         setBarreiraSelecionadas([])
+
+        showPopup("Vínculo criado com sucesso!");
     }
     
     async function linkBarreiraComAcessibilidade(e) {
@@ -154,7 +161,18 @@ function Vinculo() {
 
         setBarreiraSelecionada("")
         setAcessibilidadeSelecionadas([])
+
+        showPopup("Vínculo criado com sucesso!");
     }
+
+    function showPopup(message) {
+        setPopup({ visible: true, message });
+
+        setTimeout(() => {
+            setPopup({ visible: false, message: "" });
+        }, 2000); // fecha automaticamente em 2s
+    }
+
 
     return (
         <>
@@ -267,7 +285,7 @@ function Vinculo() {
                         }
                     </div>
 
-                    <button onClick={(event) => linkTipoComSubtipo(event)} className="bg-indigo-600 w-full text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular</button>
+                    <button onClick={(event) => linkTipoComSubtipo(event)} className="bg-indigo-600 w-full justify-center text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular:  Tipo Deficiencia com Subtipo Deficiencia</button>
                 </>
             )}
             
@@ -329,7 +347,7 @@ function Vinculo() {
                         }
                     </div>
 
-                    <button onClick={(event) => linkSubComBarreira(event)} className="bg-indigo-600 w-full text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular</button>
+                    <button onClick={(event) => linkSubComBarreira(event)} className="bg-indigo-600 w-full justify-center text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular: Subtipo Deficiencia com Barreira</button>
                 </>
             )}
 
@@ -391,7 +409,7 @@ function Vinculo() {
                         }
                     </div>
 
-                    <button onClick={(event) => linkBarreiraComAcessibilidade(event)} className="bg-indigo-600 w-full text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular</button>
+                    <button onClick={(event) => linkBarreiraComAcessibilidade(event)} className="bg-indigo-600 w-full justify-center text-white px-8 py-4 rounded-md flex items-center gap-2 transition-all duration-300 hover:bg-indigo-500">Vincular: Barreira com Acessibilidade</button>
                 </>
             )}
             
@@ -427,6 +445,12 @@ function Vinculo() {
                     </div>
                 </>
             )}
+            {popup.visible && (
+                <div className="fixed top-5 right-5 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg animate-slide-up">
+                    {popup.message}
+                </div>
+            )}
+
         </>
     )
 }

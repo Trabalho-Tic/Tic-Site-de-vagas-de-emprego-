@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../Styles/home.css";
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import logo from "../assets/Jobior.png";
+import logo from "../assets/logo.png";
 import profile from "../assets/profile.png";
 import { LogOut, User, FileText, Heart, ShieldUser  } from "lucide-react";
 
