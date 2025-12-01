@@ -19,7 +19,7 @@ const Acessibilidade = sequelize.define('Acessibilidade', {
 Acessibilidade.associate = (models) => {
 
     Acessibilidade.belongsToMany(models.Barreira, {
-    through: "tb_barreiraacessibilidades",
+    through: "tb_barreiraacessibilidade",
     foreignKey: "id_acessibilidade",
     otherKey: "id_barreira",
     as: "barreiras"

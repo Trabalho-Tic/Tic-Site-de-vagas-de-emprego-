@@ -1,8 +1,9 @@
 const Candidato = require("../models/Candidato");
 const SubtipoDeficiencia = require("../models/SubTipoDeficiencia");
-const Barreira = require("../models/Barreira");
 const Acessibilidade = require("../models/Acessibilidade");
 const Vaga = require("../models/Vaga");
+const SubTipoBarreiras = require("../models/SubTipoBarreiras");
+const BarreiraAcessibilidades = require("../models/BarreiraAcessibilidade");
 
 module.exports = {
   async calcularMatch(idCandidato) {
@@ -28,26 +29,18 @@ module.exports = {
     }
 
     // 1️⃣ barreiras relacionadas ao candidato
-    const barreiras = await Barreira.findAll({
-      include: [{
-        model: SubtipoDeficiencia,
-        as: "subtipos",
-        where: { id: candidato.subtipos.map(s => s.id) }
-      }]
+    const barreiras = await SubTipoBarreiras.findAll({
+      where: { id_subtipodeficiencia: candidato.subtipos.map(s => s.id) }
     });
 
-    const barreirasIds = barreiras.map(b => b.id);
+    const barreirasIds = barreiras.map(b => b.id_barreira);
 
     // 2️⃣ acessibilidades necessárias
-    const acessCompat = await Acessibilidade.findAll({
-      include: [{
-        model: Barreira,
-        as: "barreiras",
-        where: { id: barreirasIds }
-      }]
+    const acessCompat = await BarreiraAcessibilidades.findAll({
+      where: { id_barreira: barreirasIds }
     });
 
-    const acessCompatIds = acessCompat.map(a => a.id);
+    const acessCompatIds = [...new Set(acessCompat.map(a => a.id_acessibilidade))];
 
     // 3️⃣ vagas com acessibilidades
     const vagas = await Vaga.findAll({
@@ -55,7 +48,7 @@ module.exports = {
     });
 
     // 4️⃣ calcular score
-    const totalBarreiras = barreirasIds.length;
+    const totalBarreiras = acessCompatIds.length;
 
     const resultado = vagas.map(vaga => {
 

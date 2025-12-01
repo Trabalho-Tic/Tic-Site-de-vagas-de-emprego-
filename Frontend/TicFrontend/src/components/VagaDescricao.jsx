@@ -37,6 +37,7 @@ function VagaDescricao() {
 
         if (result?.id_company) {
           const response = await useApi({ endpoint: `/company/${result.id_company}` });
+          console.log(response)
           setEmpresa(response);
         }
 
@@ -162,10 +163,6 @@ function VagaDescricao() {
           {vaga.processo?.processoSeletivo}
         </p>
         <p className="text-sm font-medium pb-1">
-          <span className="text-lg font-semibold">Entrevistador:</span>{" "}
-          {vaga.processo?.entrevistador}
-        </p>
-        <p className="text-sm font-medium pb-1">
           <span className="text-lg font-semibold">Seu time:</span> {vaga.processo?.time}
         </p>
       </div>
@@ -177,7 +174,7 @@ function VagaDescricao() {
             href="#descricao"
             className="text-lg font-semibold pb-1 transition-all duration-300 hover:border-b-2 hover:text-gray-500"
           >
-            Descrição
+            Descrição da Empresa
           </a>
           <a
             href="#requisicoes"
@@ -202,15 +199,9 @@ function VagaDescricao() {
 
       {/* ------------------------- DESCRIÇÃO ------------------------- */}
       <section id="descricao" className="border-b-1 border-gray-400">
-        <p className="text-xl font-medium text-gray-400 pb-6">Descrição</p>
-        <p className="text-lg font-bold pb-3">O que te espera:</p>
-        <ul className="pl-5 pb-10">
-          {vaga.descricao?.descricao?.map((desc, index) => (
-            <li key={index} className="list-disc text-sm font-medium pb-2">
-              {desc}
-            </li>
-          ))}
-        </ul>
+        <p className="text-xl font-medium text-gray-400 pb-6">Descrição da Empresa</p>
+        <p className="text-lg font-bold pb-3">Quem somos?</p>
+        <p className="list-disc text-sm font-medium pb-2">{empresa.sobre}</p>
       </section>
 
       {/* ------------------------- REQUISIÇÕES ------------------------- */}
