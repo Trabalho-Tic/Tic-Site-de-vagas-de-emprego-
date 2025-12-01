@@ -26,10 +26,10 @@ Barreira.associate = (models) => {
     });
     
     Barreira.belongsToMany(models.Acessibilidade, {
-      through: "tb_barreiraacessibilidade",
-      foreignKey: 'id_barreira',
-      otherKey: 'id_acessibilidade',
-      as: 'acessibilidades'
+    through: "tb_barreiraacessibilidades",
+    foreignKey: "id_barreira",
+    otherKey: "id_acessibilidade",
+    as: "acessibilidades"
     });
 
   };
