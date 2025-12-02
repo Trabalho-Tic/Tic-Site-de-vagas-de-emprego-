@@ -33,8 +33,6 @@ function VagaDescricao() {
         const result = await useApi({ endpoint: `/vaga/${id}` });
         setVaga(result);
 
-        console.log(result)
-
         if (result?.id_company) {
           const response = await useApi({ endpoint: `/company/${result.id_company}` });
           console.log(response)
@@ -249,6 +247,22 @@ function VagaDescricao() {
             {vaga.beneficio?.beneficios?.map((b, i) => (
               <li key={i} className="list-disc text-sm font-medium">
                 {b}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+      
+      
+      <section id="beneficios" className="flex flex-col gap-6 pt-10 border-b-1 border-gray-400">
+        <p className="text-xl font-medium text-gray-400">Acessibilidades:</p>
+        <div>
+          <p className="text-lg font-bold pb-3">Quais acessibilidades temos a oferecer?
+          </p>
+          <ul className="pl-5 pb-10">
+            {vaga.acessibilidades.map((ace, i) => (
+              <li key={i} className="list-disc text-sm font-medium">
+                {ace.descricao}
               </li>
             ))}
           </ul>
