@@ -35,7 +35,7 @@ function Header() {
   }
 
   return (
-    <header className="flex justify-center sm:flex-row sm:justify-between items-center sm:px-10 lg:px-30 bg-white border-b-2 border-gray-200 h-15 relative">
+    <header className="flex flex-col md:flex-row pt-10 md:pt-0 justify-center sm:flex-row sm:justify-between items-center sm:px-10 lg:px-30 bg-white border-b-2 border-gray-200 h-15 relative">
       <button onClick={() => navigate("/")}>
         <img className="h-7 hidden sm:flex" src={logo} alt="Logo Jobior" />
       </button>

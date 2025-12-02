@@ -185,7 +185,7 @@ function Vaga() {
                   >
                     {/* badge de compatibilidade no topo direito, se existir */}
                     {match && (
-                      <div className="absolute top-4 right-10">
+                      <div className="absolute top-4 right-15">
                         <span className="bg-green-50 border border-green-200 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">
                           {match.porcentagem ?? 0}% compatível
                         </span>

@@ -79,7 +79,7 @@ function Vagas() {
                 </section>
             <section className="flex flex-col py-14 justify-center border-t-1 items-center bg-gradient-to-t from-white to-gray-200">
                 <p className="text-3xl font-semibold pb-12">As Empresas</p>
-                <div className="grid grid-cols-4 gap-5">
+                <div className="grid md:grid-cols-4 gap-5">
                     {
                         companies.map((com) => (
                             <CardCompanies empresa={com} />
