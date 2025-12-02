@@ -6,7 +6,7 @@ function CardCompanies(props) {
   console.log(props.empresa)
 
   return (
-    <Link to={`/empresa/sobre`} className="flex flex-col h-auto w-70 p-6 border border-gray-300 rounded-2xl items-center shadow-lg transition-all duration-300 hover:shadow-purple-300 hover:-translate-y-1">
+    <Link to={`/empresas`} className="flex flex-col h-auto w-70 p-6 border border-gray-300 rounded-2xl items-center shadow-lg transition-all duration-300 hover:shadow-purple-300 hover:-translate-y-1">
       <div className="flex gap-5 items-center">
         <img className="h-15 w-15 rounded-full" src={props.empresa.logo} alt="" />
         <div className="flex justify-between gap-10 py-6">
